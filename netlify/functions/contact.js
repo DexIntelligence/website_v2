@@ -84,7 +84,7 @@ function generateClientEmail(data) {
         <!-- Header -->
         <div style="background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); color: white; padding: 40px 30px; text-align: center;">
           <!-- Logo -->
-          <img src="https://dex-website-v2.netlify.app/logo.png" alt="Dex Intelligence" style="width: 60px; height: 60px; margin: 0 auto 20px; display: block; border-radius: 8px;">
+          <img src="https://dex-website-v2.netlify.app/logo.png" alt="Dex Intelligence" style="height: 60px; width: auto; margin: 0 auto 20px; display: block; border-radius: 8px;">
           
           <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">
             <span style="color: white;">Dex</span> <span style="color: #ee9e46;">Intelligence</span>
