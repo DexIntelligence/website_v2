@@ -78,7 +78,7 @@ function Header() {
             </Link>
 
             <button
-              className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/20"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 hover:border-brand transition-colors"
               aria-label="Open menu"
               onClick={() => setOpen(true)}
             >
@@ -91,14 +91,14 @@ function Header() {
       {/* Mobile Drawer */}
       {open && (
         <div className="md:hidden fixed inset-0 z-[60]" role="dialog" aria-modal="true">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] bg-gradient-to-b from-black to-neutral-900 text-white shadow-xl p-6 border-l border-brand/30">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] bg-black text-white shadow-2xl p-6 border-l-2 border-brand/50">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <img src="/logo.png" alt="Dex Intelligence Inc." className="h-12 w-auto" />
               </div>
               <button
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/20"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 hover:border-brand hover:bg-brand/10 transition-all"
                 aria-label="Close menu"
                 onClick={() => setOpen(false)}
               >
