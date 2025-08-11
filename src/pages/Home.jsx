@@ -1,9 +1,9 @@
 export default function Home() {
   return (
-    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-24">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
       {/* Hero */}
       <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-        Transforming <span className="text-brand">quantitative analysis</span> from a bottleneck into a strategic advantage
+        Transforming <span className="text-brand">quantitative analysis</span> from a bottleneck into a strategic advantage.
       </h1>
 
       {/* Subtitle */}
@@ -41,7 +41,7 @@ export default function Home() {
       {/* Foundational Principles */}
       <section className="mt-8">
         <div className="w-24 h-px bg-white/20 mb-8"></div>
-        <h2 className="text-3xl font-bold text-white mb-4">Foundational Principles</h2>
+        <h2 className="text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">Foundational Principles:</h2>
         <p className="text-xl text-gray-300 mb-12 max-w-2xl">
           Built by lawyers to meet the high standards of the legal industry.
         </p>
@@ -110,7 +110,7 @@ export default function Home() {
         </p>
         <a
           href="/contact"
-          className="inline-flex items-center gap-2 rounded-xl bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
+          className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
         >
           Contact Us
         </a>

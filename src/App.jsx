@@ -46,10 +46,10 @@ function Header() {
       } backdrop-blur bg-black text-white`}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-28 items-center justify-between">
           {/* Left: Logo (desktop size 2x) */}
           <Link to="/" className="flex items-center gap-2 group">
-             <img src="/logo.png" alt="Dex Intelligence Inc." className="h-16 w-auto" />
+             <img src="/logo.png" alt="Dex Intelligence Inc." className="h-24 w-auto" />
           </Link>
 
 
@@ -59,7 +59,7 @@ function Header() {
               <Link
                 key={item.to}
                 to={item.to}
-                className="px-3 py-2 text-base rounded-xl hover:text-brand transition-colors"
+                className="px-3 py-2 text-xl rounded-xl hover:text-brand transition-colors"
               >
                 {item.label}
               </Link>
@@ -70,7 +70,7 @@ function Header() {
           <div className="flex items-center gap-2">
             <Link
               to={CTA.to}
-              className="hidden sm:inline-flex items-center gap-1 rounded-xl bg-brand text-white px-3 py-2 text-sm font-medium hover:bg-[#d68c3f] transition-colors"
+              className="hidden sm:inline-flex items-center gap-1 bg-brand text-white px-3 py-2 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
             >
               {CTA.label}
               <ChevronRight className="h-4 w-4" aria-hidden />
@@ -112,7 +112,7 @@ function Header() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className="rounded-lg px-2 py-2 text-base hover:text-brand transition-colors"
+                    className="rounded-lg px-2 py-2 text-xl hover:text-brand transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -121,7 +121,7 @@ function Header() {
               <div className="py-3">
                 <Link
                   to={CTA.to}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand text-white px-3 py-2 text-sm font-medium hover:bg-[#d68c3f]"
+                  className="inline-flex w-full items-center justify-center gap-2 bg-brand text-white px-3 py-2 text-lg font-medium hover:bg-[#d68c3f]"
                 >
                   {CTA.label}
                   <ChevronRight className="h-4 w-4" aria-hidden />
@@ -159,7 +159,12 @@ export default function App() {
           }
         />
       </Routes>
-      <footer className="py-12 text-center opacity-70 text-xs">© {new Date().getFullYear()} Dex Intelligence Inc.</footer>
+      <footer className="py-12 opacity-70 text-xs mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="flex justify-between items-center">
+          <span>© {new Date().getFullYear()} Dex Intelligence Inc.</span>
+          <span>Toronto, ON</span>
+        </div>
+      </footer>
     </div>
   );
 }
