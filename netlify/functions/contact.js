@@ -272,6 +272,10 @@ exports.handler = async (event, context) => {
     const clientEmail = generateClientEmail(sanitizedData);
     const internalEmail = generateInternalEmail(sanitizedData, clientIP);
 
+    console.log('About to send emails...');
+    console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+    console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length);
+
     // Send emails
     const emailPromises = [
       // Send confirmation to client
@@ -293,7 +297,9 @@ exports.handler = async (event, context) => {
       }),
     ];
 
-    await Promise.all(emailPromises);
+    console.log('Sending emails...');
+    const emailResults = await Promise.all(emailPromises);
+    console.log('Email results:', emailResults);
 
     return {
       statusCode: 200,
