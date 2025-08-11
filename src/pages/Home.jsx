@@ -4,18 +4,18 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
       {/* Hero */}
-      <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
         Transforming <span className="text-brand">quantitative analysis</span> from a bottleneck into a strategic advantage.
       </h1>
 
       {/* Subtitle */}
-      <p className="mt-8 text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-5 italic leading-snug">
+      <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug">
         Building the AI-driven future of quantitative evidence in competition law.
       </p>
 
       {/* Quick Links */}
-      <section className="mt-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <section className="mt-8 sm:mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           <Link
             to="/about"
             className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
@@ -43,15 +43,15 @@ export default function Home() {
       {/* Foundational Principles */}
       <section className="mt-8">
         <div className="w-24 h-px bg-white/20 mb-8"></div>
-        <h2 className="text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">Foundational Principles:</h2>
-        <p className="text-xl text-gray-300 mb-12 max-w-2xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">Foundational Principles:</h2>
+        <p className="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-12 max-w-2xl">
           Built by lawyers to meet the high standards of the legal industry.
         </p>
         <div className="flex flex-col items-center">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full max-w-5xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 w-full max-w-5xl">
           {/* AI Safety */}
           <div className="flex flex-col items-center">
-            <img src="/AI-safety.png" alt="AI Safety" className="h-32 w-32 object-contain mb-6" />
+            <img src="/AI-safety.png" alt="AI Safety" className="h-24 w-24 sm:h-32 sm:w-32 object-contain mb-4 sm:mb-6" />
             <h3 className="text-xl font-semibold text-white mb-5 underline decoration-brand decoration-2 underline-offset-4">AI Safety</h3>
             <ul className="text-base text-gray-400 text-left space-y-2">
               <li className="flex items-start">
@@ -66,7 +66,7 @@ export default function Home() {
           </div>
           {/* Data Security */}
           <div className="flex flex-col items-center">
-            <img src="/data-security.png" alt="Data Security" className="h-32 w-32 object-contain mb-6" />
+            <img src="/data-security.png" alt="Data Security" className="h-24 w-24 sm:h-32 sm:w-32 object-contain mb-4 sm:mb-6" />
             <h3 className="text-xl font-semibold text-white mb-5 underline decoration-brand decoration-2 underline-offset-4">Data Security</h3>
             <ul className="text-base text-gray-400 text-left space-y-2">
               <li className="flex items-start">
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
           {/* Transparency & Defensibility */}
           <div className="flex flex-col items-center">
-            <img src="/transparency.png" alt="Transparency & Defensibility" className="h-32 w-32 object-contain mb-6" />
+            <img src="/transparency.png" alt="Transparency & Defensibility" className="h-24 w-24 sm:h-32 sm:w-32 object-contain mb-4 sm:mb-6" />
             <h3 className="text-xl font-semibold text-white mb-5 underline decoration-brand decoration-2 underline-offset-4">Transparency &amp; Defensibility</h3>
             <ul className="text-base text-gray-400 text-left space-y-2">
               <li className="flex items-start">

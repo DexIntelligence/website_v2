@@ -1,19 +1,19 @@
 export default function Products() {
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-8">Products and <span className="text-brand">Services</span></h1>
-        <p className="mt-8 text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-5 italic leading-snug mb-12">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">Products and <span className="text-brand">Services</span></h1>
+        <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug mb-8 sm:mb-12">
           Two ways to break the quantitative bottleneck:
         </p>
 
         {/* Products Section */}
         <section className="mt-8">
           <div className="flex flex-col items-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-4xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full max-w-4xl">
               {/* AI-Powered Services */}
               <div className="flex flex-col items-center">
-                <div className="h-64 flex items-center justify-center mb-2">
-                  <img src="/AI-powered-services.png" alt="AI-Powered Services" className="h-40 w-40 object-contain" />
+                <div className="h-48 sm:h-64 flex items-center justify-center mb-2">
+                  <img src="/AI-powered-services.png" alt="AI-Powered Services" className="h-32 w-32 sm:h-40 sm:w-40 object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">AI-Powered Services</h3>
                 <p className="text-xl text-gray-400 text-center leading-relaxed">
@@ -22,8 +22,8 @@ export default function Products() {
               </div>
               {/* Real-Time Platform */}
               <div className="flex flex-col items-center">
-                <div className="h-64 flex items-center justify-center mb-2">
-                  <img src="/real-time-platform.png" alt="Real-Time Platform" className="h-64 w-64 object-contain" />
+                <div className="h-48 sm:h-64 flex items-center justify-center mb-2">
+                  <img src="/real-time-platform.png" alt="Real-Time Platform" className="h-48 w-48 sm:h-64 sm:w-64 object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">Real-Time Platform</h3>
                 <p className="text-xl text-gray-400 text-center leading-relaxed">

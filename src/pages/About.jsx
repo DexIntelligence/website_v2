@@ -1,12 +1,12 @@
 export default function About() {
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-8">About <span className="text-brand">Us</span></h1>
-        <p className="mt-8 text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-5 italic leading-snug mb-12">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">About <span className="text-brand">Us</span></h1>
+        <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug mb-8 sm:mb-12">
           Dex Intelligence helps competition lawyers turn complex quantitative analysis into a strategic advantage. We combine legal practicality with economic rigor and secure, purpose-built AI workflows to deliver analysis that is fast, transparent, and defensible.
         </p>
         
-        <div className="bg-black/80 border border-brand px-6 py-10 max-w-4xl mx-auto">
+        <div className="bg-black/80 border border-brand px-4 sm:px-6 py-6 sm:py-10 max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-white mb-6 underline decoration-brand decoration-2 underline-offset-4">Initial Focus: Local Market Analysis</h2>
           <p className="text-lg text-gray-400 leading-relaxed">
             We are launching with a founder-led service focused on the most pressing client need: <span className="text-brand font-medium">local market analysis</span> for merger review and remedy matters. Insights from this work, powered by our internal '<span className="text-white font-medium">Market Mapper</span>' tool, will directly inform the development of our future real-time platform.
@@ -15,7 +15,7 @@ export default function About() {
 
         {/* Why Lawyers Trust Dex */}
         <section className="mt-8">
-          <h2 className="text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">Why Lawyers Trust Dex</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">Why Lawyers Trust Dex</h2>
           <div className="max-w-4xl space-y-6">
             <div className="border-l-4 border-brand pl-6 py-3 bg-neutral-800/50 inline-block pr-6">
               <p className="text-lg text-gray-300 leading-relaxed">

@@ -92,11 +92,10 @@ function Header() {
       {open && (
         <div className="md:hidden fixed inset-0 z-[60]" role="dialog" aria-modal="true">
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] bg-black text-white shadow-xl p-4">
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] bg-gradient-to-b from-black to-neutral-900 text-white shadow-xl p-6 border-l border-brand/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <img src="/logo.png" alt="Your Company" className="h-7 w-auto" />
-                <span className="text-base font-semibold tracking-tight">{LOGO_TEXT}</span>
+                <img src="/logo.png" alt="Dex Intelligence Inc." className="h-12 w-auto" />
               </div>
               <button
                 className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/20"
@@ -113,7 +112,7 @@ function Header() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className="rounded-lg px-2 py-2 text-xl hover:text-brand transition-colors"
+                    className="rounded-lg px-4 py-3 text-xl font-medium hover:text-brand hover:bg-brand/10 transition-all duration-200"
                   >
                     {item.label}
                   </Link>
@@ -122,7 +121,7 @@ function Header() {
               <div className="py-3">
                 <Link
                   to={CTA.to}
-                  className="inline-flex w-full items-center justify-center gap-2 bg-brand text-white px-3 py-2 text-lg font-medium hover:bg-[#d68c3f]"
+                  className="inline-flex w-full items-center justify-center gap-2 bg-brand text-white px-4 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
                 >
                   {CTA.label}
                   <ChevronRight className="h-4 w-4" aria-hidden />
@@ -138,7 +137,7 @@ function Header() {
 
 export default function App() {
   return (
-    <div className="min-h-[100vh] bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-900 text-neutral-900 dark:text-neutral-100">
+    <div className="min-h-[100vh] bg-gradient-to-b from-black via-neutral-900 to-neutral-800 text-white">
       <Header />
       {/* Routes render the page below the header */}
       <Routes>

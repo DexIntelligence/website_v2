@@ -125,13 +125,13 @@ export default function Contact() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-      <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-8">Contact <span className="text-brand">Us</span></h1>
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">Contact <span className="text-brand">Us</span></h1>
       
-      <p className="mt-8 text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-5 italic leading-snug mb-16">
+      <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug mb-8 sm:mb-16">
         Ready to transform your quantitative analysis workflow? Let's discuss how Dex can serve your practice.
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
         {/* Contact Information */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
@@ -165,7 +165,7 @@ export default function Contact() {
         </div>
 
         {/* Contact Form */}
-        <div className="bg-black/80 border border-brand p-8">
+        <div className="bg-black/80 border border-brand p-6 sm:p-8">
           <h2 className="text-2xl font-bold text-white mb-6">Explore an Engagement</h2>
           
           {status === 'success' && (
