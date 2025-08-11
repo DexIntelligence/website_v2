@@ -17,7 +17,7 @@ export default function Products() {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">AI-Powered Services</h3>
                 <p className="text-base text-gray-400 text-center leading-relaxed">
-                  Placeholder description for AI-powered services that help break the quantitative analysis bottleneck.
+                  For complex matters, we act as your agile analytics team.
                 </p>
               </div>
               {/* Real-Time Platform */}
@@ -27,7 +27,7 @@ export default function Products() {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">Real-Time Platform</h3>
                 <p className="text-base text-gray-400 text-center leading-relaxed">
-                  Placeholder description for the real-time platform that provides instant quantitative insights.
+                  For instant analysis, empowering lawyers directly.
                 </p>
               </div>
             </div>
