@@ -32,7 +32,7 @@ In a single, two-hour working session, your team can test a dozen different scen
 
 This new, interactive workflow is about more than just speed; it's about achieving a superior strategic outcome.
 
-• **It Leads to Better Arguments:** The ability to iterate and test hypotheses in real-time allows you to discover the strongest possible analytical narrative for your case, not just the first one you thought of.
+• **It Leads to Better Arguments:** The ability to iterate and test hypotheses in real-time allows you to discover the strongest possible analytical narrative for your case, instead of being limited by the conventional analytical tools at your disposal.
 
 • **It Empowers Your Team:** It transforms junior associates from project managers into active analysts, deepening their understanding of the file and fostering a more data-literate culture.
 
