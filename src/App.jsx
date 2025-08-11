@@ -59,7 +59,7 @@ function Header() {
               <Link
                 key={item.to}
                 to={item.to}
-                className="px-3 py-2 text-sm rounded-xl hover:text-brand transition-colors"
+                className="px-3 py-2 text-base rounded-xl hover:text-brand transition-colors"
               >
                 {item.label}
               </Link>
@@ -112,7 +112,7 @@ function Header() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className="rounded-lg px-2 py-2 text-sm hover:text-brand transition-colors"
+                    className="rounded-lg px-2 py-2 text-base hover:text-brand transition-colors"
                   >
                     {item.label}
                   </Link>
