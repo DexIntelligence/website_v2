@@ -1,9 +1,79 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getAllPosts } from '../utils/blog.js';
+
 export default function Insights() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadPosts() {
+      const allPosts = await getAllPosts();
+      setPosts(allPosts);
+      setLoading(false);
+    }
+    loadPosts();
+  }, []);
+
+  if (loading) {
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-        <h1 className="text-2xl font-semibold mb-3 tracking-tight">Insights</h1>
-        <p className="max-w-2xl text-sm opacity-80">Articles and updates placeholder.</p>
+        <h1 className="text-4xl font-bold tracking-tight text-white mb-12">Insights</h1>
+        <div className="text-center py-12">
+          <p className="text-gray-400 text-lg">Loading posts...</p>
+        </div>
       </main>
     );
   }
+
+  return (
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
+      <h1 className="text-4xl font-bold tracking-tight text-white mb-12">Insights</h1>
+      
+      {/* Blog Article List */}
+      <div className="space-y-8">
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <article key={post.slug} className="border-b border-white/20 pb-8">
+              <div className="mb-4">
+                <span className="text-sm text-gray-400">
+                  {new Date(post.date).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  })}
+                </span>
+              </div>
+              <Link to={`/insights/${post.slug}`}>
+                <h2 className="text-2xl font-bold text-white mb-3 hover:text-brand transition-colors cursor-pointer">
+                  {post.title}
+                </h2>
+              </Link>
+              <p className="text-lg text-gray-300 mb-4 leading-relaxed">
+                {post.excerpt}
+              </p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-gray-400">By {post.author}</span>
+                  <span className="text-sm text-gray-400">•</span>
+                  <span className="text-sm text-gray-400">{post.readTime}</span>
+                </div>
+                <Link 
+                  to={`/insights/${post.slug}`}
+                  className="text-brand hover:text-white transition-colors text-sm font-medium"
+                >
+                  Read More →
+                </Link>
+              </div>
+            </article>
+          ))
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">No posts available yet. Check back soon!</p>
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
   

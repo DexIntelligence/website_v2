@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Products from "./pages/Products.jsx";
 import Insights from "./pages/Insights.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
 import Contact from "./pages/Contact.jsx";
 
 // ---- Quick tweak zone -------------------------------------------------------
@@ -145,6 +146,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/insights" element={<Insights />} />
+        <Route path="/insights/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
         {/* Optional: 404 fallback */}
         <Route
