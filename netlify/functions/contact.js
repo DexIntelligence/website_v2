@@ -80,38 +80,80 @@ function generateClientEmail(data) {
   return {
     subject: 'Inquiry Received - Dex Intelligence',
     html: `
-      <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
-        <div style="background: #000; color: white; padding: 30px; text-align: center;">
-          <h1 style="margin: 0; font-size: 28px;">Dex Intelligence</h1>
-          <p style="margin: 10px 0 0 0; color: #ee9e46; font-size: 18px;">Quantitative Analysis • Competition Law</p>
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Arial', sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); color: white; padding: 40px 30px; text-align: center;">
+          <!-- Logo -->
+          <img src="https://dex-website-v2.netlify.app/logo.png" alt="Dex Intelligence" style="width: 60px; height: 60px; margin: 0 auto 20px; display: block; border-radius: 8px;">
+          
+          <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">
+            <span style="color: white;">Dex</span> <span style="color: #ee9e46;">Intelligence</span>
+          </h1>
+          <p style="margin: 8px 0 0 0; color: #a0a0a0; font-size: 16px; font-weight: 300;">
+            AI-Enhanced Quantitative Analysis • Competition Law
+          </p>
         </div>
         
-        <div style="padding: 40px 30px; background: #f8f9fa;">
-          <h2 style="color: #000; margin-bottom: 20px;">Thank you for your inquiry</h2>
+        <!-- Main Content -->
+        <div style="padding: 40px 30px; background: white;">
+          <h2 style="color: #1a1a1a; margin: 0 0 24px 0; font-size: 24px; font-weight: 600;">
+            Thank you for your secure inquiry
+          </h2>
           
-          <p>Dear ${sanitizeString(data.firstName)},</p>
+          <p style="color: #374151; line-height: 1.6; margin-bottom: 20px;">
+            Dear <strong>${sanitizeString(data.firstName)}</strong>,
+          </p>
           
-          <p>Thank you for reaching out to Dex Intelligence regarding <strong>${data.interest}</strong>. We have received your inquiry and will review it with the confidentiality and discretion that legal matters require.</p>
+          <p style="color: #374151; line-height: 1.6; margin-bottom: 24px;">
+            Thank you for reaching out regarding <strong style="color: #ee9e46;">${data.interest}</strong>. 
+            Your inquiry has been received and will be reviewed with the confidentiality and discretion 
+            that competition law matters require.
+          </p>
           
-          <div style="background: white; border-left: 4px solid #ee9e46; padding: 20px; margin: 25px 0;">
-            <h3 style="margin-top: 0; color: #000;">What happens next:</h3>
-            <ul style="margin: 0; padding-left: 20px;">
-              <li>We will review your inquiry within 24 hours</li>
-              <li>If appropriate, we will schedule a confidential consultation</li>
-              <li>All discussions will be conducted under strict confidentiality protocols</li>
+          <!-- Next Steps Card -->
+          <div style="background: #f8fafc; border: 1px solid #e5e7eb; border-left: 4px solid #ee9e46; border-radius: 8px; padding: 24px; margin: 32px 0;">
+            <h3 style="margin: 0 0 16px 0; color: #1a1a1a; font-size: 18px; font-weight: 600;">
+              What happens next:
+            </h3>
+            <ul style="margin: 0; padding-left: 20px; color: #4b5563; line-height: 1.6;">
+              <li style="margin-bottom: 8px;">We will review your inquiry within 24 hours</li>
+              <li style="margin-bottom: 8px;">If appropriate, we will schedule a confidential consultation</li>
+              <li style="margin-bottom: 0;">All discussions will be conducted under strict confidentiality protocols</li>
             </ul>
           </div>
           
-          <p>For urgent matters, please feel free to contact us directly at <a href="mailto:justin@dexintelligence.ca" style="color: #ee9e46;">justin@dexintelligence.ca</a>.</p>
+          <!-- Contact Info -->
+          <div style="background: #1a1a1a; color: white; border-radius: 8px; padding: 20px; margin: 32px 0;">
+            <p style="margin: 0 0 8px 0; color: #a0a0a0; font-size: 14px;">For urgent matters:</p>
+            <p style="margin: 0;">
+              <a href="mailto:justin@dexintelligence.ca" style="color: #ee9e46; text-decoration: none; font-weight: 500;">
+                justin@dexintelligence.ca
+              </a>
+            </p>
+          </div>
           
-          <p style="margin-top: 30px;">Best regards,<br>
-          <strong>Justin Mayne</strong><br>
-          Dex Intelligence Inc.<br>
-          Toronto, ON</p>
+          <!-- Signature -->
+          <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; color: #374151; line-height: 1.5;">
+              Best regards,<br>
+              <strong style="color: #1a1a1a;">Justin Mayne</strong><br>
+              <span style="color: #6b7280;">Dex Intelligence Inc.</span><br>
+              <span style="color: #6b7280;">Toronto, ON</span>
+            </p>
+          </div>
         </div>
         
-        <div style="background: #000; color: #ccc; padding: 20px 30px; text-align: center; font-size: 12px;">
-          <p style="margin: 0;">This email contains confidential information. If you received this in error, please delete it immediately.</p>
+        <!-- Footer -->
+        <div style="background: #1a1a1a; color: #9ca3af; padding: 24px 30px; text-align: center;">
+          <p style="margin: 0; font-size: 12px; line-height: 1.4;">
+            This email contains confidential information intended only for the addressee. 
+            If you received this in error, please delete it immediately and notify the sender.
+          </p>
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #374151;">
+            <p style="margin: 0; font-size: 11px; color: #6b7280;">
+              © ${new Date().getFullYear()} Dex Intelligence Inc. • Toronto, ON
+            </p>
+          </div>
         </div>
       </div>
     `,
