@@ -8,7 +8,8 @@ export default function Contact() {
     firm: '',
     role: '',
     interest: '',
-    message: ''
+    message: '',
+    emailConsent: false
   });
   
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
@@ -48,14 +49,18 @@ export default function Contact() {
       errors.message = 'Message must be less than 5000 characters';
     }
     
+    if (!formData.emailConsent) {
+      errors.emailConsent = 'You must consent to receive email communications';
+    }
+    
     return errors;
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
     
     // Clear validation error for this field
@@ -101,7 +106,8 @@ export default function Contact() {
           firm: '',
           role: '',
           interest: '',
-          message: ''
+          message: '',
+          emailConsent: false
         });
       } else {
         setStatus('error');
@@ -326,6 +332,28 @@ export default function Contact() {
                 ></textarea>
                 {validationErrors.message && (
                   <p className="text-red-400 text-sm mt-1">{validationErrors.message}</p>
+                )}
+              </div>
+
+              <div>
+                <div className="flex items-start">
+                  <input
+                    type="checkbox"
+                    id="emailConsent"
+                    name="emailConsent"
+                    checked={formData.emailConsent}
+                    onChange={handleChange}
+                    required
+                    className={`mt-1 mr-3 h-4 w-4 text-brand border-2 focus:ring-brand focus:ring-2 bg-neutral-900 ${
+                      validationErrors.emailConsent ? 'border-red-500' : 'border-white/20'
+                    }`}
+                  />
+                  <label htmlFor="emailConsent" className="text-sm text-gray-300 leading-relaxed">
+                    I consent to receiving email communications from Dex Intelligence, including confirmation of this inquiry and follow-up regarding potential engagement opportunities. *
+                  </label>
+                </div>
+                {validationErrors.emailConsent && (
+                  <p className="text-red-400 text-sm mt-2">{validationErrors.emailConsent}</p>
                 )}
               </div>
 

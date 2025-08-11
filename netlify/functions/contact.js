@@ -72,6 +72,10 @@ function validateForm(data) {
     errors.push('Message must be less than 5000 characters');
   }
   
+  if (!data.emailConsent) {
+    errors.push('Email consent is required');
+  }
+  
   return errors;
 }
 
