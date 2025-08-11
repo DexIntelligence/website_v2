@@ -39,23 +39,35 @@ export default function Home() {
       </section>
 
       {/* Foundational Principles */}
-      <section className="mt-12 rounded-3xl bg-black border border-white/10 p-8 flex flex-col items-center text-center">
-        <h2 className="text-2xl font-bold text-white mb-8">Foundational Principles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
-          {/* Icon 1 */}
+      <section className="mt-16 flex flex-col items-center text-center">
+        <h2 className="text-3xl font-bold text-white mb-4">Foundational Principles</h2>
+        <p className="text-xl text-gray-300 mb-12 max-w-2xl">
+          Dex is built by lawyers to meet the high standards of the legal industry.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full max-w-5xl">
+          {/* AI Safety */}
           <div className="flex flex-col items-center">
-            <img src="/AI-safety.png" alt="AI Safety" className="h-20 w-20 object-contain" />
-            <h3 className="mt-4 text-lg font-semibold text-white">AI Safety</h3>
+            <img src="/AI-safety.png" alt="AI Safety" className="h-32 w-32 object-contain mb-6" />
+            <h3 className="text-xl font-semibold text-white mb-3">AI Safety</h3>
+            <p className="text-sm text-gray-400 text-center">
+              Proprietary workflows ensure client data never enters public AI systems. Targeted AI use is applied only where safe and beneficial, with every output independently validated to eliminate hallucinations and preserve the highest level of analytical accuracy.
+            </p>
           </div>
-          {/* Icon 2 */}
+          {/* Data Security */}
           <div className="flex flex-col items-center">
-            <img src="/data-security.png" alt="Data Security" className="h-20 w-20 object-contain" />
-            <h3 className="mt-4 text-lg font-semibold text-white">Data Security</h3>
+            <img src="/data-security.png" alt="Data Security" className="h-32 w-32 object-contain mb-6" />
+            <h3 className="text-xl font-semibold text-white mb-3">Data Security</h3>
+            <p className="text-sm text-gray-400 text-center">
+              Cloud deployments run in Canada-resident AWS environments with SOC 2 Type II and ISO 27001 certified infrastructure. Data is encrypted in transit and at rest, never leaves Canada, and is protected by multi-factor authentication. Secure upload workflows include virus scanning and enable provable, documented deletion on request.
+            </p>
           </div>
-          {/* Icon 3 */}
+          {/* Transparency & Defensibility */}
           <div className="flex flex-col items-center">
-            <img src="/transparency.png" alt="Transparency & Defensibility" className="h-20 w-20 object-contain" />
-            <h3 className="mt-4 text-lg font-semibold text-white">Transparency &amp; Defensibility</h3>
+            <img src="/transparency.png" alt="Transparency & Defensibility" className="h-32 w-32 object-contain mb-6" />
+            <h3 className="text-xl font-semibold text-white mb-3">Transparency &amp; Defensibility</h3>
+            <p className="text-sm text-gray-400 text-center">
+              Analytical methods are fully transparent, reproducible, and designed to exceed industry standards for defensibility. There are no “black box” shortcuts — every result is verifiable, documented, and ready to stand up to regulatory or courtroom scrutiny.
+            </p>
           </div>
         </div>
       </section>
