@@ -22,7 +22,7 @@ The problem with this model is that it treats the legal team as a passive recipi
 
 ## The New Workflow: From Passive Recipient to Active Analyst
 
-Imagine a different approach. Your entire case team is in a boardroom, and on the screen is a live, interactive model of the market.
+Imagine a different approach. Your entire case team is in a boardroom (or a virtual meeting), and on the screen is a live, interactive model of the market.
 
 A junior associate suggests testing a 15-minute drive-time catchment area instead of a simple 5km circle. You drag a slider. Instantly, the market shares and HHI calculations on the screen update. A partner asks to see the impact of excluding a specific competitor from the analysis. You click their location on the map, and the numbers recalculate again.
 
