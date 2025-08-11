@@ -130,8 +130,8 @@ function generateClientEmail(data) {
           <div style="background: #1a1a1a; color: white; border-radius: 8px; padding: 20px; margin: 32px 0;">
             <p style="margin: 0 0 8px 0; color: #a0a0a0; font-size: 14px;">For urgent matters:</p>
             <p style="margin: 0;">
-              <a href="mailto:justin@dexintelligence.ca" style="color: #ee9e46; text-decoration: none; font-weight: 500;">
-                justin@dexintelligence.ca
+              <a href="mailto:justin@dexintelligence.ai" style="color: #ee9e46; text-decoration: none; font-weight: 500;">
+                justin@dexintelligence.ai
               </a>
             </p>
           </div>
@@ -173,7 +173,7 @@ What happens next:
 - If appropriate, we will schedule a confidential consultation  
 - All discussions will be conducted under strict confidentiality protocols
 
-For urgent matters, please contact us directly at justin@dexintelligence.ca.
+For urgent matters, please contact us directly at justin@dexintelligence.ai.
 
 Best regards,
 Justin Mayne
@@ -332,7 +332,7 @@ exports.handler = async (event, context) => {
       // Send notification to internal team
       resend.emails.send({
         from: 'Contact Form <noreply@dexintelligence.ai>',
-        to: [process.env.CONTACT_EMAIL || 'justin@dexintelligence.ca'],
+        to: [process.env.CONTACT_EMAIL || 'justin@dexintelligence.ai'],
         subject: internalEmail.subject,
         html: internalEmail.html,
         text: internalEmail.text,
@@ -357,7 +357,7 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
-        error: 'An error occurred while processing your request. Please try again or contact us directly at justin@dexintelligence.ca.' 
+        error: 'An error occurred while processing your request. Please try again or contact us directly at justin@dexintelligence.ai.' 
       }),
     };
   }

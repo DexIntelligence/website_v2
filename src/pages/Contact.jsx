@@ -155,7 +155,7 @@ export default function Contact() {
             <div>
               <h3 className="text-lg font-semibold text-white mb-2">Direct Contact</h3>
               <p className="text-gray-400 leading-relaxed">
-                Email: <a href="mailto:justin@dexintelligence.ca" className="text-brand hover:text-white transition-colors">justin@dexintelligence.ca</a>
+                Email: <a href="mailto:justin@dexintelligence.ai" className="text-brand hover:text-white transition-colors">justin@dexintelligence.ai</a>
               </p>
               <p className="text-gray-400 leading-relaxed mt-2">
                 LinkedIn: <a href="https://ca.linkedin.com/in/justin-dd-mayne" target="_blank" rel="noopener noreferrer" className="text-brand hover:text-white transition-colors">Justin Mayne</a>

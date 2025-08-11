@@ -58,7 +58,7 @@ In `netlify/functions/contact.js`, remove console.log statements:
 ## Environment Variables Required
 
 - `RESEND_API_KEY` - Your Resend API key for email sending
-- `CONTACT_EMAIL` - Email to receive form submissions (justin@dexintelligence.ca)
+- `CONTACT_EMAIL` - Email to receive form submissions (justin@dexintelligence.ai)
 - `NODE_ENV` - Set to "production" for production builds
 
 ## Build Commands

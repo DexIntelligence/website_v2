@@ -30,5 +30,5 @@
 # Environment variables for production
 # These need to be set in Netlify's UI:
 # RESEND_API_KEY - Your Resend API key
-# CONTACT_EMAIL - Email address to receive contact form submissions (defaults to justin@dexintelligence.ca)
+# CONTACT_EMAIL - Email address to receive contact form submissions (defaults to justin@dexintelligence.ai)
 # NODE_ENV - Set to "production" for production builds
