@@ -48,26 +48,51 @@ export default function Home() {
           {/* AI Safety */}
           <div className="flex flex-col items-center">
             <img src="/AI-safety.png" alt="AI Safety" className="h-32 w-32 object-contain mb-6" />
-            <h3 className="text-xl font-semibold text-white mb-3">AI Safety</h3>
-            <p className="text-sm text-gray-400 text-center">
-              Proprietary workflows ensure client data never enters public AI systems. Targeted AI use is applied only where safe and beneficial, with every output independently validated to eliminate hallucinations and preserve the highest level of analytical accuracy.
-            </p>
+            <h3 className="text-xl font-semibold text-white mb-5 underline decoration-brand decoration-2 underline-offset-4">AI Safety</h3>
+            <ul className="text-base text-gray-400 text-left space-y-2">
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>Proprietary workflows ensure client data never enters public AI systems.</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>Targeted AI use is applied only where safe and beneficial, with every output independently validated to eliminate hallucinations and preserve the highest level of analytical accuracy.</span>
+              </li>
+            </ul>
           </div>
           {/* Data Security */}
           <div className="flex flex-col items-center">
             <img src="/data-security.png" alt="Data Security" className="h-32 w-32 object-contain mb-6" />
-            <h3 className="text-xl font-semibold text-white mb-3">Data Security</h3>
-            <p className="text-sm text-gray-400 text-center">
-              Cloud deployments run in Canada-resident AWS environments with SOC 2 Type II and ISO 27001 certified infrastructure. Data is encrypted in transit and at rest, never leaves Canada, and is protected by multi-factor authentication. Secure upload workflows include virus scanning and enable provable, documented deletion on request.
-            </p>
+            <h3 className="text-xl font-semibold text-white mb-5 underline decoration-brand decoration-2 underline-offset-4">Data Security</h3>
+            <ul className="text-base text-gray-400 text-left space-y-2">
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>Cloud deployments run in Canada-resident AWS environments with SOC 2 Type II and ISO 27001 certified infrastructure.</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>Data is encrypted in transit and at rest, never leaves Canada, and is protected by multi-factor authentication.</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>Secure upload workflows include virus scanning and enable provable, documented deletion on request.</span>
+              </li>
+            </ul>
           </div>
           {/* Transparency & Defensibility */}
           <div className="flex flex-col items-center">
             <img src="/transparency.png" alt="Transparency & Defensibility" className="h-32 w-32 object-contain mb-6" />
-            <h3 className="text-xl font-semibold text-white mb-3">Transparency &amp; Defensibility</h3>
-            <p className="text-sm text-gray-400 text-center">
-              Analytical methods are fully transparent, reproducible, and designed to exceed industry standards for defensibility. There are no “black box” shortcuts — every result is verifiable, documented, and ready to stand up to regulatory or courtroom scrutiny.
-            </p>
+            <h3 className="text-xl font-semibold text-white mb-5 underline decoration-brand decoration-2 underline-offset-4">Transparency &amp; Defensibility</h3>
+            <ul className="text-base text-gray-400 text-left space-y-2">
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>Analytical methods are fully transparent, reproducible, and designed to exceed industry standards for defensibility.</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-brand mr-2 mt-0.5">•</span>
+                <span>There are no "black box" shortcuts — every result is verifiable, documented, and ready to stand up to regulatory or courtroom scrutiny.</span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
