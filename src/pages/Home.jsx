@@ -16,21 +16,21 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <a
             href="/about"
-            className="group rounded-2xl bg-black/80 border border-white/10 px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
           >
             <span className="text-2xl font-semibold text-white group-hover:text-brand">About Us</span>
             <span className="mt-2 text-sm text-gray-400">Learn about our mission and team.</span>
           </a>
           <a
             href="/products"
-            className="group rounded-2xl bg-black/80 border border-white/10 px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
           >
             <span className="text-2xl font-semibold text-white group-hover:text-brand">Explore Products</span>
             <span className="mt-2 text-sm text-gray-400">Discover our tools and solutions.</span>
           </a>
           <a
             href="/insights"
-            className="group rounded-2xl bg-black/80 border border-white/10 px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
           >
             <span className="text-2xl font-semibold text-white group-hover:text-brand">Explore Insights</span>
             <span className="mt-2 text-sm text-gray-400">Read our latest research and analysis.</span>
