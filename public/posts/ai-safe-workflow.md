@@ -36,6 +36,3 @@ AI can be used reliably in high-stakes legal matters, but only when it is used i
 
 By focusing on building auditable tools and maintaining a human-in-the-loop, expert-driven workflow, we can harness the power of AI to deliver a strategic advantage without compromising on the standards of rigor and security that the legal profession demands.
 
----
-
-*Want to learn more about how AI-enhanced local market analysis can benefit your practice? [Contact us](/contact) to discuss your specific needs.*

@@ -18,7 +18,10 @@ export default function Insights() {
   if (loading) {
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-        <h1 className="text-4xl font-bold tracking-tight text-white mb-12">Insights</h1>
+        <h1 className="text-4xl font-bold tracking-tight text-white mb-12 relative">
+          Insights
+          <div className="absolute -bottom-2 left-0 w-24 h-1 bg-brand"></div>
+        </h1>
         <div className="text-center py-12">
           <p className="text-gray-400 text-lg">Loading posts...</p>
         </div>
@@ -28,7 +31,10 @@ export default function Insights() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-      <h1 className="text-4xl font-bold tracking-tight text-white mb-12">Insights</h1>
+      <h1 className="text-4xl font-bold tracking-tight text-white mb-12 relative">
+        Insights
+        <div className="absolute -bottom-2 left-0 w-24 h-1 bg-brand"></div>
+      </h1>
       
       {/* Blog Article List */}
       <div className="space-y-8">

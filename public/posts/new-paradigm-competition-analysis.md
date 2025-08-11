@@ -39,7 +39,3 @@ This new, interactive workflow is about more than just speed; it's about achievi
 • **It Transforms the Client Conversation:** It allows you to advise clients with a level of data-driven confidence and clarity that was previously impossible in the early, critical stages of a file.
 
 The era of waiting for static answers is over. The future of competition analysis is a live, collaborative working session that puts the legal team back in control.
-
----
-
-*Want to learn more about how AI-enhanced local market analysis can benefit your practice? [Contact us](/contact) to discuss your specific needs.*
