@@ -226,16 +226,16 @@ exports.handler = async (event, context) => {
     // Get client IP for rate limiting
     const clientIP = event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown';
     
-    // Check rate limiting
-    if (isRateLimited(clientIP)) {
-      return {
-        statusCode: 429,
-        headers,
-        body: JSON.stringify({ 
-          error: 'Too many requests. Please wait 15 minutes before submitting another inquiry.' 
-        }),
-      };
-    }
+    // Check rate limiting (temporarily disabled for testing)
+    // if (isRateLimited(clientIP)) {
+    //   return {
+    //     statusCode: 429,
+    //     headers,
+    //     body: JSON.stringify({ 
+    //       error: 'Too many requests. Please wait 15 minutes before submitting another inquiry.' 
+    //     }),
+    //   };
+    // }
 
     // Parse request body
     const data = JSON.parse(event.body);
