@@ -88,7 +88,7 @@ function generateClientEmail(data) {
         <!-- Header -->
         <div style="background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); color: white; padding: 40px 30px; text-align: center;">
           <!-- Logo -->
-          <img src="https://dex-website-v2.netlify.app/logo.png" alt="Dex Intelligence" style="height: 60px; width: auto; margin: 0 auto 20px; display: block; border-radius: 8px;">
+          <img src="https://dexintelligence.ai/logo.png" alt="Dex Intelligence" style="height: 60px; width: auto; margin: 0 auto 20px; display: block; border-radius: 8px;">
           
           <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">
             <span style="color: white;">Dex</span> <span style="color: #ee9e46;">Intelligence</span>
@@ -244,7 +244,7 @@ exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development' 
       ? 'http://localhost:5173' 
-      : '*', // Allow any origin for now (can restrict later)
+      : 'https://dexintelligence.ai'
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json',
@@ -272,16 +272,15 @@ exports.handler = async (event, context) => {
     // Get client IP for rate limiting
     const clientIP = event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown';
     
-    // Check rate limiting (temporarily disabled for testing)
-    // if (isRateLimited(clientIP)) {
-    //   return {
-    //     statusCode: 429,
-    //     headers,
-    //     body: JSON.stringify({ 
-    //       error: 'Too many requests. Please wait 15 minutes before submitting another inquiry.' 
-    //     }),
-    //   };
-    // }
+    if (isRateLimited(clientIP)) {
+      return {
+        statusCode: 429,
+        headers,
+        body: JSON.stringify({ 
+          error: 'Too many requests. Please wait 15 minutes before submitting another inquiry.' 
+        }),
+      };
+    }
 
     // Parse request body
     const data = JSON.parse(event.body);
@@ -318,15 +317,12 @@ exports.handler = async (event, context) => {
     const clientEmail = generateClientEmail(sanitizedData);
     const internalEmail = generateInternalEmail(sanitizedData, clientIP);
 
-    console.log('About to send emails...');
-    console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
-    console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length);
 
     // Send emails
     const emailPromises = [
       // Send confirmation to client
       resend.emails.send({
-        from: 'Dex Intelligence <onboarding@resend.dev>',
+        from: 'Dex Intelligence <noreply@dexintelligence.ai>',
         to: [sanitizedData.email],
         subject: clientEmail.subject,
         html: clientEmail.html,
@@ -335,7 +331,7 @@ exports.handler = async (event, context) => {
       
       // Send notification to internal team
       resend.emails.send({
-        from: 'Contact Form <onboarding@resend.dev>',
+        from: 'Contact Form <noreply@dexintelligence.ai>',
         to: [process.env.CONTACT_EMAIL || 'justin@dexintelligence.ca'],
         subject: internalEmail.subject,
         html: internalEmail.html,
@@ -343,9 +339,7 @@ exports.handler = async (event, context) => {
       }),
     ];
 
-    console.log('Sending emails...');
     const emailResults = await Promise.all(emailPromises);
-    console.log('Email results:', emailResults);
 
     return {
       statusCode: 200,
