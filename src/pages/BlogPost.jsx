@@ -68,7 +68,7 @@ export default function BlogPost() {
             <span className="text-gray-600">•</span>
             <span className="text-gray-400">By {post.author}</span>
             <span className="text-gray-600">•</span>
-            <span className="text-brand font-medium">{post.readTime}</span>
+            <span className="text-gray-300 font-medium">{post.readTime}</span>
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export default function BlogPost() {
         className="prose prose-lg prose-invert max-w-none
                    prose-headings:text-white prose-headings:font-bold prose-headings:tracking-tight
                    prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:border-b prose-h2:border-white/10 prose-h2:pb-3
-                   prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-brand
+                   prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-gray-200
                    prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-3
                    prose-p:text-gray-300 prose-p:leading-relaxed prose-p:text-lg
                    prose-strong:text-white prose-strong:font-semibold
@@ -102,7 +102,7 @@ export default function BlogPost() {
                    prose-pre:bg-neutral-900 prose-pre:border prose-pre:border-white/20 prose-pre:rounded-lg
                    prose-a:text-brand prose-a:no-underline prose-a:font-medium hover:prose-a:text-white hover:prose-a:underline prose-a:underline-offset-2
                    prose-ul:text-gray-300 prose-ul:space-y-2 prose-ol:text-gray-300 prose-ol:space-y-2
-                   prose-li:text-gray-300 prose-li:leading-relaxed prose-li:marker:text-brand
+                   prose-li:text-gray-300 prose-li:leading-relaxed prose-li:marker:text-gray-400
                    prose-hr:border-white/10 prose-hr:my-12"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
