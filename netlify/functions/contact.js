@@ -280,7 +280,7 @@ exports.handler = async (event, context) => {
     const emailPromises = [
       // Send confirmation to client
       resend.emails.send({
-        from: 'Dex Intelligence <noreply@dexintelligence.ca>',
+        from: 'Dex Intelligence <onboarding@resend.dev>',
         to: [sanitizedData.email],
         subject: clientEmail.subject,
         html: clientEmail.html,
@@ -289,7 +289,7 @@ exports.handler = async (event, context) => {
       
       // Send notification to internal team
       resend.emails.send({
-        from: 'Contact Form <noreply@dexintelligence.ca>',
+        from: 'Contact Form <onboarding@resend.dev>',
         to: [process.env.CONTACT_EMAIL || 'justin@dexintelligence.ca'],
         subject: internalEmail.subject,
         html: internalEmail.html,
