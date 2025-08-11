@@ -49,11 +49,9 @@ function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Left: Logo (desktop size 2x) */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img src="/logo.png" alt="Your Company" className="h-14 w-auto" />
-            <span className="text-lg font-semibold tracking-tight group-hover:opacity-80 transition-opacity">
-              {LOGO_TEXT}
-            </span>
+             <img src="/logo.png" alt="Dex Intelligence Inc." className="h-16 w-auto" />
           </Link>
+
 
           {/* Center/Right: Nav */}
           <nav className="hidden md:flex items-center gap-1">
@@ -161,7 +159,7 @@ export default function App() {
           }
         />
       </Routes>
-      <footer className="py-12 text-center opacity-70 text-xs">© {new Date().getFullYear()} Your Company</footer>
+      <footer className="py-12 text-center opacity-70 text-xs">© {new Date().getFullYear()} Dex Intelligence Inc.</footer>
     </div>
   );
 }
