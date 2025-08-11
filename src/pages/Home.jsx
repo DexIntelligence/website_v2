@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
@@ -14,27 +16,27 @@ export default function Home() {
       {/* Quick Links */}
       <section className="mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <a
-            href="/about"
+          <Link
+            to="/about"
             className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
           >
             <span className="text-2xl font-semibold text-white group-hover:text-brand">About Us</span>
             <span className="mt-2 text-sm text-gray-400">Learn about our mission and team.</span>
-          </a>
-          <a
-            href="/products"
+          </Link>
+          <Link
+            to="/products"
             className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
           >
             <span className="text-2xl font-semibold text-white group-hover:text-brand">Explore Products</span>
             <span className="mt-2 text-sm text-gray-400">Discover our tools and solutions.</span>
-          </a>
-          <a
-            href="/insights"
+          </Link>
+          <Link
+            to="/insights"
             className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
           >
             <span className="text-2xl font-semibold text-white group-hover:text-brand">Explore Insights</span>
             <span className="mt-2 text-sm text-gray-400">Read our latest research and analysis.</span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -103,17 +105,17 @@ export default function Home() {
       {/* Design Partners Section */}
       <section className="mt-16 bg-neutral-800 p-8 text-center">
         <p className="text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-          We're selectively engaging early design partners for our <a href="/products" className="text-gray-300 decoration-transparent hover:decoration-brand underline decoration-2 underline-offset-4 transition-all duration-200">local market analysis service</a>.
+          We're selectively engaging early design partners for our <Link to="/products" className="text-gray-300 decoration-transparent hover:decoration-brand underline decoration-2 underline-offset-4 transition-all duration-200">local market analysis service</Link>.
         </p>
         <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
           For inquiries about foundational design partnerships, please contact us.
         </p>
-        <a
-          href="/contact"
+        <Link
+          to="/contact"
           className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
         >
           Contact Us
-        </a>
+        </Link>
       </section>
     </main>
   );
