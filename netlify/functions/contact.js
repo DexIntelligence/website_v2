@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -193,7 +193,7 @@ Technical Details: IP: ${clientIP}
   };
 }
 
-export const handler = async (event, context) => {
+exports.handler = async (event, context) => {
   // Set CORS headers
   const headers = {
     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development' 
