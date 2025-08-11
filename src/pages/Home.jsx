@@ -12,7 +12,7 @@ export default function Home() {
       </p>
 
       {/* Quick Links */}
-      <section className="mt-16">
+      <section className="mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <a
             href="/about"
@@ -39,12 +39,14 @@ export default function Home() {
       </section>
 
       {/* Foundational Principles */}
-      <section className="mt-16 flex flex-col items-center text-center">
+      <section className="mt-8">
+        <div className="w-24 h-px bg-white/20 mb-8"></div>
         <h2 className="text-3xl font-bold text-white mb-4">Foundational Principles</h2>
         <p className="text-xl text-gray-300 mb-12 max-w-2xl">
-          Dex is built by lawyers to meet the high standards of the legal industry.
+          Built by lawyers to meet the high standards of the legal industry.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full max-w-5xl">
+        <div className="flex flex-col items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full max-w-5xl">
           {/* AI Safety */}
           <div className="flex flex-col items-center">
             <img src="/AI-safety.png" alt="AI Safety" className="h-32 w-32 object-contain mb-6" />
@@ -94,7 +96,24 @@ export default function Home() {
               </li>
             </ul>
           </div>
+          </div>
         </div>
+      </section>
+
+      {/* Design Partners Section */}
+      <section className="mt-16 bg-neutral-800 p-8 text-center">
+        <p className="text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+          We're selectively engaging early design partners for our <a href="/products" className="text-gray-300 decoration-transparent hover:decoration-brand underline decoration-2 underline-offset-4 transition-all duration-200">local market analysis service</a>.
+        </p>
+        <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+          For inquiries about foundational design partnerships, please contact us.
+        </p>
+        <a
+          href="/contact"
+          className="inline-flex items-center gap-2 rounded-xl bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
+        >
+          Contact Us
+        </a>
       </section>
     </main>
   );
