@@ -16,7 +16,7 @@ export default function Products() {
                   <img src="/AI-powered-services.png" alt="AI-Powered Services" className="h-40 w-40 object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">AI-Powered Services</h3>
-                <p className="text-base text-gray-400 text-center leading-relaxed">
+                <p className="text-xl text-gray-400 text-center leading-relaxed">
                   For complex matters, we act as your agile analytics team.
                 </p>
               </div>
@@ -26,7 +26,7 @@ export default function Products() {
                   <img src="/real-time-platform.png" alt="Real-Time Platform" className="h-64 w-64 object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">Real-Time Platform</h3>
-                <p className="text-base text-gray-400 text-center leading-relaxed">
+                <p className="text-xl text-gray-400 text-center leading-relaxed">
                   For instant analysis, empowering lawyers directly.
                 </p>
               </div>
