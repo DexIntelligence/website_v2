@@ -1,10 +1,25 @@
 # Dex Intelligence Website - Development Notes
 
-## =¨ SECURITY REMINDERS - Before Production
+## PRODUCTION CHECKLIST - Complete Before Going Live
 
-**After deploying to custom domain (`dexintelligence.ca`), restore security settings:**
+**Critical steps to complete after DNS updates and domain verification:**
 
-### 1. CORS Restrictions
+### 1. Verify Domain in Resend
+- Go to Resend dashboard â†’ "Domains" 
+- Add and verify `dexintelligence.ca`
+- Wait for DNS propagation and verification
+
+### 2. Update Email Addresses
+In `netlify/functions/contact.js`, change from temporary addresses back to your domain:
+```javascript
+// Line ~283: Client confirmation email
+from: 'Dex Intelligence <noreply@dexintelligence.ca>',  // Change from onboarding@resend.dev
+
+// Line ~292: Internal notification email  
+from: 'Contact Form <noreply@dexintelligence.ca>',     // Change from onboarding@resend.dev
+```
+
+### 3. Restore CORS Restrictions
 In `netlify/functions/contact.js`, change line ~201:
 ```javascript
 'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development' 
@@ -12,7 +27,7 @@ In `netlify/functions/contact.js`, change line ~201:
   : 'https://dexintelligence.ca', // Change back from '*'
 ```
 
-### 2. Rate Limiting
+### 4. Re-enable Rate Limiting
 In `netlify/functions/contact.js`, uncomment lines ~230-238:
 ```javascript
 if (isRateLimited(clientIP)) {
@@ -26,10 +41,16 @@ if (isRateLimited(clientIP)) {
 }
 ```
 
-### 3. Test After Changes
+### 5. Remove Debug Logging
+In `netlify/functions/contact.js`, remove console.log statements:
+- Lines ~275-277 (API key debugging)
+- Lines ~300-302 (email results logging)
+
+### 6. Final Testing
 - Submit contact form from your custom domain
-- Verify emails are received at both addresses
+- Verify emails are received at both addresses from proper domain
 - Test rate limiting works (try submitting 4+ times)
+- Confirm CORS restrictions work (test from external domain should fail)
 
 ## Environment Variables Required
 

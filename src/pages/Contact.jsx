@@ -119,7 +119,7 @@ export default function Contact() {
 
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
-      <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-8">Contact <span className="text-brand">Dex</span></h1>
+      <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-8">Contact <span className="text-brand">Us</span></h1>
       
       <p className="mt-8 text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-5 italic leading-snug mb-16">
         Ready to transform your quantitative analysis workflow? Let's discuss how Dex can serve your practice.
