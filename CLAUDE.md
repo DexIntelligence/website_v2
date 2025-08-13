@@ -54,18 +54,40 @@ In `netlify/functions/contact.js`, remove console.log statements:
 - Verify emails are received at both addresses from proper domain
 - Test rate limiting works (try submitting 4+ times)
 - Confirm CORS restrictions work (test from external domain should fail)
+- Verify consent logging in Supabase consent_log table
+- Test privacy policy page loads correctly at /privacy
 
 ## Environment Variables Required
 
 - `RESEND_API_KEY` - Your Resend API key for email sending
 - `CONTACT_EMAIL` - Email to receive form submissions (justin@dexintelligence.ai)
 - `NODE_ENV` - Set to "production" for production builds
+- `SUPABASE_URL` - Your Supabase project URL for consent logging
+- `SUPABASE_SERVICE_KEY` - Your Supabase service role key (secure database access)
 
 ## Build Commands
 - `npm run dev` - Local development
 - `npm run build` - Production build
 - `npm run lint` - Code linting
 
-# Privacy Considerations to Implement
-- PIPEDA-compliant privacy policy on website
-- make website conform with PIPEDA and the other laws 
+## Privacy & Compliance Features ✅ IMPLEMENTED
+
+### Privacy Policy
+- **Location**: `/privacy` route - comprehensive PIPEDA/Law 25 compliant privacy policy
+- **Coverage**: Contact data handling, client data security, consent management, retention policies
+- **Quebec Law 25**: Specific provisions for Quebec residents with opt-in requirements
+- **CASL Compliance**: Email marketing consent and unsubscribe procedures
+- **Contact**: Privacy Officer details and regulator contact information
+
+### Consent Tracking System
+- **Database**: Supabase PostgreSQL with Row Level Security (RLS) enabled
+- **Table**: `consent_log` - tracks marketing opt-in preferences with full audit trail
+- **Data Logged**: Email, opt-in status, timestamp, IP address, source, firm details
+- **Security**: Service role authentication, encrypted storage, access controls
+- **Compliance**: PIPEDA/CASL consent record requirements met
+
+### Contact Form Enhancements
+- **Optional Consent**: Marketing email opt-in is optional (PIPEDA compliant)
+- **Privacy Link**: Direct link to privacy policy in form submission area
+- **Internal Notifications**: Marketing consent status displayed in notification emails
+- **Audit Trail**: All submissions logged with consent preferences and metadata 
