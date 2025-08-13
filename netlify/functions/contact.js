@@ -208,6 +208,7 @@ function generateInternalEmail(data, clientIP) {
               <tr><td style="padding: 8px 0; font-weight: bold;">Firm:</td><td>${sanitizeString(data.firm)}</td></tr>
               ${data.role ? `<tr><td style="padding: 8px 0; font-weight: bold;">Role:</td><td>${sanitizeString(data.role)}</td></tr>` : ''}
               <tr><td style="padding: 8px 0; font-weight: bold;">Interest:</td><td><span style="background: #ee9e46; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${data.interest.toUpperCase()}</span></td></tr>
+              <tr><td style="padding: 8px 0; font-weight: bold;">Marketing Opt-in:</td><td><span style="background: ${data.emailConsent ? '#22c55e' : '#ef4444'}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">${data.emailConsent ? '✓ YES' : '✗ NO'}</span></td></tr>
             </table>
           </div>
           
@@ -234,6 +235,7 @@ Email: ${data.email}
 Firm: ${sanitizeString(data.firm)}
 ${data.role ? `Role: ${sanitizeString(data.role)}` : ''}
 Interest: ${data.interest}
+Marketing Opt-in: ${data.emailConsent ? 'YES' : 'NO'}
 
 MESSAGE:
 ${sanitizeString(data.message)}
