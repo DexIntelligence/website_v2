@@ -3,10 +3,10 @@ const { createClient } = require('@supabase/supabase-js');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Initialize Supabase client
+// Initialize Supabase client with service role key
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
+  process.env.SUPABASE_SERVICE_KEY
 );
 
 // Rate limiting - simple in-memory store (for production, use Redis or similar)
