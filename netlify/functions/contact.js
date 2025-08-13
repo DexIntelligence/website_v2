@@ -299,7 +299,7 @@ exports.handler = async (event, context) => {
       role: String(body.role || "").trim(),
       interest: String(body.interest || "").trim(),
       message: String(body.message || "").trim(),
-      marketing_opt_in: Boolean(body.emailConsent === true || body.emailConsent === "on"),
+      marketing_opt_in: Boolean(body.emailConsent),
       meta: {
         source: "contact_form",
         ip: event.headers["x-nf-client-connection-ip"] || event.headers["x-forwarded-for"] || null,
