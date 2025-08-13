@@ -90,4 +90,14 @@ In `netlify/functions/contact.js`, remove console.log statements:
 - **Optional Consent**: Marketing email opt-in is optional (PIPEDA compliant)
 - **Privacy Link**: Direct link to privacy policy in form submission area
 - **Internal Notifications**: Marketing consent status displayed in notification emails
-- **Audit Trail**: All submissions logged with consent preferences and metadata 
+- **Audit Trail**: All submissions logged with consent preferences and metadata
+
+## FUTURE ENHANCEMENTS - Planned Features
+
+### Case Study Request Feature
+**Pages to Update**: Products page and Contact page
+**Implementation Plan**: Add "Request a Case Study" or "Contact us for a Case Study" buttons/sections
+- **Products Page**: Add case study request option alongside the existing service boxes
+- **Contact Page**: Include case study request as an option in the contact form or as a separate call-to-action
+- **Purpose**: Allow potential clients to request relevant case studies demonstrating Dex's capabilities in similar matters
+- **Considerations**: May require additional form fields for case study type/area of interest, confidentiality handling 

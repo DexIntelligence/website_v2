@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Products() {
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
@@ -34,9 +36,36 @@ export default function Products() {
           </div>
         </section>
 
+        {/* What we offer */}
+        <section className="mt-16">
+          <h2 className="text-3xl font-bold text-white mb-8">What We Offer:</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            <Link
+              to="/contact"
+              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            >
+              <span className="text-2xl font-semibold text-white group-hover:text-brand">Local Market Analysis</span>
+              <span className="mt-2 text-sm text-gray-400">Comprehensive analysis of competition in local geographic markets. Available for retail mergers with no client data required.</span>
+            </Link>
+            <Link
+              to="/contact"
+              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            >
+              <span className="text-2xl font-semibold text-white group-hover:text-brand">Optimal Merger Remedies</span>
+              <span className="mt-2 text-sm text-gray-400">Meet the Bureau's new standard for merger remedies by identifying the mathematically optimal divestiture package, accounting for crown jewels.</span>
+            </Link>
+            <Link
+              to="/contact"
+              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            >
+              <span className="text-2xl font-semibold text-white group-hover:text-brand">Bespoke Analysis</span>
+              <span className="mt-2 text-sm text-gray-400">Advanced analytical tools built for your needs. Cut through the noise and uncover the evidence that supports your best case.</span>
+            </Link>
+          </div>
+        </section>
+
         {/* Full Economics Toolkit */}
         <section className="mt-16">
-          <div className="w-24 h-px bg-white/20 mb-8"></div>
           <h2 className="text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">The Full Economics Toolkit, Reimagined</h2>
           <p className="text-xl text-gray-300 mb-12 leading-relaxed">
             Starting with local market analysis, expanding to everything. Antitrust economics covers vast terrain—market definition, competitive dynamics, consumer welfare analysis, econometric modeling. Dex brings <span className="text-brand font-medium">AI-powered precision</span> to any economic challenge your practice encounters.
