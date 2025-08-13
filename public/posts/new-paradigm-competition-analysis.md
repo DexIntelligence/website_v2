@@ -1,8 +1,8 @@
 ---
 title: "The 21-Day Bottleneck vs. The 2-Hour Working Session: A New Paradigm for Competition Analysis"
-date: "2025-08-11"
+date: "2025-08-12"
 author: "Justin Mayne"
-excerpt: "Recent amendments to the Competition Act have made rapid, early-stage market share analysis essential. Learn why the traditional 21-day consulting model is now obsolete and how a new, interactive '2-Hour Working Session' puts the legal team back in control of the evidence."
+excerpt: "Recent amendments to the Competition Act have made rapid, early-stage market share analysis essential. Learn why the traditional 21-day consulting model is becoming obsolete and how a new, interactive '2-Hour Working Session' puts the legal team back in control of the evidence."
 readTime: "3 min read"
 ---
 Recent amendments to the _Competition Act_ have introduced a new structural presumption: a merger is now presumed to be anti-competitive if it results in a market share above 30%. This change has created significant legal jeopardy for large companies, forcing legal teams to confront complex market share calculations at the earliest stages of a transaction. The problem is, the traditional tools for this analysis are anything but early-stage friendly.

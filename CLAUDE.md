@@ -65,3 +65,7 @@ In `netlify/functions/contact.js`, remove console.log statements:
 - `npm run dev` - Local development
 - `npm run build` - Production build
 - `npm run lint` - Code linting
+
+# Privacy Considerations to Implement
+- PIPEDA-compliant privacy policy on website
+- make website conform with PIPEDA and the other laws 

@@ -8,6 +8,7 @@ import Products from "./pages/Products.jsx";
 import Insights from "./pages/Insights.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import Contact from "./pages/Contact.jsx";
+import Privacy from "./pages/Privacy.jsx";
 
 // ---- Quick tweak zone -------------------------------------------------------
 const NAV_LINKS = [
@@ -147,6 +148,7 @@ export default function App() {
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
         {/* Optional: 404 fallback */}
         <Route
           path="*"
@@ -161,6 +163,9 @@ export default function App() {
         />
       </Routes>
       <footer className="py-12 opacity-70 text-xs mx-auto max-w-6xl px-4 sm:px-6">
+        <nav style={{display:"flex",gap:"1rem"}}>
+           <Link to="/privacy">Privacy</Link>
+        </nav>
         <div className="flex justify-between items-center">
           <span>© {new Date().getFullYear()} Dex Intelligence Inc.</span>
           <span>Toronto, ON</span>

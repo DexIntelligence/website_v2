@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -48,11 +49,7 @@ export default function Contact() {
     if (formData.message.length > 5000) {
       errors.message = 'Message must be less than 5000 characters';
     }
-    
-    if (!formData.emailConsent) {
-      errors.emailConsent = 'You must consent to receive email communications';
-    }
-    
+       
     return errors;
   };
 
@@ -343,18 +340,17 @@ export default function Contact() {
                     name="emailConsent"
                     checked={formData.emailConsent}
                     onChange={handleChange}
-                    required
                     className={`mt-1 mr-3 h-4 w-4 text-brand border-2 focus:ring-brand focus:ring-2 bg-neutral-900 ${
                       validationErrors.emailConsent ? 'border-red-500' : 'border-white/20'
                     }`}
                   />
                   <label htmlFor="emailConsent" className="text-sm text-gray-300 leading-relaxed">
-                    I consent to receiving email communications from Dex Intelligence, including confirmation of this inquiry and follow-up regarding potential engagement opportunities. *
+                    I agree to receive emails about Dex updates and legal insights (optional). I can unsubscribe at any time.
                   </label>
                 </div>
-                {validationErrors.emailConsent && (
-                  <p className="text-red-400 text-sm mt-2">{validationErrors.emailConsent}</p>
-                )}
+                  <p className="text-xs text-gray-400 mt-2">
+                    By submitting, you agree to our <Link to="/privacy" className="underline text-gray-300 hover:text-brand">Privacy Policy</Link>.
+                  </p>
               </div>
 
               <div className="bg-neutral-800/50 p-4 border-l-4 border-brand">

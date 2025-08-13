@@ -17,7 +17,7 @@ We do not upload confidential documents to a large language model and ask it for
 Think of it like this: we're not asking an AI to bake a cake. We're using AI to help us design and build a better, faster, more reliable oven. The final analysis you receive is a product of that oven—a static, transparent, and deterministic tool—not a mysterious concoction from an AI.
 
 ## The Output: A Complete, Defensible Research Package
-This "tool-building" approach means our process mirrors the standards of traditional economic consulting. The output of our work is not just a number; it's a complete, auditable research package that is ready for the rigors of legal review.
+This "tool-building" approach means our process mirrors the standards of traditional economic consulting. The output of our work is not just a number; it's a complete, auditable research package that is ready for the rigours of legal review.
 
 Every analysis we deliver is supported by:
 
@@ -34,5 +34,5 @@ This workflow ensures that every insight is transparent, reproducible, and—mos
 ## The Future is Augmented Expertise, Not Artificial Answers
 AI can be used reliably in high-stakes legal matters, but only when it is used intelligently. The goal should not be to replace expert legal and economic judgment with an artificial oracle. The goal is to augment that expertise with better, faster, and more transparent tools.
 
-By focusing on building auditable tools and maintaining a human-in-the-loop, expert-driven workflow, we can harness the power of AI to deliver a strategic advantage without compromising on the standards of rigor and security that the legal profession demands.
+By focusing on building auditable tools and maintaining a human-in-the-loop, expert-driven workflow, we can harness the power of AI to deliver a strategic advantage without compromising on the standards of rigour and security that the legal profession demands.
 
