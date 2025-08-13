@@ -1,6 +1,13 @@
 const { Resend } = require('resend');
+const { createClient } = require('@supabase/supabase-js');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 // Rate limiting - simple in-memory store (for production, use Redis or similar)
 const rateLimitMap = new Map();
@@ -280,10 +287,37 @@ exports.handler = async (event, context) => {
     }
 
     // Parse request body
-    const data = JSON.parse(event.body);
-    
-    // Add user agent for logging
-    data.userAgent = event.headers['user-agent'];
+    const body = JSON.parse(event.body || "{}");
+
+    const payload = {
+      firstName: String(body.firstName || "").trim(),
+      lastName: String(body.lastName || "").trim(),
+      email: String(body.email || "").trim(),
+      firm: String(body.firm || "").trim(),
+      role: String(body.role || "").trim(),
+      interest: String(body.interest || "").trim(),
+      message: String(body.message || "").trim(),
+      marketing_opt_in: Boolean(body.emailConsent === true || body.emailConsent === "on"),
+      meta: {
+        source: "contact_form",
+        ip: event.headers["x-nf-client-connection-ip"] || event.headers["x-forwarded-for"] || null,
+        ua: event.headers["user-agent"] || null,
+        ts: new Date().toISOString(),
+      },
+    };
+
+    // For backwards compatibility, also set data object
+    const data = {
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email,
+      firm: payload.firm,
+      role: payload.role,
+      interest: payload.interest,
+      message: payload.message,
+      emailConsent: payload.marketing_opt_in,
+      userAgent: payload.meta.ua
+    };
 
     // Validate form data
     const validationErrors = validateForm(data);
@@ -337,6 +371,31 @@ exports.handler = async (event, context) => {
     ];
 
     const emailResults = await Promise.all(emailPromises);
+
+    // Log consent to Supabase
+    try {
+      const { error: consentError } = await supabase
+        .from('consent_log')
+        .insert({
+          email: sanitizedData.email,
+          consent_type: 'marketing',
+          opt_in: payload.marketing_opt_in,
+          timestamp: payload.meta.ts,
+          ip_address: payload.meta.ip,
+          source: payload.meta.source,
+          firm: sanitizedData.firm,
+          first_name: sanitizedData.firstName,
+          last_name: sanitizedData.lastName
+        });
+
+      if (consentError) {
+        console.error('Consent logging error:', consentError);
+        // Don't fail the request if consent logging fails
+      }
+    } catch (consentErr) {
+      console.error('Consent logging exception:', consentErr);
+      // Don't fail the request if consent logging fails
+    }
 
     return {
       statusCode: 200,
