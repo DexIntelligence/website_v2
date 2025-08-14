@@ -2,10 +2,12 @@ import { marked } from 'marked';
 
 // Simple front-matter parser for browser use
 function parseFrontMatter(content) {
-  const lines = content.split('\n');
+  // Normalize line endings first
+  const normalizedContent = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const lines = normalizedContent.split('\n');
   
   if (lines[0] !== '---') {
-    return { data: {}, content: content };
+    return { data: {}, content: normalizedContent };
   }
   
   let endIndex = -1;
@@ -17,7 +19,7 @@ function parseFrontMatter(content) {
   }
   
   if (endIndex === -1) {
-    return { data: {}, content: content };
+    return { data: {}, content: normalizedContent };
   }
   
   const frontMatterLines = lines.slice(1, endIndex);
