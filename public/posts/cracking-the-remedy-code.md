@@ -43,7 +43,7 @@ This approach provides two game-changing advantages:
 
 1. **The Guarantee:** An LP-based "remedy solver" doesn't give you a _good_ answer; it **guarantees the identification of the mathematically optimal remedy.** It finds the exact, minimum divestiture package required to satisfy all of the Bureau's market share constraints at once.
 
-2. **Dynamic & Future-Proof:** This framework isn't rigid. As the legal community learns more about the Bureau's enforcement patterns, the target market share threshold can be adjusted in the model. If it becomes clear that 32% is the new 35%, the model can be updated and re-run instantly, allowing for re-optimization based on the latest intelligence.
+2. **Dynamic & Future-Proof:** This framework isn't rigid. As the legal community learns more about the Bureau's enforcement patterns, the target market share threshold can be adjusted in the model. If it becomes clear that 30% is the new 35% following the introduction of the new structural presumption threshold, the model can be updated and re-run instantly, allowing for re-optimization based on the latest intelligence.
 
 ### From Guesswork to Certainty
 
