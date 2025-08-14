@@ -45,7 +45,7 @@ export default function Products() {
               className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
             >
               <span className="text-2xl font-semibold text-white group-hover:text-brand">Local Market Analysis</span>
-              <span className="mt-2 text-sm text-gray-400">Comprehensive analysis of competition in local geographic markets. Available for retail mergers with no client data required.</span>
+              <span className="mt-2 text-sm text-gray-400">Comprehensive analysis of competition in local geographic markets. Provide high-quality preliminary assessment of retail competition even before gaining access to client data.</span>
             </Link>
             <Link
               to="/contact"
