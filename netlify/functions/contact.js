@@ -343,6 +343,7 @@ exports.handler = async (event, context) => {
       role: data.role ? sanitizeString(data.role) : '',
       interest: data.interest,
       message: sanitizeString(data.message),
+      emailConsent: data.emailConsent,
       userAgent: data.userAgent
     };
 
