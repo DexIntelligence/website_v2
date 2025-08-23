@@ -93,7 +93,7 @@ function Header() {
       {open && (
         <div className="md:hidden fixed inset-0 z-[60]" role="dialog" aria-modal="true">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] bg-neutral-800 text-white shadow-2xl p-6 border-l-2 border-brand/50 overflow-y-auto">
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[85%] bg-black text-white shadow-2xl p-6 border-l-2 border-brand/50 overflow-y-auto">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <img src="/logo.png" alt="Dex Intelligence Inc." className="h-12 w-auto" />
@@ -113,7 +113,7 @@ function Header() {
                   <Link
                     key={item.to}
                     to={item.to}
-                    className="rounded-lg px-4 py-3 text-xl font-medium hover:text-brand hover:bg-brand/10 transition-all duration-200"
+                    className="rounded-lg px-4 py-3 text-xl font-medium text-white hover:text-brand hover:bg-brand/10 transition-all duration-200"
                   >
                     {item.label}
                   </Link>
