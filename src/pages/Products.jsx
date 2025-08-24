@@ -39,7 +39,7 @@ export default function Products() {
         {/* What we offer */}
         <section className="mt-16">
           <h2 className="text-3xl font-bold text-white mb-8">What We Offer:</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <Link
               to="/contact"
               className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
@@ -53,6 +53,13 @@ export default function Products() {
             >
               <span className="text-2xl font-semibold text-white group-hover:text-brand">Optimal Merger Remedies</span>
               <span className="mt-2 text-sm text-gray-400">Meet the Bureau's new standard for merger remedies by identifying the mathematically optimal divestiture package, accounting for crown jewels.</span>
+            </Link>
+            <Link
+              to="/contact"
+              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
+            >
+              <span className="text-2xl font-semibold text-white group-hover:text-brand">Retail Data Collection</span>
+              <span className="mt-2 text-sm text-gray-400">Proprietary workflows automatically scrape and verify retail data from public sources, including store locators, for comprehensive market coverage.</span>
             </Link>
             <Link
               to="/contact"
