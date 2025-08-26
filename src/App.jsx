@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, Lock } from "lucide-react";
 
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
@@ -9,6 +9,10 @@ import Insights from "./pages/Insights.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import Contact from "./pages/Contact.jsx";
 import Privacy from "./pages/Privacy.jsx";
+import Login from "./pages/client/Login.jsx";
+import Dashboard from "./pages/client/Dashboard.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { authService } from "./utils/auth.js";
 
 // ---- Quick tweak zone -------------------------------------------------------
 const NAV_LINKS = [
@@ -33,6 +37,7 @@ function useScrollShadow() {
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const scrolled = useScrollShadow();
   const location = useLocation();
 
@@ -40,6 +45,27 @@ function Header() {
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const currentUser = await authService.getUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setUser(null);
+      }
+    };
+    checkAuth();
+
+    // Subscribe to auth changes
+    const unsubscribe = authService.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <header
@@ -70,13 +96,23 @@ function Header() {
 
           {/* Right: CTA + Mobile Menu Button */}
           <div className="flex items-center gap-2">
-            <Link
-              to={CTA.to}
-              className="hidden sm:inline-flex items-center gap-1 bg-brand text-white px-3 py-2 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
-            >
-              {CTA.label}
-              <ChevronRight className="h-4 w-4" aria-hidden />
-            </Link>
+            {user ? (
+              <Link
+                to="/client/dashboard"
+                className="hidden sm:inline-flex items-center gap-1 bg-brand text-white px-3 py-2 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
+              >
+                <Lock className="h-4 w-4" />
+                Client Portal
+              </Link>
+            ) : (
+              <Link
+                to={CTA.to}
+                className="hidden sm:inline-flex items-center gap-1 bg-brand text-white px-3 py-2 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
+              >
+                {CTA.label}
+                <ChevronRight className="h-4 w-4" aria-hidden />
+              </Link>
+            )}
 
             <button
               className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 hover:border-brand transition-colors"
@@ -120,13 +156,23 @@ function Header() {
                 ))}
               </div>
               <div className="py-3">
-                <Link
-                  to={CTA.to}
-                  className="inline-flex w-full items-center justify-center gap-2 bg-brand text-white px-4 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
-                >
-                  {CTA.label}
-                  <ChevronRight className="h-4 w-4" aria-hidden />
-                </Link>
+                {user ? (
+                  <Link
+                    to="/client/dashboard"
+                    className="inline-flex w-full items-center justify-center gap-2 bg-brand text-white px-4 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
+                  >
+                    <Lock className="h-4 w-4" />
+                    Client Portal
+                  </Link>
+                ) : (
+                  <Link
+                    to={CTA.to}
+                    className="inline-flex w-full items-center justify-center gap-2 bg-brand text-white px-4 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
+                  >
+                    {CTA.label}
+                    <ChevronRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -149,6 +195,16 @@ export default function App() {
         <Route path="/insights/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
+        {/* Client Portal Routes */}
+        <Route path="/client/login" element={<Login />} />
+        <Route
+          path="/client/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         {/* Optional: 404 fallback */}
         <Route
           path="*"

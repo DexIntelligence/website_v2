@@ -1,0 +1,180 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2 } from 'lucide-react';
+import { authService } from '../../utils/auth';
+
+export default function Dashboard() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [launchingApp, setLaunchingApp] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    try {
+      const currentUser = await authService.getUser();
+      setUser(currentUser);
+    } catch (error) {
+      console.error('Failed to load user:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      navigate('/client/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  const launchMarketMapper = async () => {
+    setLaunchingApp(true);
+    try {
+      const token = await authService.generateAppToken(user);
+      const appUrl = authService.buildAppUrl(token);
+      window.open(appUrl, '_blank');
+    } catch (error) {
+      console.error('Failed to launch Market Mapper:', error);
+      alert('Failed to launch Market Mapper. Please try again.');
+    } finally {
+      setLaunchingApp(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 text-brand animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <main className="min-h-screen pt-32 pb-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        {/* Header */}
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white">Client Dashboard</h1>
+            <p className="mt-2 text-gray-400">Welcome back, {user?.email}</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-white border border-gray-600 hover:border-brand rounded-lg transition-colors"
+          >
+            <LogOut className="h-4 w-4" />
+            Sign Out
+          </button>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Market Mapper Card - Featured */}
+          <div className="lg:col-span-2 bg-gradient-to-br from-brand/20 to-brand/5 border border-brand/50 rounded-lg p-8">
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-brand/20 rounded-lg">
+                  <BarChart3 className="h-6 w-6 text-brand" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-white">Market Mapper</h2>
+                  <p className="text-gray-400">Real-time local market analysis platform</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <p className="text-gray-300 leading-relaxed">
+                Access comprehensive market analysis tools, competitive intelligence, and data-driven insights 
+                for your antitrust and competition matters.
+              </p>
+              
+              <div className="pt-4">
+                <button
+                  onClick={launchMarketMapper}
+                  disabled={launchingApp}
+                  className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
+                >
+                  {launchingApp ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Launching...
+                    </>
+                  ) : (
+                    <>
+                      Launch Market Mapper
+                      <ExternalLink className="h-5 w-5" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Links Card */}
+          <div className="bg-neutral-800/50 border border-gray-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+            <div className="space-y-3">
+              <Link
+                to="/contact"
+                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+              >
+                <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                <span className="text-gray-300 group-hover:text-white">Request Support</span>
+              </Link>
+              <a
+                href="/insights"
+                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+              >
+                <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                <span className="text-gray-300 group-hover:text-white">View Insights</span>
+              </a>
+              <button
+                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
+                disabled
+              >
+                <Settings className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-600">Account Settings (Coming Soon)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Features Section */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-neutral-800/30 border border-gray-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-white mb-3">Recent Activity</h3>
+            <p className="text-gray-400 text-sm">No recent activity to display</p>
+          </div>
+          
+          <div className="bg-neutral-800/30 border border-gray-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="text-gray-400 hover:text-brand transition-colors">
+                  Market Mapper User Guide (Coming Soon)
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-brand transition-colors">
+                  API Documentation (Coming Soon)
+                </a>
+              </li>
+              <li>
+                <Link to="/privacy" className="text-gray-400 hover:text-brand transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

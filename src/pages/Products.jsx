@@ -1,6 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Lock, ExternalLink } from 'lucide-react';
+import { authService } from '../utils/auth';
 
 export default function Products() {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const currentUser = await authService.getUser();
+            setUser(currentUser);
+        };
+        checkAuth();
+    }, []);
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">Products and <span className="text-brand">Services</span></h1>
@@ -28,9 +40,18 @@ export default function Products() {
                   <img src="/real-time-platform.png" alt="Real-Time Platform" className="h-48 w-48 sm:h-64 sm:w-64 object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">Real-Time Platform</h3>
-                <p className="text-xl text-gray-400 text-center leading-relaxed">
+                <p className="text-xl text-gray-400 text-center leading-relaxed mb-4">
                   For instant analysis, empowering lawyers directly.
                 </p>
+                {user && (
+                  <Link
+                    to="/client/dashboard"
+                    className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 text-sm font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
+                  >
+                    <Lock className="h-4 w-4" />
+                    Access Platform
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -86,13 +107,29 @@ export default function Products() {
           </p>
           <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
             For inquiries about foundational design partnerships, please contact us.
+            {user && (
+              <span className="block mt-2 text-brand">
+                Existing clients can access the platform through the Client Portal.
+              </span>
+            )}
           </p>
-          <a
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
-          >
-            Contact Us
-          </a>
+          <div className="flex justify-center gap-4">
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
+            >
+              Contact Us
+            </a>
+            {user && (
+              <Link
+                to="/client/dashboard"
+                className="inline-flex items-center gap-2 bg-neutral-700 text-white px-6 py-3 text-lg font-medium hover:bg-neutral-600 transition-colors"
+              >
+                <Lock className="h-5 w-5" />
+                Client Portal
+              </Link>
+            )}
+          </div>
         </section>
       </main>
     );
