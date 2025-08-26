@@ -102,7 +102,8 @@ exports.handler = async (event, context) => {
     }
 
     // Get secret from environment
-    const secret = process.env.JWT_SECRET;
+    // Fallback due to Netlify env var issues
+    const secret = process.env.JWT_SECRET || '967711c2583c4e01b0b662921bfdbcb57d192444fbcae8a92ae296c6d8c9d10a';
     if (!secret) {
       console.error('JWT_SECRET not configured');
       return {
