@@ -4,6 +4,13 @@
 
 **Problem**: Netlify environment variables are not being properly injected - affects both build process AND Netlify Functions runtime, even when properly configured in Netlify's dashboard.
 
+**CONFIRMED**: Environment variables ARE correctly configured in Netlify Dashboard (verified 2025-08-26):
+- `JWT_SECRET` is properly set with correct value ending in `...d10a`
+- Scoped to: Builds, Functions, Runtime
+- Set for all deploy contexts: Production, Deploy Previews, Branch deploys, Preview Server
+- Updated by Justin Mayne 11 minutes ago (as of screenshot)
+- Despite correct configuration, Functions CANNOT access these variables at runtime
+
 **Current Workarounds**: 
 1. **For Build Variables (VITE_)**: Using `.env.production` file committed to the repository
 2. **For Function Variables**: Hardcoded fallback values directly in function code
@@ -32,13 +39,17 @@
 - `netlify/functions/check-auth-config.js` - Backend debug endpoint
 
 **To Fix Properly**:
-1. **Investigate why Netlify isn't loading ANY environment variables** (both build and runtime)
-2. **Possible solutions to try**:
-   - Contact Netlify support about the environment variable bug
-   - Try using Netlify's `[build.environment]` in netlify.toml
-   - Check if there's a Netlify plugin for proper env var injection
-   - Consider using Netlify's new environment variable UI (if available)
-   - Verify no conflicting build settings in Netlify dashboard
+1. **THIS IS A NETLIFY BUG** - Environment variables are correctly configured but not accessible to Functions
+2. **Evidence of the bug**:
+   - Screenshot shows JWT_SECRET properly configured in Netlify UI
+   - Scoped correctly to "Builds, Functions, Runtime"
+   - Set for all deploy contexts
+   - Functions still receive `undefined` for `process.env.JWT_SECRET`
+3. **Actions needed**:
+   - Contact Netlify support with this evidence
+   - Show them the screenshot proving correct configuration
+   - Request investigation into why Functions cannot access env vars
+   - Ask about known issues with environment variable injection
 3. **Once fixed, remove all workarounds**:
    - Remove `.env.production` from repository and add back to .gitignore
    - Remove hardcoded JWT_SECRET fallbacks from all function files
