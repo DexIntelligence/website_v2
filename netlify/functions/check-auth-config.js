@@ -6,6 +6,32 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
+  
+  // Check for admin debug token - required for production
+  const authHeader = event.headers.authorization || event.headers.Authorization || '';
+  const adminDebugToken = process.env.ADMIN_DEBUG_TOKEN;
+  
+  // If ADMIN_DEBUG_TOKEN is set, require it for access
+  if (adminDebugToken && authHeader !== `Bearer ${adminDebugToken}`) {
+    return {
+      statusCode: 401,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ error: 'Unauthorized - Admin token required' })
+    };
+  }
+  
+  // In production without token configured, disable endpoint entirely
+  if (process.env.NODE_ENV === 'production' && !adminDebugToken) {
+    return {
+      statusCode: 404,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ error: 'Endpoint not found' })
+    };
+  }
 
   // Check which environment variables are set
   const config = {

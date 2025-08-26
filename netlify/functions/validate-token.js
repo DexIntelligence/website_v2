@@ -1,15 +1,78 @@
 const crypto = require('crypto');
 
-const headers = {
-  'Access-Control-Allow-Origin': '*', // Allow from any origin for the Cloud Run app
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Type': 'application/json',
-};
+// Allowed origins for CORS
+const allowedOrigins = [
+  'https://app.dexintelligence.ai',
+  'https://market-mapper-xuixlullgq-uc.a.run.app',
+  'https://dexintelligence.ai',
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8501' : null,
+  process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : null
+].filter(Boolean);
+
+// Rate limiting storage
+const rateLimit = new Map();
+const WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS = 10;
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const userRequests = rateLimit.get(ip) || [];
+  const recentRequests = userRequests.filter(t => now - t < WINDOW_MS);
+  
+  if (recentRequests.length >= MAX_REQUESTS) {
+    return false; // Rate limited
+  }
+  
+  recentRequests.push(now);
+  rateLimit.set(ip, recentRequests);
+  return true; // Allowed
+}
+
+// Clean up old rate limit records periodically
+function cleanupRateLimits() {
+  const now = Date.now();
+  for (const [ip, requests] of rateLimit.entries()) {
+    const recentRequests = requests.filter(t => now - t < WINDOW_MS);
+    if (recentRequests.length === 0) {
+      rateLimit.delete(ip);
+    } else {
+      rateLimit.set(ip, recentRequests);
+    }
+  }
+}
+
+// Run cleanup every 5 minutes
+setInterval(cleanupRateLimits, 300000);
 
 exports.handler = async (event, context) => {
+  // Get origin from request headers
+  const origin = event.headers.origin || event.headers.Origin || '';
+  
+  // Check if origin is allowed
+  const isAllowedOrigin = allowedOrigins.includes(origin);
+  
+  // Build response headers
+  const headers = {
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json',
+  };
+  
+  // Only set CORS origin if it's allowed
+  if (isAllowedOrigin) {
+    headers['Access-Control-Allow-Origin'] = origin;
+    headers['Access-Control-Allow-Credentials'] = 'true';
+  }
+  
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
+    if (!isAllowedOrigin) {
+      return {
+        statusCode: 403,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Origin not allowed' }),
+      };
+    }
     return {
       statusCode: 200,
       headers,
@@ -22,6 +85,36 @@ exports.handler = async (event, context) => {
       statusCode: 405,
       headers,
       body: JSON.stringify({ error: 'Method not allowed' }),
+    };
+  }
+  
+  // Check origin for non-OPTIONS requests
+  if (!isAllowedOrigin) {
+    return {
+      statusCode: 403,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        valid: false,
+        error: 'Origin not allowed' 
+      }),
+    };
+  }
+  
+  // Get client IP for rate limiting
+  const clientIP = event.headers['x-forwarded-for'] || 
+                   event.headers['X-Forwarded-For'] || 
+                   event.headers['x-real-ip'] ||
+                   'unknown';
+  
+  // Check rate limit
+  if (!checkRateLimit(clientIP)) {
+    return {
+      statusCode: 429,
+      headers,
+      body: JSON.stringify({ 
+        valid: false,
+        error: 'Too many requests. Please try again later.' 
+      }),
     };
   }
 
@@ -113,8 +206,8 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Log validation for monitoring (optional)
-    console.log(`Token validated for user ${payload.userId} from IP ${ip}`);
+    // Log validation for monitoring (include actual IP from headers)
+    console.log(`Token validated for user ${payload.userId} from IP ${ip || clientIP}`);
 
     // Return validation result
     return {

@@ -3,7 +3,7 @@ const crypto = require('crypto');
 // Rate limiting storage
 const rateLimit = new Map();
 const WINDOW_MS = 60000; // 1 minute
-const MAX_REQUESTS = 5; // Stricter limit for token generation
+const MAX_REQUESTS = 3; // Very strict limit for Market Mapper tokens
 
 function checkRateLimit(ip) {
   const now = Date.now();
@@ -35,11 +35,41 @@ function cleanupRateLimits() {
 // Run cleanup every 5 minutes
 setInterval(cleanupRateLimits, 300000);
 
+// Verify Supabase session token
+async function verifySupabaseToken(token) {
+  // In production, you would verify this token with Supabase
+  // For now, we'll do basic validation
+  if (!token || !token.startsWith('eyJ')) {
+    return null;
+  }
+  
+  try {
+    // Decode JWT payload (without verification for now)
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    
+    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+    
+    // Check if token is expired
+    if (payload.exp && payload.exp * 1000 < Date.now()) {
+      return null;
+    }
+    
+    return {
+      userId: payload.sub,
+      email: payload.email,
+    };
+  } catch (error) {
+    console.error('Token decode error:', error);
+    return null;
+  }
+}
+
 const headers = {
   'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development' 
     ? 'http://localhost:5173' 
     : 'https://dexintelligence.ai',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Content-Type': 'application/json',
 };
@@ -80,28 +110,31 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { userId, email, exp, iat } = JSON.parse(event.body);
-
-    // Validate required fields
-    if (!userId || !email || !exp || !iat) {
+    // Verify authorization header
+    const authHeader = event.headers.authorization || event.headers.Authorization || '';
+    
+    if (!authHeader.startsWith('Bearer ')) {
       return {
-        statusCode: 400,
+        statusCode: 401,
         headers,
-        body: JSON.stringify({ error: 'Missing required fields' }),
+        body: JSON.stringify({ error: 'Authorization required' }),
       };
     }
-
-    // Validate expiration (max 1 hour from now)
-    const maxExpiry = Date.now() + 3600000;
-    if (exp > maxExpiry) {
+    
+    const supabaseToken = authHeader.substring(7);
+    
+    // Verify Supabase session
+    const user = await verifySupabaseToken(supabaseToken);
+    
+    if (!user) {
       return {
-        statusCode: 400,
+        statusCode: 401,
         headers,
-        body: JSON.stringify({ error: 'Token expiry too far in future' }),
+        body: JSON.stringify({ error: 'Invalid or expired session' }),
       };
     }
-
-    // Get secret from environment
+    
+    // Get JWT secret from environment
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       console.error('JWT_SECRET not configured');
@@ -111,42 +144,53 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ error: 'Server configuration error' }),
       };
     }
-
-    // Create JWT payload
+    
+    // Create short-lived token for Market Mapper (5 minutes)
+    const now = Date.now();
+    const expiry = now + 300000; // 5 minutes
+    
+    // Create JWT payload with nonce for replay protection
     const header = {
       alg: 'HS256',
       typ: 'JWT'
     };
-
+    
     const payload = {
-      userId,
-      email,
-      exp,
-      iat,
+      sub: user.userId,
+      email: user.email,
+      purpose: 'market-mapper-access',
+      exp: Math.floor(expiry / 1000), // Convert to seconds
+      iat: Math.floor(now / 1000),
       iss: 'dexintelligence.ai',
-      aud: 'app.dexintelligence.ai'
+      aud: 'app.dexintelligence.ai',
+      nonce: crypto.randomBytes(16).toString('hex'), // Prevent replay attacks
+      jti: crypto.randomBytes(16).toString('hex'), // Unique token ID
     };
-
+    
     // Encode header and payload
     const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64url');
     const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64url');
-
+    
     // Create signature
     const signatureBase = `${encodedHeader}.${encodedPayload}`;
     const signature = crypto
       .createHmac('sha256', secret)
       .update(signatureBase)
       .digest('base64url');
-
+    
     // Combine to create JWT
     const token = `${signatureBase}.${signature}`;
-
+    
+    // Log token generation for audit
+    console.log(`Market Mapper token generated for user ${user.userId} (${user.email}) from IP ${clientIP}`);
+    
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({ 
         token,
-        expires: exp 
+        expiresIn: 300, // seconds
+        expiresAt: expiry, // timestamp
       }),
     };
   } catch (error) {

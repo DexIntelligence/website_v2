@@ -26,3 +26,14 @@ dist-ssr
 # Environment files
 .env
 .env.local
+.env.development
+.env.test
+.env.production.local
+.env.*.local
+
+# Security testing and local development
+test-security.js
+*.test.env
+.env.production.local
+NETLIFY_ENV_SETUP_LOCAL.md
+*_LOCAL.md
