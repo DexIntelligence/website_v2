@@ -37,3 +37,8 @@ test-security.js
 .env.production.local
 NETLIFY_ENV_SETUP_LOCAL.md
 *_LOCAL.md
+
+# Security documentation (contains example tokens that trigger false positives)
+# These files are documentation only, no real secrets
+SECURITY_INTEGRATION_PLAN.md
+SECURITY_AUDIT_REPORT.md
