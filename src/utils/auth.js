@@ -53,25 +53,24 @@ export const authService = {
   async generateAppToken(user) {
     if (!user) throw new Error('User required to generate token');
     
-    const payload = {
-      userId: user.id,
-      email: user.email,
-      exp: Date.now() + 3600000, // 1 hour expiry
-      iat: Date.now(),
-    };
+    // Get current Supabase session for authentication
+    const session = await this.getSession();
+    if (!session) {
+      throw new Error('No active session');
+    }
     
-    // In production, this would use a server-side function with proper HMAC signing
-    // For now, we'll call a Netlify function to generate the token
-    const response = await fetch('/.netlify/functions/generate-token', {
+    // Call the new Market Mapper specific token endpoint
+    const response = await fetch('/.netlify/functions/generate-market-mapper-token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
       },
-      body: JSON.stringify(payload),
     });
     
     if (!response.ok) {
-      throw new Error('Failed to generate app token');
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.error || 'Failed to generate Market Mapper token');
     }
     
     const { token } = await response.json();

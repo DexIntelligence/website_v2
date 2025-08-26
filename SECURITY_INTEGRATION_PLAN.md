@@ -15,6 +15,18 @@ This document coordinates security integration between:
 
 The goal is seamless, secure authentication while maintaining independent security boundaries.
 
+### 🚨 CRITICAL: Website Team Action Items
+
+**The Market Mapper app is deployed and waiting. Users see "Authentication Required" until these are complete:**
+
+1. **Fix CORS** in `validate-token.js` - Allow origins: `https://app.dexintelligence.ai`, `https://market-mapper-xuixlullgq-uc.a.run.app`, `http://localhost:8501`
+2. **Create** `generate-market-mapper-token.js` endpoint - Generate 5-minute JWT tokens for Market Mapper access
+3. **Update Dashboard** - Launch button should generate token and redirect to `https://app.dexintelligence.ai?token=...`
+4. **Add Rate Limiting** - Prevent brute force on token validation
+5. **Secure JWT_SECRET** - Generate new secret, add to Netlify dashboard
+
+**See detailed implementation code below in Website-Side Requirements section.**
+
 ---
 
 ## Current State Analysis
@@ -646,11 +658,19 @@ Response:
 - Updated implementation priority order with specific files
 - Added rate limiting implementation details
 
-### Next Steps
-- Implement Phase 1 security fixes (CORS, rate limiting)
-- Generate and configure new JWT_SECRET
-- Test token validation with Cloud Run application
-- Complete security header configuration
+### Version 1.3.0 - 2025-08-26 (CURRENT)
+- **APP DEPLOYED** - Market Mapper authentication system is live
+- Added critical action items summary for website team
+- App shows "Authentication Required" until website endpoints ready
+- All app-side code complete and in production
+- Token validation endpoint: `https://dexintelligence.ai/.netlify/functions/validate-token`
+- Market Mapper URL: `https://app.dexintelligence.ai`
+
+### Next Steps (Website Team)
+1. Fix CORS in validate-token.js (add our origins)
+2. Create generate-market-mapper-token.js endpoint
+3. Update dashboard launch button
+4. Test end-to-end flow
 
 ---
 

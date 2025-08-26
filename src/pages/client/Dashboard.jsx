@@ -36,12 +36,26 @@ export default function Dashboard() {
   const launchMarketMapper = async () => {
     setLaunchingApp(true);
     try {
+      // Generate secure 5-minute token for Market Mapper
       const token = await authService.generateAppToken(user);
       const appUrl = authService.buildAppUrl(token);
-      window.open(appUrl, '_blank');
+      
+      // Redirect to Market Mapper with token
+      window.location.href = appUrl;
     } catch (error) {
       console.error('Failed to launch Market Mapper:', error);
-      alert('Failed to launch Market Mapper. Please try again.');
+      
+      // Show more specific error message
+      let errorMessage = 'Failed to launch Market Mapper. ';
+      if (error.message.includes('session')) {
+        errorMessage += 'Please log in again.';
+      } else if (error.message.includes('Too many requests')) {
+        errorMessage += 'Please wait a moment and try again.';
+      } else {
+        errorMessage += 'Please try again or contact support.';
+      }
+      
+      alert(errorMessage);
     } finally {
       setLaunchingApp(false);
     }
