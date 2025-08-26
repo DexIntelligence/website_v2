@@ -1,4 +1,19 @@
-# React + Vite
+# Dex Intelligence Website
+
+## ⚠️ Known Issues
+
+### Netlify Environment Variables Not Loading
+**Critical Issue**: Netlify is not properly injecting `VITE_*` environment variables into the build process, breaking client authentication.
+
+**Current Workaround**: Using `.env.production` file committed to the repository.
+
+**See `CLAUDE.md` for**:
+- Full details about the issue
+- List of affected variables
+- Debug tools available at `/client/debug`
+- Instructions for proper fix
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

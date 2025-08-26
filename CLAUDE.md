@@ -1,5 +1,41 @@
 # Dex Intelligence Website - Development Notes
 
+## ⚠️ CRITICAL ISSUE - Netlify Environment Variables Not Loading
+
+**Problem**: Netlify environment variables prefixed with `VITE_` are not being injected into the Vite build process, even though they are properly configured in Netlify's dashboard.
+
+**Current Workaround**: Using `.env.production` file committed to the repository (added to git, removed from .gitignore)
+
+**Affected Variables**:
+- `VITE_SUPABASE_URL` - Required for client authentication
+- `VITE_SUPABASE_ANON_KEY` - Required for client authentication  
+- `VITE_APP_DOMAIN` - Required for Market Mapper integration
+
+**Impact**: Client portal authentication was completely broken until workaround was implemented.
+
+**Files Modified for Workaround**:
+- `.env.production` - Contains hardcoded environment variables (temporary solution)
+- `.gitignore` - Removed `.env.production` from ignore list to allow commit
+
+**Debug Tools Created** (can be removed after permanent fix):
+- `/client/debug` route - Shows environment variables available to frontend/backend
+- `src/pages/client/AuthDebug.jsx` - Debug component
+- `netlify/functions/check-auth-config.js` - Backend debug endpoint
+
+**To Fix Properly**:
+1. Investigate why Netlify isn't passing `VITE_*` variables to the build
+2. Possible solutions to try:
+   - Contact Netlify support
+   - Try using Netlify's `[build.environment]` in netlify.toml
+   - Check if there's a Netlify plugin for Vite env vars
+   - Verify no conflicting build settings in Netlify dashboard
+3. Once fixed, remove `.env.production` from repository and add back to .gitignore
+4. Remove debug components and endpoints
+
+**Note**: The current workaround is acceptable for now since these are public keys (anon key is meant to be exposed to browsers), but proper environment variable injection should be restored for better security practices.
+
+---
+
 ## PRODUCTION CHECKLIST - Complete Before Going Live
 
 **Critical steps to complete after DNS updates and domain verification:**
