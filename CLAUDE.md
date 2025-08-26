@@ -2,20 +2,29 @@
 
 ## ⚠️ CRITICAL ISSUE - Netlify Environment Variables Not Loading
 
-**Problem**: Netlify environment variables prefixed with `VITE_` are not being injected into the Vite build process, even though they are properly configured in Netlify's dashboard.
+**Problem**: Netlify environment variables are not being properly injected - affects both build process AND Netlify Functions runtime, even when properly configured in Netlify's dashboard.
 
-**Current Workaround**: Using `.env.production` file committed to the repository (added to git, removed from .gitignore)
+**Current Workarounds**: 
+1. **For Build Variables (VITE_)**: Using `.env.production` file committed to the repository
+2. **For Function Variables**: Hardcoded fallback values directly in function code
 
 **Affected Variables**:
-- `VITE_SUPABASE_URL` - Required for client authentication
-- `VITE_SUPABASE_ANON_KEY` - Required for client authentication  
-- `VITE_APP_DOMAIN` - Required for Market Mapper integration
+- `VITE_SUPABASE_URL` - Required for client authentication (in .env.production)
+- `VITE_SUPABASE_ANON_KEY` - Required for client authentication (in .env.production)
+- `VITE_APP_DOMAIN` - Required for Market Mapper integration (in .env.production)
+- `JWT_SECRET` - Required for token generation/validation (hardcoded in functions as fallback)
 
-**Impact**: Client portal authentication was completely broken until workaround was implemented.
+**Impact**: 
+- Client portal authentication was completely broken until workaround implemented
+- Market Mapper integration failed with 500 errors until JWT_SECRET hardcoded
+- Functions cannot access ANY environment variables from Netlify dashboard
 
 **Files Modified for Workaround**:
-- `.env.production` - Contains hardcoded environment variables (temporary solution)
+- `.env.production` - Contains VITE_ variables and JWT_SECRET (committed to repo)
 - `.gitignore` - Removed `.env.production` from ignore list to allow commit
+- `netlify/functions/generate-market-mapper-token.js` - Hardcoded JWT_SECRET fallback (line 139)
+- `netlify/functions/validate-token.js` - Hardcoded JWT_SECRET fallback (line 137)
+- `netlify/functions/generate-token.js` - Hardcoded JWT_SECRET fallback (line 106)
 
 **Debug Tools Created** (can be removed after permanent fix):
 - `/client/debug` route - Shows environment variables available to frontend/backend
@@ -23,14 +32,23 @@
 - `netlify/functions/check-auth-config.js` - Backend debug endpoint
 
 **To Fix Properly**:
-1. Investigate why Netlify isn't passing `VITE_*` variables to the build
-2. Possible solutions to try:
-   - Contact Netlify support
+1. **Investigate why Netlify isn't loading ANY environment variables** (both build and runtime)
+2. **Possible solutions to try**:
+   - Contact Netlify support about the environment variable bug
    - Try using Netlify's `[build.environment]` in netlify.toml
-   - Check if there's a Netlify plugin for Vite env vars
+   - Check if there's a Netlify plugin for proper env var injection
+   - Consider using Netlify's new environment variable UI (if available)
    - Verify no conflicting build settings in Netlify dashboard
-3. Once fixed, remove `.env.production` from repository and add back to .gitignore
-4. Remove debug components and endpoints
+3. **Once fixed, remove all workarounds**:
+   - Remove `.env.production` from repository and add back to .gitignore
+   - Remove hardcoded JWT_SECRET fallbacks from all function files
+   - Remove debug components and endpoints
+   - Update all secrets to new values (since current ones are exposed)
+
+**SECURITY WARNING**: Current JWT_SECRET is hardcoded in function files as a workaround. When Netlify env vars are fixed:
+1. Generate NEW JWT_SECRET 
+2. Remove hardcoded values from code
+3. Use only environment variables
 
 **Note**: The current workaround is acceptable for now since these are public keys (anon key is meant to be exposed to browsers), but proper environment variable injection should be restored for better security practices.
 
