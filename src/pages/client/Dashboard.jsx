@@ -38,14 +38,12 @@ export default function Dashboard() {
     try {
       // Generate secure 5-minute token for Market Mapper
       const token = await authService.generateAppToken(user);
-      console.log('[DEBUG] Token generated:', token ? `${token.substring(0, 20)}...` : 'UNDEFINED/NULL');
       
       if (!token) {
         throw new Error('Token generation returned empty token');
       }
       
       const appUrl = authService.buildAppUrl(token);
-      console.log('[DEBUG] Redirecting to:', appUrl);
       
       // Redirect to Market Mapper with token
       window.location.href = appUrl;

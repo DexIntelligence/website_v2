@@ -55,8 +55,6 @@ export const authService = {
       throw new Error('No active session');
     }
     
-    console.log('[DEBUG] Calling token generation endpoint...');
-    
     // Call the new Market Mapper specific token endpoint
     const response = await fetch('/.netlify/functions/generate-market-mapper-token', {
       method: 'POST',
@@ -66,24 +64,19 @@ export const authService = {
       },
     });
     
-    console.log('[DEBUG] Token endpoint response status:', response.status);
-    
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      console.error('[DEBUG] Token generation failed:', error);
       throw new Error(error.error || 'Failed to generate Market Mapper token');
     }
     
-    const data = await response.json();
-    console.log('[DEBUG] Token response data:', data);
-    const { token } = data;
+    const { token } = await response.json();
     return token;
   },
 
   buildAppUrl(token) {
     const appDomain = import.meta.env.VITE_APP_DOMAIN || 'app.dexintelligence.ai';
-    // Use hash fragment instead of query parameter to prevent Streamlit from clearing it
-    return `https://${appDomain}#token=${encodeURIComponent(token)}`;
+    // Use query parameter - app now handles this with cookies for persistence
+    return `https://${appDomain}?token=${encodeURIComponent(token)}`;
   },
 };
 
