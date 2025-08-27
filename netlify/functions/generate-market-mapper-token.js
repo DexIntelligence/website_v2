@@ -146,9 +146,9 @@ exports.handler = async (event, context) => {
       };
     }
     
-    // Create short-lived token for Market Mapper (5 minutes)
+    // Create short-lived token for Market Mapper (2 minutes)
     const now = Date.now();
-    const expiry = now + 300000; // 5 minutes
+    const expiry = now + 120000; // 2 minutes
     
     // Create JWT payload with nonce for replay protection
     const header = {
@@ -190,7 +190,7 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify({ 
         token,
-        expiresIn: 300, // seconds
+        expiresIn: 120, // seconds (2 minutes)
         expiresAt: expiry, // timestamp
       }),
     };

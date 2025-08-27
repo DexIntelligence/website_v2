@@ -183,8 +183,8 @@ exports.handler = async (event, context) => {
     // Decode payload
     const payload = JSON.parse(Buffer.from(encodedPayload, 'base64url').toString());
 
-    // Check expiration
-    if (payload.exp && payload.exp < Date.now()) {
+    // Check expiration (exp is in seconds, Date.now() is in milliseconds)
+    if (payload.exp && payload.exp * 1000 < Date.now()) {
       return {
         statusCode: 401,
         headers,
