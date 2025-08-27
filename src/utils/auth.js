@@ -1,9 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
 
-// NOTE: Environment variables are currently loaded from .env.production file
-// due to Netlify not properly injecting VITE_* variables during build.
-// See CLAUDE.md for details on this issue and how to fix it properly.
-// TODO: Remove .env.production workaround once Netlify env vars are working
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 

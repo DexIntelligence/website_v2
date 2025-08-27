@@ -28,6 +28,7 @@ dist-ssr
 .env.local
 .env.development
 .env.test
+.env.production
 .env.production.local
 .env.*.local
 
@@ -35,6 +36,7 @@ dist-ssr
 test-security.js
 *.test.env
 .env.production.local
+NETLIFY_ENV_SETUP.md
 NETLIFY_ENV_SETUP_LOCAL.md
 *_LOCAL.md
 

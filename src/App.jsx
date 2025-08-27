@@ -11,7 +11,6 @@ import Contact from "./pages/Contact.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Login from "./pages/client/Login.jsx";
 import Dashboard from "./pages/client/Dashboard.jsx";
-import AuthDebug from "./pages/client/AuthDebug.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { authService } from "./utils/auth.js";
 
@@ -198,7 +197,6 @@ export default function App() {
         <Route path="/privacy" element={<Privacy />} />
         {/* Client Portal Routes */}
         <Route path="/client/login" element={<Login />} />
-        <Route path="/client/debug" element={<AuthDebug />} />
         <Route
           path="/client/dashboard"
           element={
