@@ -55,6 +55,8 @@ export const authService = {
       throw new Error('No active session');
     }
     
+    console.log('[DEBUG] Calling token generation endpoint...');
+    
     // Call the new Market Mapper specific token endpoint
     const response = await fetch('/.netlify/functions/generate-market-mapper-token', {
       method: 'POST',
@@ -64,12 +66,17 @@ export const authService = {
       },
     });
     
+    console.log('[DEBUG] Token endpoint response status:', response.status);
+    
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
+      console.error('[DEBUG] Token generation failed:', error);
       throw new Error(error.error || 'Failed to generate Market Mapper token');
     }
     
-    const { token } = await response.json();
+    const data = await response.json();
+    console.log('[DEBUG] Token response data:', data);
+    const { token } = data;
     return token;
   },
 
