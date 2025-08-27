@@ -75,7 +75,8 @@ export const authService = {
 
   buildAppUrl(token) {
     const appDomain = import.meta.env.VITE_APP_DOMAIN || 'app.dexintelligence.ai';
-    return `https://${appDomain}?token=${encodeURIComponent(token)}`;
+    // Use hash fragment instead of query parameter to prevent Streamlit from clearing it
+    return `https://${appDomain}#token=${encodeURIComponent(token)}`;
   },
 };
 

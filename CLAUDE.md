@@ -1,5 +1,19 @@
 # Dex Intelligence Website - Development Notes
 
+## DNS Configuration (Updated 2025-08-27)
+
+**Current Setup:**
+- Primary domain: `dexintelligence.ai`
+- Netlify site: `dex-website-v2.netlify.app`
+- DNS provider: GoDaddy
+- A record: Points to `75.2.70.109` (Netlify's load balancer)
+
+**Recent Changes:**
+- Removed duplicate Netlify project that was causing conflicts
+- Updated A record from old IP `75.2.60.5` (deleted project) to `75.2.70.109` (current project)
+- Waiting for DNS propagation (typically 10-30 minutes, can take up to 48 hours)
+- SSL certificate will auto-provision once DNS propagates and Netlify detects the domain
+
 ## PRODUCTION CHECKLIST - Complete Before Going Live
 
 **Critical steps to complete after DNS updates and domain verification:**

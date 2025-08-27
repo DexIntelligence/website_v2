@@ -38,6 +38,7 @@ test-security.js
 .env.production.local
 NETLIFY_ENV_SETUP.md
 NETLIFY_ENV_SETUP_LOCAL.md
+AUTHENTICATION_ALTERNATIVES.md
 *_LOCAL.md
 
 # Security documentation (contains example tokens that trigger false positives)
