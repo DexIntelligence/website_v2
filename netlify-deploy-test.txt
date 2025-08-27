@@ -1,0 +1,7 @@
+Netlify deployment test file
+Created: 2025-08-27
+Purpose: Verify Netlify is deploying from the correct GitHub repository
+Latest commit when created: afd628c
+GitHub repo: https://github.com/DexIntelligence/website_v2.git
+
+This file can be safely deleted after confirming deployment.
