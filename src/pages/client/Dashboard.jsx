@@ -71,12 +71,19 @@ export default function Dashboard() {
 
       // Set cookie with proper domain for cross-subdomain access
       // This is the ONLY authentication method that works in production
-      document.cookie = `market_mapper_token=${token}; ` +
-                       `domain=.dexintelligence.ai; ` +  // Leading dot for subdomains
-                       `path=/; ` +
-                       `secure; ` +                       // HTTPS only
-                       `samesite=lax; ` +                 // Allow cross-subdomain
-                       `max-age=3600`;                    // 1 hour
+      const cookieString = `market_mapper_token=${token}; ` +
+                          `domain=.dexintelligence.ai; ` +  // Leading dot for subdomains
+                          `path=/; ` +
+                          `secure; ` +                       // HTTPS only
+                          `samesite=lax; ` +                 // Allow cross-subdomain
+                          `max-age=3600`;                    // 1 hour
+      
+      console.log('Setting cookie:', cookieString);
+      document.cookie = cookieString;
+      
+      // Verify cookie was set
+      console.log('All cookies after setting:', document.cookie);
+      console.log('Redirecting to: https://app.dexintelligence.ai (no token in URL)');
 
       // Redirect to Market Mapper app (NO token in URL)
       window.location.href = 'https://app.dexintelligence.ai';

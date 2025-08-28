@@ -4,6 +4,13 @@
 **Status**: ✅ COMPLETE - Cookie-only approach implemented  
 **Important**: URL parameters do NOT work in production due to Cloud Run limitations
 
+## ⚡ Quick Reference for Website Team
+
+**What you need to do**: Set a cookie before redirecting to the app.
+**Cookie name**: `market_mapper_token`
+**Cookie domain**: `.dexintelligence.ai` (with leading dot)
+**Then redirect to**: `https://app.dexintelligence.ai` (no URL params)
+
 ## 🎯 Current Implementation
 
 ### What the Website Does
@@ -44,6 +51,23 @@ const launchMarketMapper = async () => {
   window.location.href = 'https://app.dexintelligence.ai';
 };
 ```
+
+## ⏱️ Token & Session Management
+
+### Token Expiry Times
+- **JWT Token**: 2 minutes (120000 ms) - short-lived for security
+- **Cookie**: 1 hour (3600 seconds) - allows multiple app refreshes
+- **App Session**: Persists as long as cookie is valid
+
+### Why Different Expiry Times?
+- **Short JWT** (2 min): Minimizes risk if token is intercepted
+- **Longer Cookie** (1 hour): User doesn't need to re-authenticate frequently
+- **Validation**: App re-validates on each page load, ensuring token is still valid
+
+### Session Refresh Flow
+1. User accesses app → Cookie read → Token validated
+2. If token expired but cookie valid → Website should generate new token
+3. If cookie expired → User must return to dashboard
 
 ## 🍪 Cookie Configuration
 
@@ -88,6 +112,42 @@ When the app loads at `app.dexintelligence.ai`:
 - **URL**: Clean, no parameters
 - **Validation**: App validates token with website API
 
+### App-Side Cookie Reading (Streamlit)
+```python
+# auth_handler.py - try_shared_cookie()
+from streamlit_cookies_controller import CookieController
+cookies = CookieController()
+token = cookies.get('market_mapper_token')
+
+if token:
+    # Validate with website API
+    response = requests.post(
+        'https://dexintelligence.ai/.netlify/functions/validate-token',
+        json={'token': token},
+        headers={'Origin': 'https://app.dexintelligence.ai'}  # Required!
+    )
+```
+
+**Note**: The `Origin` header is REQUIRED for validation to work.
+
+## 🔍 Troubleshooting Common Issues
+
+### Issue: "Authentication Required" despite setting cookie
+**Cause**: Cookie domain doesn't have leading dot
+**Fix**: Ensure domain is `.dexintelligence.ai` not `dexintelligence.ai`
+
+### Issue: Token validation returns 401/403
+**Cause**: Missing or incorrect Origin header
+**Fix**: App must send `Origin: https://app.dexintelligence.ai` header
+
+### Issue: Cookie not visible in app
+**Cause**: SameSite set to Strict instead of Lax
+**Fix**: Use `samesite=lax` to allow cross-subdomain
+
+### Issue: Works locally but not in production
+**Cause**: Trying to use URL parameters
+**Fix**: URL params don't work in Cloud Run - use cookies only
+
 ## 🧪 Testing
 
 ### Verify Cookie is Set
@@ -117,13 +177,19 @@ When the app loads at `app.dexintelligence.ai`:
 
 ## 🔧 Environment Variables Required
 
-### Netlify Functions
+### Website (Netlify Functions)
 - `JWT_SECRET` - For signing tokens
 - `NODE_ENV` - Set to "production"
+
+### App (Cloud Run)
+- **None required for authentication!**
+- Authentication is stateless via cookie validation
+- No JWT_SECRET needed on app side (validation done by website API)
 
 ### NOT Required Anymore
 - ~~SUPABASE_URL~~ (state exchange removed)
 - ~~SUPABASE_SERVICE_KEY~~ (state exchange removed)
+- ~~SUPABASE_ANON_KEY~~ (state exchange removed)
 
 ## 📊 Summary
 
@@ -141,5 +207,84 @@ The implementation is:
 - **Secure**: Proper cookie flags and JWT signing
 - **Reliable**: Works in Cloud Run environment
 - **Clean**: No unnecessary complexity
+
+### Deployment Checklist
+
+**Website Team**:
+- [ ] Cookie domain has leading dot: `.dexintelligence.ai`
+- [ ] Cookie has `samesite=lax` (not strict)
+- [ ] Cookie has `secure=true` for HTTPS
+- [ ] Redirect URL has no query parameters
+- [ ] JWT token includes userId, email, exp claims
+- [ ] Removed `buildAppUrl` function that adds tokens to URLs
+- [ ] No token in redirect URL
+
+**App Team**:
+- [ ] Using `streamlit-cookies-controller` package
+- [ ] Sending `Origin` header with validation requests
+- [ ] NOT checking URL parameters for tokens
+- [ ] Cookie name matches: `market_mapper_token`
+
+## 🐛 Debugging Cookie Issues
+
+### Changes Made (2025-01-28)
+
+1. **Added Debug Logging** to Dashboard.jsx:
+   ```javascript
+   console.log('Setting cookie:', cookieString);
+   console.log('All cookies after setting:', document.cookie);
+   console.log('Redirecting to: https://app.dexintelligence.ai (no token in URL)');
+   ```
+
+2. **Removed URL Token Code** from auth.js:
+   - Deleted `buildAppUrl` function that was adding `?token=` to URLs
+   - This was causing tokens to appear in URLs even though Dashboard wasn't using it
+
+### Testing Cookie Setting
+
+1. **Clear Everything First:**
+   - Clear all cookies for dexintelligence.ai
+   - Clear localStorage
+   - Log out and log back in
+
+2. **Check Console Output:**
+   When clicking "Launch Market Mapper", console should show:
+   ```
+   Setting cookie: market_mapper_token=eyJ...
+   All cookies after setting: market_mapper_token=eyJ...
+   Redirecting to: https://app.dexintelligence.ai (no token in URL)
+   ```
+
+3. **Verify in DevTools:**
+   - Go to Application → Cookies → dexintelligence.ai
+   - Should see `market_mapper_token` with domain `.dexintelligence.ai`
+
+### If Cookie Is NOT Being Set
+
+**Test in Console:**
+```javascript
+// Test if cookies work at all
+document.cookie = "test=value; domain=.dexintelligence.ai; path=/";
+console.log('Cookies:', document.cookie);
+
+// Check secure context (required for secure cookies)
+console.log('Secure context?', window.isSecureContext);
+
+// Check current domain
+console.log('Domain:', window.location.hostname);
+```
+
+**Common Issues:**
+- **Not HTTPS**: Secure cookies only work on HTTPS (not http://localhost)
+- **Domain mismatch**: Must be on dexintelligence.ai domain
+- **Browser blocking**: Check cookie settings, try incognito mode
+- **Cache**: Hard refresh (Ctrl+Shift+R) to clear cached JS
+
+### If Token Still Appears in URL
+
+1. **Check for cached code** - Hard refresh browser
+2. **Search for other redirects** - Look for any code with `?token=`
+3. **Verify deployment** - Ensure latest code is deployed
+4. **Check browser network tab** - See if redirect has token
 
 The website now does exactly what's needed for the app team's cookie-based authentication!

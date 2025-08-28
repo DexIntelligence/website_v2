@@ -46,6 +46,8 @@ export const authService = {
     return () => subscription?.unsubscribe();
   },
 
+  // NOTE: generateAppToken is no longer used - Dashboard.jsx handles token generation directly
+  // Keeping for backwards compatibility but should not be used for new implementations
   async generateAppToken(user) {
     if (!user) throw new Error('User required to generate token');
     
@@ -73,11 +75,8 @@ export const authService = {
     return token;
   },
 
-  buildAppUrl(token) {
-    const appDomain = import.meta.env.VITE_APP_DOMAIN || 'app.dexintelligence.ai';
-    // Use query parameter - app now handles this with cookies for persistence
-    return `https://${appDomain}?token=${encodeURIComponent(token)}`;
-  },
+  // REMOVED: buildAppUrl function that was adding tokens to URLs
+  // Cookies are the ONLY working method for Cloud Run
 };
 
 export default authService;
