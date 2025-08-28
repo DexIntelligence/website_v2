@@ -1,5 +1,44 @@
 # Dex Intelligence Website - Development Notes
 
+## Market Mapper Authentication (Cookie-Based) ✅ WORKING
+
+**Implementation Date**: 2025-01-28  
+**Status**: Production Ready - Successfully tested end-to-end
+
+### How It Works
+When a user clicks "Launch Market Mapper" from the client dashboard:
+1. Website generates a JWT token via Netlify function (`generate-market-mapper-token`)
+2. Sets a cross-subdomain cookie: `market_mapper_token`
+3. Redirects to `https://app.dexintelligence.ai` (NO URL parameters)
+4. App reads cookie and validates token with website API
+
+### Key Implementation Details
+```javascript
+// Cookie settings in Dashboard.jsx
+document.cookie = `market_mapper_token=${token}; ` +
+                 `domain=.dexintelligence.ai; ` +  // Leading dot REQUIRED
+                 `path=/; ` +
+                 `secure; ` +                       // HTTPS only
+                 `samesite=lax; ` +                 // Cross-subdomain access
+                 `max-age=3600`;                    // 1 hour
+```
+
+### Critical Requirements
+- **URL parameters do NOT work** - Google Cloud Run strips query parameters
+- **Cookie domain MUST have leading dot** (`.dexintelligence.ai`)
+- **SameSite must be Lax** (not Strict) for cross-subdomain
+- Token validation requires `Origin: https://app.dexintelligence.ai` header
+
+### Required Environment Variables
+- `JWT_SECRET` - Required in Netlify for token signing
+- `NODE_ENV` - Set to "production" in Netlify
+
+### Files Involved
+- `src/pages/client/Dashboard.jsx` - Sets cookie and redirects
+- `netlify/functions/generate-market-mapper-token.js` - Creates JWT
+- `netlify/functions/validate-token.js` - Validates tokens from app
+- `src/utils/auth.js` - Auth utilities (buildAppUrl removed)
+
 ## DNS Configuration (Updated 2025-08-27)
 
 **Current Setup:**
