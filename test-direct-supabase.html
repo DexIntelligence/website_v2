@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Direct Supabase State Exchange</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Test Direct Supabase State Exchange</h1>
+    
+    <div>
+        <h2>Step 1: Configure Supabase</h2>
+        <input type="text" id="supabaseUrl" placeholder="Your Supabase URL" style="width: 300px;">
+        <input type="password" id="supabaseKey" placeholder="Your Supabase Anon Key" style="width: 300px;">
+        <button onclick="initSupabase()">Initialize</button>
+        <div id="initStatus"></div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h2>Step 2: Login</h2>
+        <input type="email" id="email" placeholder="Email" style="width: 200px;">
+        <input type="password" id="password" placeholder="Password" style="width: 200px;">
+        <button onclick="login()">Login</button>
+        <div id="loginStatus"></div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h2>Step 3: Test State Creation</h2>
+        <button onclick="createState()" id="createBtn" disabled>Create Auth State</button>
+        <div id="stateResult"></div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h2>Step 4: Test Exchange</h2>
+        <input type="text" id="stateId" placeholder="State ID to exchange" style="width: 300px;">
+        <button onclick="exchangeState()">Exchange State</button>
+        <div id="exchangeResult"></div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h2>Step 5: Launch Market Mapper</h2>
+        <button onclick="launchMarketMapper()" id="launchBtn" disabled>Launch Market Mapper</button>
+    </div>
+
+    <script>
+        let supabase;
+        let currentUser;
+
+        function initSupabase() {
+            const url = document.getElementById('supabaseUrl').value;
+            const key = document.getElementById('supabaseKey').value;
+            
+            if (!url || !key) {
+                alert('Please enter both URL and Key');
+                return;
+            }
+
+            supabase = window.supabase.createClient(url, key);
+            document.getElementById('initStatus').innerHTML = '✅ Supabase initialized';
+        }
+
+        async function login() {
+            if (!supabase) {
+                alert('Please initialize Supabase first');
+                return;
+            }
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                document.getElementById('loginStatus').innerHTML = `❌ Login failed: ${error.message}`;
+            } else {
+                currentUser = data.user;
+                document.getElementById('loginStatus').innerHTML = `✅ Logged in as: ${currentUser.email}`;
+                document.getElementById('createBtn').disabled = false;
+                document.getElementById('launchBtn').disabled = false;
+            }
+        }
+
+        async function createState() {
+            if (!currentUser) {
+                alert('Please login first');
+                return;
+            }
+
+            // Generate simple JWT token
+            const generateJWT = (data) => {
+                return btoa(JSON.stringify(data));
+            };
+
+            try {
+                const { data, error } = await supabase
+                    .from('auth_states')
+                    .insert({
+                        user_id: currentUser.id,
+                        token: generateJWT({
+                            userId: currentUser.id,
+                            email: currentUser.email,
+                            exp: Date.now() + 3600000 // 1 hour
+                        })
+                    })
+                    .select('state_id')
+                    .single();
+
+                if (error) {
+                    document.getElementById('stateResult').innerHTML = `❌ Error: ${error.message}`;
+                } else {
+                    document.getElementById('stateResult').innerHTML = `
+                        ✅ State created!<br>
+                        State ID: <code>${data.state_id}</code><br>
+                        <button onclick="navigator.clipboard.writeText('${data.state_id}')">Copy State ID</button>
+                    `;
+                    document.getElementById('stateId').value = data.state_id;
+                }
+            } catch (err) {
+                document.getElementById('stateResult').innerHTML = `❌ Error: ${err.message}`;
+            }
+        }
+
+        async function exchangeState() {
+            const stateId = document.getElementById('stateId').value;
+            if (!stateId) {
+                alert('Please enter a state ID');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .rpc('exchange_auth_state', {
+                        state_id_param: stateId
+                    });
+
+                if (error) {
+                    document.getElementById('exchangeResult').innerHTML = `❌ Error: ${error.message}`;
+                } else if (!data || data.length === 0) {
+                    document.getElementById('exchangeResult').innerHTML = '❌ State not found or already used';
+                } else {
+                    const token = data[0].token;
+                    const decoded = JSON.parse(atob(token));
+                    document.getElementById('exchangeResult').innerHTML = `
+                        ✅ Token received!<br>
+                        User ID: ${decoded.userId}<br>
+                        Email: ${decoded.email}<br>
+                        Expires: ${new Date(decoded.exp).toLocaleString()}
+                    `;
+                }
+            } catch (err) {
+                document.getElementById('exchangeResult').innerHTML = `❌ Error: ${err.message}`;
+            }
+        }
+
+        async function launchMarketMapper() {
+            if (!currentUser) {
+                alert('Please login first');
+                return;
+            }
+
+            // This is exactly what the app team expects
+            const generateJWT = (data) => {
+                return btoa(JSON.stringify(data));
+            };
+
+            const { data, error } = await supabase
+                .from('auth_states')
+                .insert({
+                    user_id: currentUser.id,
+                    token: generateJWT({
+                        userId: currentUser.id,
+                        email: currentUser.email,
+                        exp: Date.now() + 3600000
+                    })
+                })
+                .select('state_id')
+                .single();
+
+            if (data) {
+                localStorage.setItem('market_mapper_state', data.state_id);
+                alert(`State saved to localStorage: ${data.state_id}\n\nNow redirecting to Market Mapper...`);
+                window.location.href = 'https://app.dexintelligence.ai';
+            } else {
+                alert(`Error: ${error.message}`);
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 5px;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        div {
+            margin-bottom: 10px;
+        }
+    </style>
+</body>
+</html>

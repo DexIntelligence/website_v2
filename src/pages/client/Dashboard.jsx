@@ -33,24 +33,57 @@ export default function Dashboard() {
     }
   };
 
+  // Cookie-based authentication (ONLY working method in production)
   const launchMarketMapper = async () => {
     setLaunchingApp(true);
     try {
-      // Generate secure 5-minute token for Market Mapper
-      const token = await authService.generateAppToken(user);
+      // Get current user from auth service
+      const currentUser = await authService.getUser();
+      if (!currentUser) {
+        throw new Error('User not authenticated');
+      }
+
+      // Get session for secure token generation
+      const session = await authService.getSession();
+      if (!session) {
+        throw new Error('No active session. Please log in again.');
+      }
+
+      // Generate secure JWT token via Netlify function
+      const response = await fetch('/.netlify/functions/generate-market-mapper-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || 'Failed to generate token');
+      }
+
+      const { token } = await response.json();
       
       if (!token) {
-        throw new Error('Token generation returned empty token');
+        throw new Error('No token received from server');
       }
+
+      // Set cookie with proper domain for cross-subdomain access
+      // This is the ONLY authentication method that works in production
+      document.cookie = `market_mapper_token=${token}; ` +
+                       `domain=.dexintelligence.ai; ` +  // Leading dot for subdomains
+                       `path=/; ` +
+                       `secure; ` +                       // HTTPS only
+                       `samesite=lax; ` +                 // Allow cross-subdomain
+                       `max-age=3600`;                    // 1 hour
+
+      // Redirect to Market Mapper app (NO token in URL)
+      window.location.href = 'https://app.dexintelligence.ai';
       
-      const appUrl = authService.buildAppUrl(token);
-      
-      // Redirect to Market Mapper with token
-      window.location.href = appUrl;
     } catch (error) {
       console.error('Failed to launch Market Mapper:', error);
       
-      // Show more specific error message
       let errorMessage = 'Failed to launch Market Mapper. ';
       if (error.message.includes('session')) {
         errorMessage += 'Please log in again.';
@@ -116,7 +149,7 @@ export default function Dashboard() {
               
               <div className="pt-4">
                 <button
-                  onClick={launchMarketMapper}
+                  onClick={launchMarketMapper} // Cookie-based authentication only
                   disabled={launchingApp}
                   className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
                 >
