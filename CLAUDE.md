@@ -1,5 +1,27 @@
 # Dex Intelligence Website - Development Notes
 
+## PRIMARY OBJECTIVE: Cloud Storage Integration for Client Portal 🎯
+
+**Goal**: Implement secure persistent storage where clients can upload files through the website dashboard, with seamless access from the Market Mapper app on Google Cloud Run.
+
+### Recommended Architecture
+- **Storage**: Google Cloud Storage (GCS) with per-client buckets
+- **Authentication**: Identity-Aware Proxy (IAP) for enhanced security
+- **File Access**: Time-limited signed URLs for upload/download operations
+- **Dashboard UI**: External GCS Console access (most secure) with optional embedded file manager
+
+### Implementation Priorities
+1. **Phase 1**: Set up GCS buckets with IAP protection and external console access
+2. **Phase 2**: Add quick upload widget and recent files display to dashboard
+3. **Phase 3**: Consider full embedded file manager based on user feedback
+
+### Key Security Requirements
+- All file operations must use signed URLs (no direct GCS access from browser)
+- Implement per-client bucket isolation with strict IAM policies
+- Enable comprehensive audit logging through Cloud Logging
+- File uploads must be validated for type and size restrictions
+- Regular rotation of service account credentials
+
 ## Market Mapper Authentication (Cookie-Based) ✅ WORKING
 
 **Implementation Date**: 2025-01-28  
