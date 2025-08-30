@@ -1,10 +1,9 @@
-const crypto = require('crypto');
-const { getDeploymentConfigByUser, getEnvVar } = require('./utils/deployment-config');
+const { createClient } = require('@supabase/supabase-js');
 
 // Rate limiting storage
 const rateLimit = new Map();
 const WINDOW_MS = 60000; // 1 minute
-const MAX_REQUESTS = 3; // Very strict limit for Market Mapper tokens
+const MAX_REQUESTS = 30; // Allow frequent fetching for dashboard updates
 
 function checkRateLimit(ip) {
   const now = Date.now();
@@ -38,8 +37,6 @@ setInterval(cleanupRateLimits, 300000);
 
 // Verify Supabase session token
 async function verifySupabaseToken(token) {
-  // In production, you would verify this token with Supabase
-  // For now, we'll do basic validation
   if (!token || !token.startsWith('eyJ')) {
     return null;
   }
@@ -71,7 +68,7 @@ const headers = {
     ? 'http://localhost:5173' 
     : 'https://dexintelligence.ai',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Content-Type': 'application/json',
 };
 
@@ -85,7 +82,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  if (event.httpMethod !== 'POST') {
+  if (event.httpMethod !== 'GET') {
     return {
       statusCode: 405,
       headers,
@@ -134,99 +131,84 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ error: 'Invalid or expired session' }),
       };
     }
+
+    // Initialize Supabase client
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
     
-    // Get deployment ID from request body if provided
-    const requestBody = event.body ? JSON.parse(event.body) : {};
-    const deploymentId = requestBody.deploymentId || null;
-    
-    // Get deployment-specific JWT secret
-    let secret;
-    let targetDeployment = null;
-    
-    if (deploymentId) {
-      const { getDeploymentConfig } = require('./utils/deployment-config');
-      const deploymentConfig = await getDeploymentConfig(deploymentId);
-      secret = getEnvVar(deploymentConfig.envConfig, 'JWT_SECRET');
-      targetDeployment = deploymentConfig;
-    } else {
-      // Fallback: Get user's first deployment configuration
-      const userDeployments = await getDeploymentConfigByUser(user.email);
-      if (userDeployments.length === 0) {
-        return {
-          statusCode: 403,
-          headers,
-          body: JSON.stringify({ error: 'No deployments found for user' }),
-        };
-      }
-      
-      const firstDeployment = userDeployments[0];
-      secret = getEnvVar(firstDeployment.envConfig, 'JWT_SECRET');
-      targetDeployment = firstDeployment;
-    }
-    
-    if (!secret) {
-      console.error('JWT_SECRET not configured for deployment');
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error('Supabase configuration missing');
       return {
         statusCode: 500,
         headers,
-        body: JSON.stringify({ error: 'JWT secret not configured for deployment' }),
+        body: JSON.stringify({ error: 'Database configuration error' }),
       };
     }
-    
-    // Create short-lived token for Market Mapper (2 minutes)
-    const now = Date.now();
-    const expiry = now + 120000; // 2 minutes
-    
-    // Create JWT payload with nonce for replay protection
-    const header = {
-      alg: 'HS256',
-      typ: 'JWT'
-    };
-    
-    const payload = {
-      sub: user.userId,
-      email: user.email,
-      purpose: 'market-mapper-access',
-      exp: Math.floor(expiry / 1000), // Convert to seconds
-      iat: Math.floor(now / 1000),
-      iss: 'dexintelligence.ai',
-      aud: 'app.dexintelligence.ai',
-      nonce: crypto.randomBytes(16).toString('hex'), // Prevent replay attacks
-      jti: crypto.randomBytes(16).toString('hex'), // Unique token ID
-    };
-    
-    // Encode header and payload
-    const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64url');
-    const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64url');
-    
-    // Create signature
-    const signatureBase = `${encodedHeader}.${encodedPayload}`;
-    const signature = crypto
-      .createHmac('sha256', secret)
-      .update(signatureBase)
-      .digest('base64url');
-    
-    // Combine to create JWT
-    const token = `${signatureBase}.${signature}`;
-    
-    // Log token generation for audit
-    console.log(`Market Mapper token generated for user ${user.userId} (${user.email}) from IP ${clientIP}`);
-    
+
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Fetch deployments the user has access to (email-based)
+    // Note: env_config is excluded from user-facing API for security
+    const { data: deployments, error } = await supabase
+      .from('deployments')
+      .select(`
+        id,
+        name,
+        description,
+        cloud_run_url,
+        gcs_bucket,
+        project_id,
+        region,
+        created_at,
+        authorized_emails
+      `)
+      .eq('is_active', true)
+      .contains('authorized_emails', [user.email])
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Database query error:', error);
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Failed to fetch deployments' }),
+      };
+    }
+
+    // Transform data for frontend consumption
+    const userDeployments = deployments.map(deployment => ({
+      id: deployment.id,
+      name: deployment.name,
+      description: deployment.description,
+      cloudRunUrl: deployment.cloud_run_url,
+      gcsBucket: deployment.gcs_bucket,
+      projectId: deployment.project_id,
+      region: deployment.region,
+      authorizedEmails: deployment.authorized_emails,
+    }));
+
+    // Log successful fetch for audit
+    console.log(`Deployments fetched for user ${user.userId} (${user.email}): ${userDeployments.length} deployments`);
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ 
-        token,
-        expiresIn: 120, // seconds (2 minutes)
-        expiresAt: expiry, // timestamp
+      body: JSON.stringify({
+        deployments: userDeployments,
+        count: userDeployments.length,
+        user: {
+          id: user.userId,
+          email: user.email
+        }
       }),
     };
+
   } catch (error) {
-    console.error('Token generation error:', error);
+    console.error('Get user deployments error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to generate token' }),
+      body: JSON.stringify({ error: 'Failed to fetch user deployments' }),
     };
   }
 };

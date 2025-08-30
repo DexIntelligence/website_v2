@@ -1,10 +1,11 @@
 const crypto = require('crypto');
+const { Storage } = require('@google-cloud/storage');
 const { getDeploymentConfigByUser, getEnvVar } = require('./utils/deployment-config');
 
 // Rate limiting storage
 const rateLimit = new Map();
 const WINDOW_MS = 60000; // 1 minute
-const MAX_REQUESTS = 3; // Very strict limit for Market Mapper tokens
+const MAX_REQUESTS = 10; // Allow more for bucket access operations
 
 function checkRateLimit(ip) {
   const now = Date.now();
@@ -63,6 +64,80 @@ async function verifySupabaseToken(token) {
   } catch (error) {
     console.error('Token decode error:', error);
     return null;
+  }
+}
+
+// Generate signed URL for shared bucket access
+async function generateSignedBucketUrl(userId, email, deploymentId = null) {
+  try {
+    let serviceAccountKey, projectId, bucketName;
+    
+    if (deploymentId) {
+      // Get deployment-specific configuration
+      const { getDeploymentConfig } = require('./utils/deployment-config');
+      const deploymentConfig = await getDeploymentConfig(deploymentId);
+      serviceAccountKey = getEnvVar(deploymentConfig.envConfig, 'GCS_SERVICE_ACCOUNT_KEY');
+      projectId = deploymentConfig.projectId;
+      bucketName = getEnvVar(deploymentConfig.envConfig, 'SHARED_FILES_BUCKET') || deploymentConfig.gcsBucket;
+    } else {
+      // Fallback: Get user's first deployment configuration
+      const userDeployments = await getDeploymentConfigByUser(email);
+      if (userDeployments.length === 0) {
+        throw new Error('No deployments found for user');
+      }
+      
+      const firstDeployment = userDeployments[0];
+      serviceAccountKey = getEnvVar(firstDeployment.envConfig, 'GCS_SERVICE_ACCOUNT_KEY');
+      projectId = firstDeployment.projectId;
+      bucketName = getEnvVar(firstDeployment.envConfig, 'SHARED_FILES_BUCKET') || firstDeployment.gcsBucket;
+    }
+    
+    if (!serviceAccountKey) {
+      throw new Error('GCS service account key not configured');
+    }
+    
+    // Parse service account key
+    const credentials = JSON.parse(serviceAccountKey);
+    
+    // Create storage client with service account
+    const storage = new Storage({
+      projectId: projectId,
+      credentials: credentials,
+    });
+    
+    const bucket = storage.bucket(bucketName);
+    
+    // Generate signed URL for bucket browsing (1 hour expiration)
+    const [url] = await bucket.getSignedUrl({
+      version: 'v4',
+      action: 'read',
+      expires: Date.now() + 60 * 60 * 1000, // 1 hour from now
+      extensionHeaders: {
+        'x-goog-content-type': 'application/octet-stream'
+      }
+    });
+    
+    // For bucket browsing, we need to redirect to GCS Console with auth
+    const consoleUrl = `https://console.cloud.google.com/storage/browser/${bucketName}?project=${projectId}`;
+    
+    return {
+      signedUrl: url,
+      consoleUrl: consoleUrl,
+      bucketName: bucketName
+    };
+    
+  } catch (error) {
+    console.error('Error generating signed URL:', error);
+    // Fallback to console URL if signed URL generation fails
+    const bucketName = process.env.GCS_SHARED_BUCKET_NAME || 'market-mapper-v1-1-shared';
+    const projectId = process.env.GCS_PROJECT_ID || 'market-mapper-v1-1';
+    const consoleUrl = `https://console.cloud.google.com/storage/browser/${bucketName}?project=${projectId}`;
+    
+    return {
+      consoleUrl: consoleUrl,
+      bucketName: bucketName,
+      fallback: true
+    };
   }
 }
 
@@ -139,94 +214,32 @@ exports.handler = async (event, context) => {
     const requestBody = event.body ? JSON.parse(event.body) : {};
     const deploymentId = requestBody.deploymentId || null;
     
-    // Get deployment-specific JWT secret
-    let secret;
-    let targetDeployment = null;
+    // Generate signed URL for shared bucket access
+    const urlData = await generateSignedBucketUrl(user.userId, user.email, deploymentId);
     
-    if (deploymentId) {
-      const { getDeploymentConfig } = require('./utils/deployment-config');
-      const deploymentConfig = await getDeploymentConfig(deploymentId);
-      secret = getEnvVar(deploymentConfig.envConfig, 'JWT_SECRET');
-      targetDeployment = deploymentConfig;
-    } else {
-      // Fallback: Get user's first deployment configuration
-      const userDeployments = await getDeploymentConfigByUser(user.email);
-      if (userDeployments.length === 0) {
-        return {
-          statusCode: 403,
-          headers,
-          body: JSON.stringify({ error: 'No deployments found for user' }),
-        };
-      }
-      
-      const firstDeployment = userDeployments[0];
-      secret = getEnvVar(firstDeployment.envConfig, 'JWT_SECRET');
-      targetDeployment = firstDeployment;
-    }
-    
-    if (!secret) {
-      console.error('JWT_SECRET not configured for deployment');
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: 'JWT secret not configured for deployment' }),
-      };
-    }
-    
-    // Create short-lived token for Market Mapper (2 minutes)
-    const now = Date.now();
-    const expiry = now + 120000; // 2 minutes
-    
-    // Create JWT payload with nonce for replay protection
-    const header = {
-      alg: 'HS256',
-      typ: 'JWT'
-    };
-    
-    const payload = {
-      sub: user.userId,
-      email: user.email,
-      purpose: 'market-mapper-access',
-      exp: Math.floor(expiry / 1000), // Convert to seconds
-      iat: Math.floor(now / 1000),
-      iss: 'dexintelligence.ai',
-      aud: 'app.dexintelligence.ai',
-      nonce: crypto.randomBytes(16).toString('hex'), // Prevent replay attacks
-      jti: crypto.randomBytes(16).toString('hex'), // Unique token ID
-    };
-    
-    // Encode header and payload
-    const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64url');
-    const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64url');
-    
-    // Create signature
-    const signatureBase = `${encodedHeader}.${encodedPayload}`;
-    const signature = crypto
-      .createHmac('sha256', secret)
-      .update(signatureBase)
-      .digest('base64url');
-    
-    // Combine to create JWT
-    const token = `${signatureBase}.${signature}`;
-    
-    // Log token generation for audit
-    console.log(`Market Mapper token generated for user ${user.userId} (${user.email}) from IP ${clientIP}`);
+    // Log URL generation for audit
+    console.log(`Shared bucket URL generated for user ${user.userId} (${user.email}) from IP ${clientIP}${urlData.fallback ? ' (fallback)' : ''}`);
     
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({ 
-        token,
-        expiresIn: 120, // seconds (2 minutes)
-        expiresAt: expiry, // timestamp
+        url: urlData.consoleUrl, // Use console URL for now as it's more reliable for UI access
+        signedUrl: urlData.signedUrl, // Include signed URL for future use
+        bucketName: urlData.bucketName,
+        bucketInfo: 'Team collaboration shared bucket with organized folders',
+        accessType: 'shared-data',
+        folders: ['general/', 'antitrust-team/', 'consulting-team/'],
+        expiresIn: 3600, // URL valid for 1 hour
+        hasSigned: !urlData.fallback,
       }),
     };
   } catch (error) {
-    console.error('Token generation error:', error);
+    console.error('Shared bucket URL generation error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to generate token' }),
+      body: JSON.stringify({ error: 'Failed to generate shared bucket access URL' }),
     };
   }
 };

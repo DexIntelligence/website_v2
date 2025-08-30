@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Cloud, Database } from 'lucide-react';
+import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files } from 'lucide-react';
 import { authService } from '../../utils/auth';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [launchingApp, setLaunchingApp] = useState(false);
-  const [accessingStorage, setAccessingStorage] = useState(false);
+  const [accessingFiles, setAccessingFiles] = useState(false);
+  const [deployments, setDeployments] = useState([]);
+  const [deploymentsLoading, setDeploymentsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,10 +20,45 @@ export default function Dashboard() {
     try {
       const currentUser = await authService.getUser();
       setUser(currentUser);
+      if (currentUser) {
+        await loadUserDeployments();
+      }
     } catch (error) {
       console.error('Failed to load user:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadUserDeployments = async () => {
+    try {
+      const session = await authService.getSession();
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      const response = await fetch('/.netlify/functions/get-user-deployments', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || 'Failed to fetch deployments');
+      }
+
+      const data = await response.json();
+      setDeployments(data.deployments || []);
+      console.log(`Loaded ${data.deployments?.length || 0} deployments for user`);
+
+    } catch (error) {
+      console.error('Failed to load deployments:', error);
+      setDeployments([]);
+    } finally {
+      setDeploymentsLoading(false);
     }
   };
 
@@ -35,7 +72,7 @@ export default function Dashboard() {
   };
 
   // Cookie-based authentication (ONLY working method in production)
-  const launchMarketMapper = async () => {
+  const launchMarketMapper = async (deployment) => {
     setLaunchingApp(true);
     try {
       // Get current user from auth service
@@ -57,6 +94,9 @@ export default function Dashboard() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${session.access_token}`,
         },
+        body: JSON.stringify({
+          deploymentId: deployment.id
+        }),
       });
 
       if (!response.ok) {
@@ -84,10 +124,10 @@ export default function Dashboard() {
       
       // Verify cookie was set
       console.log('All cookies after setting:', document.cookie);
-      console.log('Redirecting to: https://app.dexintelligence.ai (no token in URL)');
+      console.log(`Redirecting to: ${deployment.cloudRunUrl} (no token in URL)`);
 
       // Redirect to Market Mapper app (NO token in URL)
-      window.location.href = 'https://app.dexintelligence.ai';
+      window.location.href = deployment.cloudRunUrl;
       
     } catch (error) {
       console.error('Failed to launch Market Mapper:', error);
@@ -107,9 +147,10 @@ export default function Dashboard() {
     }
   };
 
-  // Access GCS Console with secure authentication
-  const accessFileStorage = async () => {
-    setAccessingStorage(true);
+
+  // Access shared data bucket for team collaboration
+  const accessDataSharing = async () => {
+    setAccessingFiles(true);
     try {
       // Get current user from auth service
       const currentUser = await authService.getUser();
@@ -123,18 +164,21 @@ export default function Dashboard() {
         throw new Error('No active session. Please log in again.');
       }
 
-      // Generate secure access URL via Netlify function
-      const response = await fetch('/.netlify/functions/generate-gcs-console-url', {
+      // Generate secure shared bucket access URL via Netlify function
+      const response = await fetch('/.netlify/functions/generate-shared-bucket-url', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${session.access_token}`,
         },
+        body: JSON.stringify({
+          deploymentId: deployments[0]?.id // Use first deployment for file sharing
+        }),
       });
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
-        throw new Error(error.error || 'Failed to generate storage access URL');
+        throw new Error(error.error || 'Failed to generate shared bucket access URL');
       }
 
       const { url } = await response.json();
@@ -143,13 +187,15 @@ export default function Dashboard() {
         throw new Error('No access URL received from server');
       }
 
-      // Open GCS Console in new tab
+      console.log('Opening shared bucket access:', url);
+
+      // Open GCS Console for shared bucket in new tab
       window.open(url, '_blank', 'noopener,noreferrer');
       
     } catch (error) {
-      console.error('Failed to access file storage:', error);
+      console.error('Failed to access data sharing:', error);
       
-      let errorMessage = 'Failed to access file storage. ';
+      let errorMessage = 'Failed to access data sharing. ';
       if (error.message.includes('session')) {
         errorMessage += 'Please log in again.';
       } else if (error.message.includes('Too many requests')) {
@@ -160,7 +206,7 @@ export default function Dashboard() {
       
       alert(errorMessage);
     } finally {
-      setAccessingStorage(false);
+      setAccessingFiles(false);
     }
   };
 
@@ -192,47 +238,91 @@ export default function Dashboard() {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Market Mapper Card - Featured */}
-          <div className="lg:col-span-2 bg-gradient-to-br from-brand/20 to-brand/5 border border-brand/50 rounded-lg p-8">
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-brand/20 rounded-lg">
-                  <BarChart3 className="h-6 w-6 text-brand" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-semibold text-white">Market Mapper</h2>
-                  <p className="text-gray-400">Real-time local market analysis platform</p>
-                </div>
+          {/* Deployments Loading */}
+          {deploymentsLoading && (
+            <div className="lg:col-span-2 bg-neutral-800/30 border border-gray-700 rounded-lg p-8">
+              <div className="flex items-center justify-center">
+                <Loader2 className="h-8 w-8 text-brand animate-spin" />
+                <span className="ml-3 text-gray-300">Loading deployments...</span>
               </div>
             </div>
-            
-            <div className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Access comprehensive market analysis tools, competitive intelligence, and data-driven insights 
-                for your antitrust and competition matters.
-              </p>
+          )}
+
+          {/* No Deployments */}
+          {!deploymentsLoading && deployments.length === 0 && (
+            <div className="lg:col-span-2 bg-neutral-800/30 border border-gray-700 rounded-lg p-8">
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-white mb-2">No Deployments Available</h3>
+                <p className="text-gray-400">Contact your administrator to get access to Market Mapper deployments.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Dynamic Deployment Cards */}
+          {!deploymentsLoading && deployments.map((deployment) => (
+            <div key={deployment.id} className="lg:col-span-2 bg-gradient-to-br from-brand/20 to-brand/5 border border-brand/50 rounded-lg p-8">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-brand/20 rounded-lg">
+                    <BarChart3 className="h-6 w-6 text-brand" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-semibold text-white">{deployment.name}</h2>
+                    <p className="text-gray-400">{deployment.description || 'Market Mapper deployment'}</p>
+                  </div>
+                </div>
+              </div>
               
-              <div className="pt-4">
-                <button
-                  onClick={launchMarketMapper} // Cookie-based authentication only
-                  disabled={launchingApp}
-                  className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
-                >
-                  {launchingApp ? (
-                    <>
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      Launching...
-                    </>
-                  ) : (
-                    <>
-                      Launch Market Mapper
-                      <ExternalLink className="h-5 w-5" />
-                    </>
-                  )}
-                </button>
+              <div className="space-y-4">
+                <p className="text-gray-300 leading-relaxed">
+                  Access comprehensive market analysis tools, competitive intelligence, and data-driven insights 
+                  for your antitrust and competition matters.
+                </p>
+                
+                <div className="pt-4">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={() => launchMarketMapper(deployment)}
+                      disabled={launchingApp || accessingFiles}
+                      className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
+                    >
+                      {launchingApp ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Launching App...
+                        </>
+                      ) : (
+                        <>
+                          <BarChart3 className="h-5 w-5" />
+                          Launch Market Mapper
+                          <ExternalLink className="h-4 w-4" />
+                        </>
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={() => accessDataSharing()}
+                      disabled={accessingFiles || launchingApp}
+                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 text-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
+                    >
+                      {accessingFiles ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Accessing Files...
+                        </>
+                      ) : (
+                        <>
+                          <Files className="h-5 w-5" />
+                          Access File Sharing
+                          <ExternalLink className="h-4 w-4" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
 
           {/* Quick Links Card */}
           <div className="bg-neutral-800/50 border border-gray-700 rounded-lg p-6">
@@ -263,55 +353,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* File Storage Section */}
-        <div className="mt-6">
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/50 rounded-lg p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-blue-500/20 rounded-lg">
-                  <Database className="h-6 w-6 text-blue-400" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white">File Storage</h3>
-                  <p className="text-gray-400">Secure cloud storage for your data and documents</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Access your dedicated cloud storage to upload, manage, and share files securely. 
-                All files are encrypted and stored with enterprise-grade security.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={accessFileStorage}
-                  disabled={accessingStorage}
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
-                >
-                  {accessingStorage ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Accessing...
-                    </>
-                  ) : (
-                    <>
-                      <Cloud className="h-4 w-4" />
-                      Open File Storage
-                      <ExternalLink className="h-4 w-4" />
-                    </>
-                  )}
-                </button>
-                
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <span>•</span>
-                  <span>Secure access via Google Cloud Console</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Additional Features Section */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">

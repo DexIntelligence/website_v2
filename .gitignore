@@ -45,3 +45,13 @@ AUTHENTICATION_ALTERNATIVES.md
 # These files are documentation only, no real secrets
 SECURITY_INTEGRATION_PLAN.md
 SECURITY_AUDIT_REPORT.md
+
+# Admin documentation (contains deployment configurations and database details)
+DEPLOYMENT_ADMIN_GUIDE.md
+DEPLOYMENT_CLONING_SYSTEM.md
+GCS_ENVIRONMENT_SETUP.md
+MULTI_CLIENT_DASHBOARD_INTEGRATION.md
+demo-clone.txt
+
+# Database setup files (contain production configurations)
+database/
