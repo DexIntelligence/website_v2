@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { createClient } = require('@supabase/supabase-js');
+const { getDeploymentConfigByUser, getEnvVar } = require('./utils/deployment-config');
 
 // Rate limiting storage
 const rateLimit = new Map();
@@ -20,18 +20,38 @@ function checkRateLimit(ip) {
   return true; // Allowed
 }
 
+// Clean up old rate limit records periodically
+function cleanupRateLimits() {
+  const now = Date.now();
+  for (const [ip, requests] of rateLimit.entries()) {
+    const recentRequests = requests.filter(t => now - t < WINDOW_MS);
+    if (recentRequests.length === 0) {
+      rateLimit.delete(ip);
+    } else {
+      rateLimit.set(ip, recentRequests);
+    }
+  }
+}
+
+// Run cleanup every 5 minutes
+setInterval(cleanupRateLimits, 300000);
+
 // Verify Supabase session token
 async function verifySupabaseToken(token) {
+  // In production, you would verify this token with Supabase
+  // For now, we'll do basic validation
   if (!token || !token.startsWith('eyJ')) {
     return null;
   }
   
   try {
+    // Decode JWT payload (without verification for now)
     const parts = token.split('.');
     if (parts.length !== 3) return null;
     
     const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
     
+    // Check if token is expired
     if (payload.exp && payload.exp * 1000 < Date.now()) {
       return null;
     }
@@ -73,17 +93,25 @@ exports.handler = async (event, context) => {
     };
   }
   
-  const clientIP = event.headers['x-forwarded-for'] || 'unknown';
+  // Get client IP for rate limiting
+  const clientIP = event.headers['x-forwarded-for'] || 
+                   event.headers['X-Forwarded-For'] || 
+                   event.headers['x-real-ip'] ||
+                   'unknown';
   
+  // Check rate limit
   if (!checkRateLimit(clientIP)) {
     return {
       statusCode: 429,
       headers,
-      body: JSON.stringify({ error: 'Too many requests. Please try again later.' }),
+      body: JSON.stringify({ 
+        error: 'Too many requests. Please try again later.' 
+      }),
     };
   }
 
   try {
+    // Verify authorization header
     const authHeader = event.headers.authorization || event.headers.Authorization || '';
     
     if (!authHeader.startsWith('Bearer ')) {
@@ -95,6 +123,8 @@ exports.handler = async (event, context) => {
     }
     
     const supabaseToken = authHeader.substring(7);
+    
+    // Verify Supabase session
     const user = await verifySupabaseToken(supabaseToken);
     
     if (!user) {
@@ -105,49 +135,37 @@ exports.handler = async (event, context) => {
       };
     }
     
-    // Get deployment ID from request body
+    // Get deployment ID from request body if provided
     const requestBody = event.body ? JSON.parse(event.body) : {};
     const deploymentId = requestBody.deploymentId || null;
     
-    // Initialize Supabase client
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
-    
-    if (!supabaseUrl || !supabaseServiceKey) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: 'Database configuration error' }),
-      };
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
-    // Get deployment configuration directly from database
-    let deploymentQuery = supabase
-      .from('deployments')
-      .select('env_config, name')
-      .eq('is_active', true)
-      .contains('authorized_emails', [user.email]);
+    // Get deployment-specific JWT secret
+    let secret;
+    let targetDeployment = null;
     
     if (deploymentId) {
-      deploymentQuery = deploymentQuery.eq('id', deploymentId);
+      const { getDeploymentConfig } = require('./utils/deployment-config');
+      const deploymentConfig = await getDeploymentConfig(deploymentId);
+      secret = getEnvVar(deploymentConfig.envConfig, 'JWT_SECRET');
+      targetDeployment = deploymentConfig;
+    } else {
+      // Fallback: Get user's first deployment configuration
+      const userDeployments = await getDeploymentConfigByUser(user.email);
+      if (userDeployments.length === 0) {
+        return {
+          statusCode: 403,
+          headers,
+          body: JSON.stringify({ error: 'No deployments found for user' }),
+        };
+      }
+      
+      const firstDeployment = userDeployments[0];
+      secret = getEnvVar(firstDeployment.envConfig, 'JWT_SECRET');
+      targetDeployment = firstDeployment;
     }
     
-    const { data: deployments, error } = await deploymentQuery.limit(1);
-    
-    if (error || !deployments || deployments.length === 0) {
-      return {
-        statusCode: 403,
-        headers,
-        body: JSON.stringify({ error: 'No authorized deployments found for user' }),
-      };
-    }
-    
-    const deployment = deployments[0];
-    const jwtSecret = deployment.env_config?.JWT_SECRET;
-    
-    if (!jwtSecret) {
+    if (!secret) {
+      console.error('JWT_SECRET not configured for deployment');
       return {
         statusCode: 500,
         headers,
@@ -159,26 +177,39 @@ exports.handler = async (event, context) => {
     const now = Date.now();
     const expiry = now + 120000; // 2 minutes
     
-    const header = { alg: 'HS256', typ: 'JWT' };
+    // Create JWT payload with nonce for replay protection
+    const header = {
+      alg: 'HS256',
+      typ: 'JWT'
+    };
+    
     const payload = {
       sub: user.userId,
       email: user.email,
+      purpose: 'market-mapper-access',
+      exp: Math.floor(expiry / 1000), // Convert to seconds
       iat: Math.floor(now / 1000),
-      exp: Math.floor(expiry / 1000),
-      deployment: deployment.name,
-      nonce: crypto.randomUUID()
+      iss: 'dexintelligence.ai',
+      aud: 'app.dexintelligence.ai',
+      nonce: crypto.randomBytes(16).toString('hex'), // Prevent replay attacks
+      jti: crypto.randomBytes(16).toString('hex'), // Unique token ID
     };
     
+    // Encode header and payload
     const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64url');
     const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64url');
+    
+    // Create signature
     const signatureBase = `${encodedHeader}.${encodedPayload}`;
     const signature = crypto
-      .createHmac('sha256', jwtSecret)
+      .createHmac('sha256', secret)
       .update(signatureBase)
       .digest('base64url');
     
+    // Combine to create JWT
     const token = `${signatureBase}.${signature}`;
     
+    // Log token generation for audit
     console.log(`Market Mapper token generated for user ${user.userId} (${user.email}) from IP ${clientIP}`);
     
     return {
@@ -186,8 +217,8 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify({ 
         token,
-        expiresIn: 120,
-        expiresAt: expiry,
+        expiresIn: 120, // seconds (2 minutes)
+        expiresAt: expiry, // timestamp
       }),
     };
   } catch (error) {
