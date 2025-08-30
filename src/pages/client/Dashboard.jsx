@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2 } from 'lucide-react';
+import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Cloud, Database } from 'lucide-react';
 import { authService } from '../../utils/auth';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [launchingApp, setLaunchingApp] = useState(false);
+  const [accessingStorage, setAccessingStorage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -106,6 +107,63 @@ export default function Dashboard() {
     }
   };
 
+  // Access GCS Console with secure authentication
+  const accessFileStorage = async () => {
+    setAccessingStorage(true);
+    try {
+      // Get current user from auth service
+      const currentUser = await authService.getUser();
+      if (!currentUser) {
+        throw new Error('User not authenticated');
+      }
+
+      // Get session for secure token generation
+      const session = await authService.getSession();
+      if (!session) {
+        throw new Error('No active session. Please log in again.');
+      }
+
+      // Generate secure access URL via Netlify function
+      const response = await fetch('/.netlify/functions/generate-gcs-console-url', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || 'Failed to generate storage access URL');
+      }
+
+      const { url } = await response.json();
+      
+      if (!url) {
+        throw new Error('No access URL received from server');
+      }
+
+      // Open GCS Console in new tab
+      window.open(url, '_blank', 'noopener,noreferrer');
+      
+    } catch (error) {
+      console.error('Failed to access file storage:', error);
+      
+      let errorMessage = 'Failed to access file storage. ';
+      if (error.message.includes('session')) {
+        errorMessage += 'Please log in again.';
+      } else if (error.message.includes('Too many requests')) {
+        errorMessage += 'Please wait a moment and try again.';
+      } else {
+        errorMessage += 'Please try again or contact support.';
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setAccessingStorage(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -201,6 +259,56 @@ export default function Dashboard() {
                 <Settings className="h-5 w-5 text-gray-600" />
                 <span className="text-gray-600">Account Settings (Coming Soon)</span>
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* File Storage Section */}
+        <div className="mt-6">
+          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/50 rounded-lg p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-blue-500/20 rounded-lg">
+                  <Database className="h-6 w-6 text-blue-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white">File Storage</h3>
+                  <p className="text-gray-400">Secure cloud storage for your data and documents</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <p className="text-gray-300 leading-relaxed">
+                Access your dedicated cloud storage to upload, manage, and share files securely. 
+                All files are encrypted and stored with enterprise-grade security.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={accessFileStorage}
+                  disabled={accessingStorage}
+                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
+                >
+                  {accessingStorage ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Accessing...
+                    </>
+                  ) : (
+                    <>
+                      <Cloud className="h-4 w-4" />
+                      Open File Storage
+                      <ExternalLink className="h-4 w-4" />
+                    </>
+                  )}
+                </button>
+                
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <span>•</span>
+                  <span>Secure access via Google Cloud Console</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -109,21 +109,51 @@ Enables long-running Tab 4 optimizations via Cloud Tasks:
 **Week 3**: Analysis Results - Tab 2/3/4 results, caching
 **Week 4**: Performance Optimization - compression, lazy loading, progress tracking
 
-## Configuration
-**Environment**: `GCS_BUCKET="market-mapper-sessions"`, `SESSION_TTL_DAYS="7"`
-**IAM Permissions**: storage.objects.create/delete/get/list, storage.buckets.get
+## Production Configuration (Market-Mapper-v1-1)
+**Environment Variables**:
+- `GCS_BUCKET="market-mapper-v1-1-sessions"`
+- `SESSION_TTL_DAYS="7"`
+- `ENABLE_COMPRESSION="true"`
 
-## Phase 1 Implementation Timeline
-**Phase 1.1**: Core Infrastructure - GCS bucket, GCSSessionManager class, error handling
-**Phase 1.2**: Critical State Migration - data, mappings, geocoding results  
-**Phase 1.3**: Analysis Results - Tab 2/3/4 results, caching
-**Phase 1.4**: Performance Optimization - compression, lazy loading, progress tracking
+**Service Account**: `market-mapper-service@market-mapper-v1-1.iam.gserviceaccount.com`
+**IAM Permissions**: 
+- `roles/storage.objectAdmin` (for session state bucket)
+- `roles/secretmanager.secretAccessor` (for API keys)
 
-## Production Deployment Phases  
-**Phase 2**: External Session State - GCS bucket, state migration
-**Phase 3**: Async Processing - Cloud Tasks, worker service  
-**Phase 4**: IAP Production - OAuth, monitoring, custom domain  
-**Phase 5**: CI/CD - GitHub, Cloud Build triggers
+**Cloud Run Configuration**:
+- **Region**: northamerica-northeast1 (Montreal, Canada)
+- **Memory**: 2GB
+- **CPU**: 2 vCPUs  
+- **Timeout**: 3600 seconds (60 minutes)
+- **Scaling**: 0-10 instances
+- **Service Account**: market-mapper-service@market-mapper-v1-1.iam.gserviceaccount.com
+
+## Phase 1 Implementation Timeline ✅ COMPLETED
+**Phase 1.1**: Core Infrastructure - GCS bucket, GCSSessionManager class, error handling ✅
+**Phase 1.2**: Critical State Migration - data, mappings, geocoding results ✅ 
+**Phase 1.3**: Analysis Results - Tab 2/3/4 results, caching ⏳ (Ready for implementation)
+**Phase 1.4**: Performance Optimization - compression, lazy loading, progress tracking ⏳ (Ready for implementation)
+
+## Production Deployment Status - Market-Mapper-v1-1 Project
+**✅ Phase 2 COMPLETED**: External Session State - GCS bucket deployed to `market-mapper-v1-1-sessions`
+- **Project**: market-mapper-v1-1 (Canadian region: northamerica-northeast1)
+- **GCS Bucket**: market-mapper-v1-1-sessions with 7-day lifecycle policy
+- **Service Account**: market-mapper-service@market-mapper-v1-1.iam.gserviceaccount.com
+- **Mapbox API**: Stored in Google Secret Manager as `mapbox-api-key`
+- **Cloud Run**: Successfully deployed with 2GB memory, 60min timeout
+- **GitHub Repository**: https://github.com/DexIntelligence/streamlit_market_mapper_v1.1.git
+
+**🚀 Phase 3 IN PROGRESS**: IAP Production Setup
+- **OAuth**: Pending configuration in Google Cloud Console
+- **Access Control**: Pending user/group assignments
+- **Custom Domain**: Optional future enhancement
+
+**⏳ Phase 4 READY**: CI/CD Pipeline
+- **GitHub Integration**: Ready for Cloud Build trigger setup
+- **Continuous Deployment**: Manual deployment currently working
+- **Auto-deployment**: `gcloud builds triggers create github` command prepared
+
+**🔮 Phase 5 FUTURE**: Async Processing - Cloud Tasks, worker service for Tab 4 optimizations
 
 **Future Phase 6+**: Collaborative Features (Shared File Access, Multi-user workflows)
 
@@ -134,7 +164,16 @@ Enables long-running Tab 4 optimizations via Cloud Tasks:
 
 ## Troubleshooting
 **Common Issues**: Permission errors, session not found, performance issues
-**Debug**: `gsutil ls gs://market-mapper-sessions/`
+**Debug Commands**:
+- `gsutil ls gs://market-mapper-v1-1-sessions/` - List session files
+- `gcloud run services describe market-mapper --region=northamerica-northeast1` - Check service status
+- `gcloud logging read "resource.type=cloud_run_revision AND resource.labels.service_name=market-mapper" --limit=50` - View application logs
+- `gcloud secrets versions list mapbox-api-key` - Verify API key is stored
+
+**Performance Monitoring**:
+- **GCS Usage**: Monitor storage costs via Cloud Console → Storage
+- **Cloud Run Metrics**: Monitor memory/CPU usage via Cloud Console → Cloud Run → market-mapper
+- **Session State**: Check `gs://market-mapper-v1-1-sessions/` for user session data
 
 ## Future Enhancements (Phase 2+)
 
