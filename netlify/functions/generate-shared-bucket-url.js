@@ -1,6 +1,4 @@
-const crypto = require('crypto');
-const { Storage } = require('@google-cloud/storage');
-const { getDeploymentConfigByUser, getEnvVar } = require('./utils/deployment-config');
+const { createClient } = require('@supabase/supabase-js');
 
 // Rate limiting storage
 const rateLimit = new Map();
@@ -21,38 +19,18 @@ function checkRateLimit(ip) {
   return true; // Allowed
 }
 
-// Clean up old rate limit records periodically
-function cleanupRateLimits() {
-  const now = Date.now();
-  for (const [ip, requests] of rateLimit.entries()) {
-    const recentRequests = requests.filter(t => now - t < WINDOW_MS);
-    if (recentRequests.length === 0) {
-      rateLimit.delete(ip);
-    } else {
-      rateLimit.set(ip, recentRequests);
-    }
-  }
-}
-
-// Run cleanup every 5 minutes
-setInterval(cleanupRateLimits, 300000);
-
 // Verify Supabase session token
 async function verifySupabaseToken(token) {
-  // In production, you would verify this token with Supabase
-  // For now, we'll do basic validation
   if (!token || !token.startsWith('eyJ')) {
     return null;
   }
   
   try {
-    // Decode JWT payload (without verification for now)
     const parts = token.split('.');
     if (parts.length !== 3) return null;
     
     const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
     
-    // Check if token is expired
     if (payload.exp && payload.exp * 1000 < Date.now()) {
       return null;
     }
@@ -64,80 +42,6 @@ async function verifySupabaseToken(token) {
   } catch (error) {
     console.error('Token decode error:', error);
     return null;
-  }
-}
-
-// Generate signed URL for shared bucket access
-async function generateSignedBucketUrl(userId, email, deploymentId = null) {
-  try {
-    let serviceAccountKey, projectId, bucketName;
-    
-    if (deploymentId) {
-      // Get deployment-specific configuration
-      const { getDeploymentConfig } = require('./utils/deployment-config');
-      const deploymentConfig = await getDeploymentConfig(deploymentId);
-      serviceAccountKey = getEnvVar(deploymentConfig.envConfig, 'GCS_SERVICE_ACCOUNT_KEY');
-      projectId = deploymentConfig.projectId;
-      bucketName = getEnvVar(deploymentConfig.envConfig, 'SHARED_FILES_BUCKET') || deploymentConfig.gcsBucket;
-    } else {
-      // Fallback: Get user's first deployment configuration
-      const userDeployments = await getDeploymentConfigByUser(email);
-      if (userDeployments.length === 0) {
-        throw new Error('No deployments found for user');
-      }
-      
-      const firstDeployment = userDeployments[0];
-      serviceAccountKey = getEnvVar(firstDeployment.envConfig, 'GCS_SERVICE_ACCOUNT_KEY');
-      projectId = firstDeployment.projectId;
-      bucketName = getEnvVar(firstDeployment.envConfig, 'SHARED_FILES_BUCKET') || firstDeployment.gcsBucket;
-    }
-    
-    if (!serviceAccountKey) {
-      throw new Error('GCS service account key not configured');
-    }
-    
-    // Parse service account key
-    const credentials = JSON.parse(serviceAccountKey);
-    
-    // Create storage client with service account
-    const storage = new Storage({
-      projectId: projectId,
-      credentials: credentials,
-    });
-    
-    const bucket = storage.bucket(bucketName);
-    
-    // Generate signed URL for bucket browsing (1 hour expiration)
-    const [url] = await bucket.getSignedUrl({
-      version: 'v4',
-      action: 'read',
-      expires: Date.now() + 60 * 60 * 1000, // 1 hour from now
-      extensionHeaders: {
-        'x-goog-content-type': 'application/octet-stream'
-      }
-    });
-    
-    // For bucket browsing, we need to redirect to GCS Console with auth
-    const consoleUrl = `https://console.cloud.google.com/storage/browser/${bucketName}?project=${projectId}`;
-    
-    return {
-      signedUrl: url,
-      consoleUrl: consoleUrl,
-      bucketName: bucketName
-    };
-    
-  } catch (error) {
-    console.error('Error generating signed URL:', error);
-    // Fallback to console URL if signed URL generation fails
-    const bucketName = process.env.GCS_SHARED_BUCKET_NAME || 'market-mapper-v1-1-shared';
-    const projectId = process.env.GCS_PROJECT_ID || 'market-mapper-v1-1';
-    const consoleUrl = `https://console.cloud.google.com/storage/browser/${bucketName}?project=${projectId}`;
-    
-    return {
-      consoleUrl: consoleUrl,
-      bucketName: bucketName,
-      fallback: true
-    };
   }
 }
 
@@ -168,25 +72,17 @@ exports.handler = async (event, context) => {
     };
   }
   
-  // Get client IP for rate limiting
-  const clientIP = event.headers['x-forwarded-for'] || 
-                   event.headers['X-Forwarded-For'] || 
-                   event.headers['x-real-ip'] ||
-                   'unknown';
+  const clientIP = event.headers['x-forwarded-for'] || 'unknown';
   
-  // Check rate limit
   if (!checkRateLimit(clientIP)) {
     return {
       statusCode: 429,
       headers,
-      body: JSON.stringify({ 
-        error: 'Too many requests. Please try again later.' 
-      }),
+      body: JSON.stringify({ error: 'Too many requests. Please try again later.' }),
     };
   }
 
   try {
-    // Verify authorization header
     const authHeader = event.headers.authorization || event.headers.Authorization || '';
     
     if (!authHeader.startsWith('Bearer ')) {
@@ -198,8 +94,6 @@ exports.handler = async (event, context) => {
     }
     
     const supabaseToken = authHeader.substring(7);
-    
-    // Verify Supabase session
     const user = await verifySupabaseToken(supabaseToken);
     
     if (!user) {
@@ -210,28 +104,84 @@ exports.handler = async (event, context) => {
       };
     }
     
-    // Get deployment ID from request body if provided
+    // Get deployment ID from request body
     const requestBody = event.body ? JSON.parse(event.body) : {};
     const deploymentId = requestBody.deploymentId || null;
     
-    // Generate signed URL for shared bucket access
-    const urlData = await generateSignedBucketUrl(user.userId, user.email, deploymentId);
+    // Initialize Supabase client
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
     
-    // Log URL generation for audit
-    console.log(`Shared bucket URL generated for user ${user.userId} (${user.email}) from IP ${clientIP}${urlData.fallback ? ' (fallback)' : ''}`);
+    if (!supabaseUrl || !supabaseServiceKey) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Database configuration error' }),
+      };
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
+    // Get deployment configuration directly from database
+    let deploymentQuery = supabase
+      .from('deployments')
+      .select('env_config, name, cloud_run_url')
+      .eq('is_active', true)
+      .contains('authorized_emails', [user.email]);
+    
+    if (deploymentId) {
+      deploymentQuery = deploymentQuery.eq('id', deploymentId);
+    }
+    
+    const { data: deployments, error } = await deploymentQuery.limit(1);
+    
+    if (error || !deployments || deployments.length === 0) {
+      return {
+        statusCode: 403,
+        headers,
+        body: JSON.stringify({ error: 'No authorized deployments found for user' }),
+      };
+    }
+    
+    const deployment = deployments[0];
+    const envConfig = deployment.env_config || {};
+    
+    // Extract GCS configuration from deployment
+    const projectId = envConfig.GCS_PROJECT_ID;
+    const sharedBucket = envConfig.SHARED_FILES_BUCKET;
+    const iapAudience = envConfig.IAP_AUDIENCE;
+    
+    if (!projectId || !sharedBucket) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'GCS configuration not found for deployment' }),
+      };
+    }
+    
+    // Generate GCS Console URL with IAP authentication
+    let consoleUrl;
+    if (iapAudience) {
+      // Use IAP-protected URL for enhanced security
+      consoleUrl = `https://console.cloud.google.com/storage/browser/${sharedBucket}?project=${projectId}&authuser=${encodeURIComponent(user.email)}`;
+    } else {
+      // Standard GCS Console URL
+      consoleUrl = `https://console.cloud.google.com/storage/browser/${sharedBucket}?project=${projectId}`;
+    }
+    
+    console.log(`Shared bucket URL generated for user ${user.userId} (${user.email}) from IP ${clientIP}`);
     
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({ 
-        url: urlData.consoleUrl, // Use console URL for now as it's more reliable for UI access
-        signedUrl: urlData.signedUrl, // Include signed URL for future use
-        bucketName: urlData.bucketName,
+        url: consoleUrl,
+        bucketName: sharedBucket,
+        projectId: projectId,
+        deployment: deployment.name,
         bucketInfo: 'Team collaboration shared bucket with organized folders',
         accessType: 'shared-data',
-        folders: ['general/', 'antitrust-team/', 'consulting-team/'],
-        expiresIn: 3600, // URL valid for 1 hour
-        hasSigned: !urlData.fallback,
+        expiresIn: 3600, // Console session valid for 1 hour typically
       }),
     };
   } catch (error) {
