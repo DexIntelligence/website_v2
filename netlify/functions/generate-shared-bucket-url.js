@@ -146,16 +146,29 @@ exports.handler = async (event, context) => {
     const deployment = deployments[0];
     const envConfig = deployment.env_config || {};
     
+    // Debug logging to see what's available
+    console.log('Available env_config keys:', Object.keys(envConfig));
+    console.log('Looking for GCS_PROJECT_ID:', envConfig.GCS_PROJECT_ID);
+    console.log('Looking for SHARED_FILES_BUCKET:', envConfig.SHARED_FILES_BUCKET);
+    
     // Extract GCS configuration from deployment
     const projectId = envConfig.GCS_PROJECT_ID;
     const sharedBucket = envConfig.SHARED_FILES_BUCKET;
     const iapAudience = envConfig.IAP_AUDIENCE;
     
     if (!projectId || !sharedBucket) {
+      console.log('Missing GCS config - projectId:', projectId, 'sharedBucket:', sharedBucket);
       return {
         statusCode: 500,
         headers,
-        body: JSON.stringify({ error: 'GCS configuration not found for deployment' }),
+        body: JSON.stringify({ 
+          error: 'GCS configuration not found for deployment',
+          debug: {
+            hasProjectId: !!projectId,
+            hasSharedBucket: !!sharedBucket,
+            availableKeys: Object.keys(envConfig)
+          }
+        }),
       };
     }
     
