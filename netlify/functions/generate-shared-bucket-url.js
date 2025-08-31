@@ -146,29 +146,37 @@ exports.handler = async (event, context) => {
     const deployment = deployments[0];
     const envConfig = deployment.env_config || {};
     
-    // Debug logging to see what's available
-    console.log('Available env_config keys:', Object.keys(envConfig));
-    console.log('Looking for GCS_PROJECT_ID:', envConfig.GCS_PROJECT_ID);
-    console.log('Looking for SHARED_FILES_BUCKET:', envConfig.SHARED_FILES_BUCKET);
-    
     // Extract GCS configuration from deployment
-    const projectId = envConfig.GCS_PROJECT_ID;
     const sharedBucket = envConfig.SHARED_FILES_BUCKET;
     const iapAudience = envConfig.IAP_AUDIENCE;
+    const serviceAccountKey = envConfig.GCS_SERVICE_ACCOUNT_KEY;
     
-    if (!projectId || !sharedBucket) {
-      console.log('Missing GCS config - projectId:', projectId, 'sharedBucket:', sharedBucket);
+    if (!sharedBucket || !serviceAccountKey) {
       return {
         statusCode: 500,
         headers,
-        body: JSON.stringify({ 
-          error: 'GCS configuration not found for deployment',
-          debug: {
-            hasProjectId: !!projectId,
-            hasSharedBucket: !!sharedBucket,
-            availableKeys: Object.keys(envConfig)
-          }
-        }),
+        body: JSON.stringify({ error: 'GCS configuration not found for deployment' }),
+      };
+    }
+    
+    // Extract project ID from service account key
+    let projectId;
+    try {
+      const serviceAccount = JSON.parse(serviceAccountKey);
+      projectId = serviceAccount.project_id;
+    } catch (error) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Invalid GCS service account configuration' }),
+      };
+    }
+    
+    if (!projectId) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Project ID not found in service account' }),
       };
     }
     
