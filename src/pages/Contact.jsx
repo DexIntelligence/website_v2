@@ -303,7 +303,8 @@ export default function Contact() {
                   <option value="merger-review">Merger Review Support</option>
                   <option value="competitive-assessment">Competitive Assessment</option>
                   <option value="market-definition">Market Definition Studies</option>
-                  <option value="damages-analysis">Damages Analysis</option>
+                  <option value="merger-remedies">Merger Remedies Analysis</option>
+                  <option value="market-mapper-demo">Market Mapper Demo</option>
                   <option value="other">Other Economic Analysis</option>
                 </select>
                 {validationErrors.interest && (
