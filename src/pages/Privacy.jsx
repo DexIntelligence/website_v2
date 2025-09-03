@@ -240,7 +240,7 @@ export default function Privacy() {
           <p className="text-gray-300">
             <strong>Privacy Officer</strong><br />
             Justin Mayne<br />
-            justin.mayne@dexintelligence.ai<br />
+            justine@dexintelligence.ai<br />
             (416) 388-6843
           </p>
           <p className="text-gray-300">
