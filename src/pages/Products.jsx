@@ -57,6 +57,34 @@ export default function Products() {
           </div>
         </section>
 
+        {/* Market Mapper v1 Section */}
+        <section className="mt-12 relative">
+          <div className="flex justify-center">
+            <div className="max-w-2xl w-full relative">
+              {/* Round gradient burst behind box */}
+              <div className="absolute -inset-3 rounded-full opacity-90 blur-lg" style={{
+                background: 'radial-gradient(circle, rgba(238, 158, 70, 0.8) 0%, rgba(238, 158, 70, 0.4) 50%, rgba(238, 158, 70, 0.1) 80%, transparent 100%)'
+              }}></div>
+              
+              <div className="bg-black/90 border border-brand p-8 text-center hover:border-brand hover:shadow-lg hover:shadow-brand/20 transition-all duration-200 relative backdrop-blur-sm">
+                <h3 className="text-2xl font-bold text-white mb-3 underline decoration-brand decoration-2 underline-offset-4">Market Mapper v1 - Live Beta</h3>
+                <p className="text-lg text-gray-300 mb-4 leading-relaxed">
+                  Comprehensive local competition analysis for mergers in real time. Interactive market definitions, automated regulatory assessments, and professional reporting.
+                </p>
+                <a
+                  href="/Dex - Market Mapper v1 One Pager.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  View Demo Overview
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What we offer */}
         <section className="mt-16">
           <h2 className="text-3xl font-bold text-white mb-8">What We Offer:</h2>

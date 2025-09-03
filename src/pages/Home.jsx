@@ -71,7 +71,7 @@ export default function Home() {
             <ul className="text-base text-gray-400 text-left space-y-2">
               <li className="flex items-start">
                 <span className="text-brand mr-2 mt-0.5">•</span>
-                <span>Cloud deployments run in Canada-resident AWS environments with SOC 2 Type II and ISO 27001 certified infrastructure.</span>
+                <span>Cloud deployments run in Canada-resident Google Cloud environments with SOC 2 Type II and ISO 27001 certified infrastructure.</span>
               </li>
               <li className="flex items-start">
                 <span className="text-brand mr-2 mt-0.5">•</span>

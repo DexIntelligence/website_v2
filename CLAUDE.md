@@ -1,26 +1,95 @@
 # Dex Intelligence Website - Development Notes
 
-## PRIMARY OBJECTIVE: Cloud Storage Integration for Client Portal 🎯
+## GCS File Sharing Integration ✅ IMPLEMENTED
 
-**Goal**: Implement secure persistent storage where clients can upload files through the website dashboard, with seamless access from the Market Mapper app on Google Cloud Run.
+**Implementation Date**: 2025-08-31  
+**Status**: Production Ready - Successfully deployed with dual button architecture
 
-### Recommended Architecture
-- **Storage**: Google Cloud Storage (GCS) with per-client buckets
-- **Authentication**: Identity-Aware Proxy (IAP) for enhanced security
-- **File Access**: Time-limited signed URLs for upload/download operations
-- **Dashboard UI**: External GCS Console access (most secure) with optional embedded file manager
+### Architecture Overview
+- **Dual Access Pattern**: Separate "Launch Market Mapper" and "Access File Sharing" buttons
+- **Storage**: Google Cloud Storage with deployment-specific shared buckets
+- **Authentication**: Database-driven email authorization with IAP integration
+- **Access Method**: Direct GCS Console URLs for maximum security and reliability
 
-### Implementation Priorities
-1. **Phase 1**: Set up GCS buckets with IAP protection and external console access
-2. **Phase 2**: Add quick upload widget and recent files display to dashboard
-3. **Phase 3**: Consider full embedded file manager based on user feedback
+### Implementation Summary
+Users can now access shared team collaboration buckets directly from the dashboard through the "Access File Sharing" button, which redirects to Google Cloud Console with proper authentication.
 
-### Key Security Requirements
-- All file operations must use signed URLs (no direct GCS access from browser)
-- Implement per-client bucket isolation with strict IAM policies
-- Enable comprehensive audit logging through Cloud Logging
-- File uploads must be validated for type and size restrictions
-- Regular rotation of service account credentials
+### Database Schema
+```sql
+CREATE TABLE deployments (
+  id uuid PRIMARY KEY,
+  name text NOT NULL,
+  authorized_emails text[] NOT NULL,  -- Email-based access control
+  env_config jsonb NOT NULL,          -- Contains GCS configuration
+  is_active boolean DEFAULT true
+);
+```
+
+### Required Environment Configuration (env_config JSONB)
+```json
+{
+  "SHARED_FILES_BUCKET": "bucket-name-shared",
+  "GCS_SERVICE_ACCOUNT_KEY": "{...service account JSON...}",
+  "IAP_AUDIENCE": "optional-iap-client-id"
+}
+```
+
+**Important**: Project ID is automatically extracted from `GCS_SERVICE_ACCOUNT_KEY.project_id` - no separate `GCS_PROJECT_ID` field needed.
+
+### Key Implementation Lessons Learned
+
+#### 1. Netlify Function Dependencies
+**Problem**: Functions using custom utility modules (`require('./utils/deployment-config')`) fail with "handler is undefined or not exported"
+
+**Solution**: Query database directly in each function using `@supabase/supabase-js` client
+```javascript
+// ❌ Problematic approach
+const { getDeploymentConfig } = require('./utils/deployment-config');
+
+// ✅ Working approach  
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const { data: deployments } = await supabase.from('deployments')...
+```
+
+#### 2. Environment Variable Architecture
+**Problem**: Initially attempted separate `GCS_PROJECT_ID` field in database
+
+**Solution**: Extract project ID from service account JSON automatically
+```javascript
+const serviceAccount = JSON.parse(envConfig.GCS_SERVICE_ACCOUNT_KEY);
+const projectId = serviceAccount.project_id;
+```
+
+#### 3. Error Handling and Debugging
+**Process**: Add temporary debug logging to identify missing fields, then remove once fixed
+```javascript
+// Temporary debugging (removed in final version)
+console.log('Available env_config keys:', Object.keys(envConfig));
+
+// Production-appropriate logging (kept)
+console.log(`Shared bucket URL generated for user ${user.email}`);
+```
+
+### Files Involved
+- **`src/pages/client/Dashboard.jsx`**: Dual button UI with `accessDataSharing()` function
+- **`netlify/functions/generate-shared-bucket-url.js`**: GCS Console URL generation
+- **`netlify/functions/get-user-deployments.js`**: Email-based deployment authorization
+- **Database**: `deployments` table with JSONB env_config
+
+### Access Flow
+1. User clicks "Access File Sharing" button
+2. Dashboard calls `generate-shared-bucket-url` function with deployment ID
+3. Function queries database for authorized deployment based on user email
+4. Function extracts GCS configuration from deployment's env_config
+5. Function generates GCS Console URL with IAP authentication if available
+6. User redirected to Google Cloud Console for bucket access
+
+### Security Features
+- Email-based authorization via database `authorized_emails` array
+- Rate limiting (10 requests per minute per IP)
+- Supabase Row Level Security for deployment visibility  
+- IAP-aware URL generation for enhanced security
+- Audit logging of all access attempts
 
 ## Market Mapper Authentication (Cookie-Based) ✅ WORKING
 

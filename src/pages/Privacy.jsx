@@ -30,7 +30,7 @@ export default function Privacy() {
   
           <h3 className="text-xl font-semibold">B. Sensitive client information (“Client Data”)</h3>
           <ul className="list-disc pl-6 space-y-2 text-gray-300">
-            <li>Files you upload into our secure AWS environment (documents, data, notes).</li>
+            <li>Files you upload into our secure Google Cloud environment (documents, data, notes).</li>
             <li>Payment information you provide at checkout (processed by our payment provider).</li>
           </ul>
           <p className="text-gray-300">
@@ -107,12 +107,12 @@ export default function Privacy() {
             5) How we host, store, and protect Client Data
           </h2>
           <ul className="list-disc pl-6 space-y-2 text-gray-300">
-            <li><strong>Direct-to-cloud uploads:</strong> Your browser uploads files directly to encrypted storage in our AWS account via presigned links; the app does not proxy the file.</li>
+            <li><strong>Direct-to-cloud uploads:</strong> Your browser uploads files directly to encrypted storage in our Google Cloud account via signed URLs; the app does not proxy the file.</li>
             <li><strong>Encryption:</strong> TLS in transit; server-side encryption (KMS) at rest.</li>
             <li><strong>Access controls:</strong> role-based, least-privilege; access is logged and reviewed.</li>
             <li><strong>Malware scanning:</strong> new uploads are scanned; infected files are quarantined and you are alerted.</li>
             <li><strong>No local downloads:</strong> our staff do <strong>not</strong> download Client Data; processing and access occur within the secure cloud environment.</li>
-            <li><strong>VPC/private paths:</strong> where supported, service-to-service traffic remains on AWS private links.</li>
+            <li><strong>Private networking:</strong> where supported, service-to-service traffic remains on Google Cloud private networks.</li>
             <li><strong>Deletion &amp; backups:</strong> you can delete files; backups expire on a rolling schedule (see Retention).</li>
             <li><strong>Model training:</strong> we do <strong>not</strong> use your Client Data to train models unless we clearly ask and you agree.</li>
           </ul>
@@ -149,10 +149,10 @@ export default function Privacy() {
             We use vetted providers to host and support the Services. They may access information <strong>only</strong> to perform services for us and must protect it by contract.
           </p>
           <ul className="list-disc pl-6 space-y-2 text-gray-300">
-            <li><strong>Hosting &amp; storage:</strong> AWS (Canada region); encrypted S3 for files; ECS Fargate for app runtime.</li>
+            <li><strong>Hosting &amp; storage:</strong> Google Cloud (Canada region); encrypted Cloud Storage for files; Cloud Run for app runtime.</li>
             <li><strong>Identity &amp; login:</strong> Amazon Cognito (MFA supported).</li>
             <li><strong>Email:</strong> Microsoft 365/Outlook for administrative and transactional email, and <strong>Resend</strong> for sending application and marketing messages (only to contacts who have opted in).</li>
-            <li><strong>Security &amp; logging:</strong> AWS CloudTrail and CloudWatch for infrastructure and object-level logging, plus AWS GuardDuty and malware scanning services for threat detection. Logs are retained per our retention schedule, encrypted at rest, and reviewed for security events.</li>
+            <li><strong>Security &amp; logging:</strong> Google Cloud Logging and Monitoring for infrastructure and object-level logging, plus Security Command Center and malware scanning services for threat detection. Logs are retained per our retention schedule, encrypted at rest, and reviewed for security events.</li>
             <li><strong>Payments:</strong> payment processor (e.g., Stripe).</li>
           </ul>
           <p className="text-gray-300">
