@@ -121,7 +121,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">Contact <span className="text-brand">Us</span></h1>
       
       <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug mb-8 sm:mb-16">

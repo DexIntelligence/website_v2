@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
       {/* Hero */}
       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
         Transforming <span className="text-brand">quantitative analysis</span> from a bottleneck into a strategic advantage.

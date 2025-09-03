@@ -17,7 +17,7 @@ export default function Insights() {
 
   if (loading) {
     return (
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
         <h1 className="text-4xl font-bold tracking-tight text-white mb-12 relative">
           Insights
           <div className="absolute -bottom-2 left-0 w-24 h-1 bg-brand"></div>
@@ -30,7 +30,7 @@ export default function Insights() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32">
+    <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
       <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-8 sm:mb-12 relative">
         Insights
         <div className="absolute -bottom-2 left-0 w-16 sm:w-24 h-1 bg-brand"></div>

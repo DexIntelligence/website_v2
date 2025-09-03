@@ -1,7 +1,7 @@
 // src/pages/Privacy.jsx
 export default function Privacy() {
     return (
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 text-white">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40 text-white">
         {/* Title */}
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
           Privacy Policy

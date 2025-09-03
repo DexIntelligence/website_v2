@@ -20,7 +20,7 @@ export default function BlogPost() {
 
   if (loading) {
     return (
-      <main className="mx-auto max-w-4xl px-4 sm:px-6 pt-32">
+      <main className="mx-auto max-w-4xl px-4 sm:px-6 pt-40">
         <div className="text-center py-12">
           <p className="text-gray-400 text-lg">Loading post...</p>
         </div>
@@ -30,7 +30,7 @@ export default function BlogPost() {
 
   if (!post) {
     return (
-      <main className="mx-auto max-w-4xl px-4 sm:px-6 pt-32">
+      <main className="mx-auto max-w-4xl px-4 sm:px-6 pt-40">
         <div className="text-center py-12">
           <h1 className="text-2xl font-bold text-white mb-4">Post not found</h1>
           <Link to="/insights" className="text-brand hover:text-white transition-colors">
@@ -42,7 +42,7 @@ export default function BlogPost() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 sm:px-6 pt-32">
+    <main className="mx-auto max-w-4xl px-4 sm:px-6 pt-40">
       {/* Back link */}
       <div className="mb-8">
         <Link 

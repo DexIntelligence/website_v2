@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
-import { Menu, X, ChevronRight, Lock } from "lucide-react";
+import { Menu, X, ChevronRight, Lock, User } from "lucide-react";
 
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
@@ -69,7 +69,7 @@ function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-shadow ${
+      className={`fixed inset-x-0 top-6 z-50 transition-shadow ${
         scrolled ? "shadow-sm" : "shadow-none"
       } backdrop-blur bg-black text-white`}
     >
@@ -183,8 +183,57 @@ function Header() {
 }
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  // Check authentication status for top band
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const currentUser = await authService.getUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setUser(null);
+      }
+    };
+    checkAuth();
+
+    // Subscribe to auth changes
+    const unsubscribe = authService.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="min-h-[100vh] bg-gradient-to-b from-black via-neutral-900 to-neutral-800 text-white">
+      {/* Subtle Top Client Band */}
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-black/70 backdrop-blur-sm border-b border-neutral-800/50">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-1 flex justify-end">
+          {user ? (
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <User className="h-3 w-3" />
+              <span>{user.email}</span>
+              <Link 
+                to="/client/dashboard"
+                className="ml-2 text-brand hover:text-[#d68c3f] transition-colors"
+              >
+                Dashboard
+              </Link>
+            </div>
+          ) : (
+            <Link 
+              to="/client/login"
+              className="flex items-center gap-1 text-xs text-gray-400 hover:text-brand transition-colors"
+            >
+              <Lock className="h-3 w-3" />
+              CLIENT LOGIN
+            </Link>
+          )}
+        </div>
+      </div>
+      
       <Header />
       {/* Routes render the page below the header */}
       <Routes>

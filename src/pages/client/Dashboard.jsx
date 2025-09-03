@@ -219,7 +219,7 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="min-h-screen pt-32 pb-12">
+    <main className="min-h-screen pt-40 pb-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
