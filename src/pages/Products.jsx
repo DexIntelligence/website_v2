@@ -78,6 +78,7 @@ export default function Products() {
             ],
         },
         {
+
             name: 'Market Mapper Pro',
             status: 'In design',
             statusTone: 'text-sky-300 bg-sky-500/10 border border-sky-400/40',
@@ -88,6 +89,7 @@ export default function Products() {
                 'Organize every matter with secure, version-controlled project files tied to live Market Mapper data.',
                 'Model divestiture and commitment scenarios alongside automated overlap analytics in one place.',
                 'Publish regulator-ready exhibits that stay synced to the same Dex data fabric as Market Mapper v1.',
+
             ],
         },
     ];
