@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Lock, ExternalLink } from 'lucide-react';
+import {
+    Lock,
+    ExternalLink,
+    Map,
+    Network,
+    Sparkles,
+    Users2,
+    LineChart,
+    ShieldCheck,
+    BarChart3,
+} from 'lucide-react';
 import { authService } from '../utils/auth';
 
 export default function Products() {
@@ -13,153 +23,336 @@ export default function Products() {
         };
         checkAuth();
     }, []);
+
+    const platformPillars = [
+        {
+            title: 'Live competition data fabric',
+            description:
+                'Continuously harmonized retail location data, catchments, and regulatory thresholds ready for instant analysis.',
+            icon: Network,
+        },
+        {
+            title: 'Automated AI workflows',
+            description:
+                'Purpose-built automation runs screenings, surfaces risks, and drafts deliverables without exposing sensitive client data.',
+            icon: Sparkles,
+        },
+        {
+            title: 'Economist-in-the-loop assurance',
+            description:
+                'A senior team pressure-tests every automated result, ready to intervene whenever a case needs bespoke judgment.',
+            icon: Users2,
+        },
+    ];
+
+    const platformModules = [
+        {
+            name: 'Market Mapper',
+            status: 'Live beta',
+            statusTone: 'text-emerald-300 bg-emerald-500/10 border border-emerald-400/40',
+            tagline: 'Local area analysis available today.',
+            description:
+                'Interactive, map-driven local competition analysis for merger review teams, complete with export-ready evidence packs.',
+            highlights: [
+                'Define and compare overlap markets across drive-time, distance, or travel time in minutes.',
+                'Instantly check Competition Bureau screening thresholds and provincial rules.',
+                'Auto-generate polished market reports with transparent methodology notes.',
+            ],
+            cta: {
+                label: 'View Market Mapper overview',
+                href: '/Dex - Market Mapper v1 One Pager.pdf',
+                external: true,
+            },
+        },
+        {
+            name: 'Retail Data Collector',
+            status: 'Alpha build',
+            statusTone: 'text-amber-300 bg-amber-500/10 border border-amber-400/40',
+            tagline: 'Automated sourcing for national and local competitor coverage.',
+            description:
+                'Structured ingestion of store locator, pricing, and loyalty data to keep Market Mapper analysis current and defensible.',
+            highlights: [
+                'Verified scraping of thousands of storefronts with geocoding and audit trails.',
+                'Change-detection alerts so counsel always knows when overlaps shift.',
+                'Secure pipelines ready for private retailer data drops.',
+            ],
+        },
+        {
+            name: 'Market Mapper Pro',
+            status: 'In design',
+            statusTone: 'text-sky-300 bg-sky-500/10 border border-sky-400/40',
+            tagline: 'Advanced project file management and competition analytics for geographic competition.',
+            description:
+                'Extends Market Mapper with collaborative workspaces, versioned case files, and remedy scenario planning so teams can manage complex geographic competition matters end-to-end.',
+            highlights: [
+                'Organize every matter with secure, version-controlled project files tied to live Market Mapper data.',
+                'Model divestiture and commitment scenarios alongside automated overlap analytics in one place.',
+                'Publish regulator-ready exhibits that stay synced to the same Dex data fabric as Market Mapper v1.',
+            ],
+        },
+    ];
+
+    const economistSupport = [
+        'Structured intake so we can translate complex fact patterns into Dex-ready datasets.',
+        'AI-first analyses reviewed by economists who have led merger reviews and litigation support.',
+        'Rapid-turnaround advisory when automation flags novel issues or edge-case markets.',
+    ];
+
+    const roadmap = [
+        {
+            phase: 'Phase 1 · Q4 2025',
+            title: 'Deliver best-in-class local area analysis',
+            description:
+                'Market Mapper v1 in live beta with design partners, generating regulator-ready evidence packages on-demand.',
+        },
+        {
+            phase: 'Phase 2 · Q2 2026',
+            title: 'Add sales-based market share intelligence',
+            description:
+                'Blend client transaction data with Dex benchmarks to automate competitive effects analysis and rapid remedy evaluation.',
+        },
+        {
+            phase: 'Phase 3 · Q4 2026 – 2027',
+            title: 'Scale to mature econometrics',
+            description:
+                'Full econometric suite for litigation and behavioural monitoring, built on the same trusted workflows and data fabric.',
+        },
+    ];
+
     return (
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">Products and <span className="text-brand">Services</span></h1>
-        <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-4xl border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug mb-8 sm:mb-12">
-          Two ways to break the quantitative bottleneck:
-        </p>
-
-        {/* Products Section */}
-        <section className="mt-8">
-          <div className="flex flex-col items-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 w-full max-w-4xl">
-              {/* AI-Powered Services */}
-              <div className="flex flex-col items-center">
-                <div className="h-48 sm:h-64 flex items-center justify-center mb-2">
-                  <img src="/AI-powered-services.png" alt="AI-Powered Services" className="h-32 w-32 sm:h-40 sm:w-40 object-contain" />
+        <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-24 space-y-24">
+            <section className="relative overflow-hidden rounded-3xl border border-brand/40 bg-black/70 px-6 py-12 sm:px-10 sm:py-16">
+                <div className="absolute inset-0 bg-gradient-to-br from-brand/20 via-transparent to-brand/5" aria-hidden="true" />
+                <div className="relative z-10 max-w-3xl space-y-6">
+                    <p className="text-sm font-semibold uppercase tracking-widest text-brand/80">Dex Platform</p>
+                    <h1 className="text-4xl sm:text-5xl font-semibold leading-tight text-white">
+                        Competition economics, delivered as a platform
+                    </h1>
+                    <p className="text-lg sm:text-xl text-gray-200 leading-relaxed">
+                        Dex unifies automated market intelligence with a senior economist team so competition lawyers can answer
+                        local overlap questions instantly and handle the edge cases with confidence. Market Mapper is live today,
+                        and the broader Dex Platform is rolling out module by module.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <Link
+                            to="/contact"
+                            className="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-base font-semibold text-black transition hover:bg-[#d68c3f]"
+                        >
+                            Request a walkthrough
+                        </Link>
+                        <a
+                            href="/Dex - Market Mapper v1 One Pager.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
+                        >
+                            <ExternalLink className="h-4 w-4" />
+                            Download Market Mapper overview
+                        </a>
+                    </div>
+                    <div className="text-sm text-gray-400">
+                        {user ? (
+                            <Link
+                                to="/client/dashboard"
+                                className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-medium text-white transition hover:bg-white/20"
+                            >
+                                <Lock className="h-4 w-4" />
+                                Open the client portal
+                            </Link>
+                        ) : (
+                            <span>Market Mapper v1 is in live beta with design partners — join us to see it in action.</span>
+                        )}
+                    </div>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">AI-Powered Services</h3>
-                <p className="text-xl text-gray-400 text-center leading-relaxed">
-                  For complex matters, we act as your agile analytics team.
-                </p>
-              </div>
-              {/* Real-Time Platform */}
-              <div className="flex flex-col items-center">
-                <div className="h-48 sm:h-64 flex items-center justify-center mb-2">
-                  <img src="/real-time-platform.png" alt="Real-Time Platform" className="h-48 w-48 sm:h-64 sm:w-64 object-contain" />
+            </section>
+
+            <section className="space-y-10">
+                <div>
+                    <h2 className="text-3xl font-semibold text-white">How the Dex Platform is built</h2>
+                    <p className="mt-4 text-lg text-gray-300">
+                        Inspired by the best modern data platforms, Dex combines a trusted data foundation, secure automation, and
+                        expert review. Every module snaps into this architecture so you can scale from local screenings to full
+                        merger remedies without switching tools.
+                    </p>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2.5 underline decoration-brand decoration-2 underline-offset-4">Real-Time Platform</h3>
-                <p className="text-xl text-gray-400 text-center leading-relaxed mb-4">
-                  For instant analysis, empowering lawyers directly.
+                <div className="grid gap-6 sm:grid-cols-3">
+                    {platformPillars.map((pillar) => {
+                        const Icon = pillar.icon;
+                        return (
+                            <div
+                                key={pillar.title}
+                                className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1"
+                            >
+                                <Icon className="mb-4 h-8 w-8 text-brand" />
+                                <h3 className="text-xl font-semibold text-white">{pillar.title}</h3>
+                                <p className="mt-3 text-base text-gray-300 leading-relaxed">{pillar.description}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
+
+            <section className="space-y-12">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <h2 className="text-3xl font-semibold text-white">Platform modules</h2>
+                        <p className="mt-3 text-lg text-gray-300">
+                            Start with Market Mapper and grow into additional Dex modules as they launch. Each module shares the
+                            same evidence base, so every answer stays consistent across your matter lifecycle.
+                        </p>
+                    </div>
+                    <p className="rounded-full border border-brand/50 px-4 py-2 text-sm font-medium text-brand/90">
+                        Market Mapper access available now — new modules ship through 2026.
+                    </p>
+                </div>
+                <div className="grid gap-6">
+                    {platformModules.map((module) => (
+                        <div
+                            key={module.name}
+                            className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-transparent to-white/5 p-8 transition hover:border-brand/60"
+                        >
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div className="space-y-2">
+                                    <h3 className="text-2xl font-semibold text-white">{module.name}</h3>
+                                    <p className="text-base font-medium text-brand/90">{module.tagline}</p>
+                                </div>
+                                <span className={`inline-flex items-center rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-widest ${module.statusTone}`}>
+                                    {module.status}
+                                </span>
+                            </div>
+                            <p className="mt-4 text-lg text-gray-300 leading-relaxed">{module.description}</p>
+                            <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+                                {module.highlights.map((item) => (
+                                    <li key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/40 p-4">
+                                        <ShieldCheck className="mt-1 h-5 w-5 text-brand" />
+                                        <span className="text-sm text-gray-200 leading-relaxed">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            {module.cta ? (
+                                module.cta.external ? (
+                                    <a
+                                        href={module.cta.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                    >
+                                        <ExternalLink className="h-4 w-4" />
+                                        {module.cta.label}
+                                    </a>
+                                ) : (
+                                    <Link
+                                        to={module.cta.href}
+                                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                    >
+                                        {module.cta.label}
+                                    </Link>
+                                )
+                            ) : (
+                                <p className="mt-6 text-sm text-gray-400">
+                                    Interested in early access? <Link to="/contact" className="text-brand hover:text-white">Talk to the team.</Link>
+                                </p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <section className="grid gap-8 lg:grid-cols-[1.25fr_1fr]">
+                <div className="rounded-3xl border border-brand/40 bg-gradient-to-br from-brand/20 via-transparent to-black/60 p-8">
+                    <div className="flex items-center gap-3">
+                        <Map className="h-6 w-6 text-brand" />
+                        <span className="text-sm font-semibold uppercase tracking-widest text-brand/90">Local area analysis</span>
+                    </div>
+                    <h2 className="mt-4 text-3xl font-semibold text-white">Precision local evidence, on demand</h2>
+                    <p className="mt-4 text-lg text-gray-200 leading-relaxed">
+                        Whether you need a quick overlap screen or a defensible submission, Market Mapper produces polished local
+                        market exhibits in minutes. Our economists partner with you to tailor catchments, assumptions, and
+                        reporting so every claim stands up to regulator scrutiny.
+                    </p>
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                        <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                            <LineChart className="mb-3 h-6 w-6 text-brand" />
+                            <h3 className="text-lg font-semibold text-white">Quantitative rigor</h3>
+                            <p className="mt-2 text-sm text-gray-300">
+                                Built-in methodologies for distance, drive-time, and custom catchments with transparent assumptions.
+                            </p>
+                        </div>
+                        <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                            <BarChart3 className="mb-3 h-6 w-6 text-brand" />
+                            <h3 className="text-lg font-semibold text-white">Board-ready outputs</h3>
+                            <p className="mt-2 text-sm text-gray-300">
+                                Generate stakeholder-friendly PDF reports, data tables, and shareable dashboards with a single click.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+                    <h3 className="text-2xl font-semibold text-white">Your economist partners</h3>
+                    <p className="mt-4 text-base text-gray-300 leading-relaxed">
+                        Dex is founder-led by economists who have supported merger reviews, remedies, and litigation. We stay
+                        engaged throughout the engagement to:
+                    </p>
+                    <ul className="mt-6 space-y-4">
+                        {economistSupport.map((item) => (
+                            <li key={item} className="flex gap-3 text-sm text-gray-200 leading-relaxed">
+                                <ShieldCheck className="h-5 w-5 flex-shrink-0 text-brand" />
+                                <span>{item}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <Link
+                        to="/contact"
+                        className="mt-8 inline-flex items-center justify-center rounded-full border border-brand/60 px-5 py-2 text-sm font-semibold text-brand transition hover:bg-brand hover:text-black"
+                    >
+                        Meet the team
+                    </Link>
+                </div>
+            </section>
+
+            <section className="space-y-10">
+                <div>
+                    <h2 className="text-3xl font-semibold text-white">Roadmap to the full Dex Platform</h2>
+                    <p className="mt-3 text-lg text-gray-300">
+                        We are shipping quickly with a transparent roadmap. Join as a design partner to influence the modules that
+                        matter most to your practice.
+                    </p>
+                </div>
+                <div className="relative border-l border-white/10 pl-6">
+                    <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-brand/60 via-white/10 to-transparent" aria-hidden="true" />
+                    <div className="space-y-10">
+                        {roadmap.map((item) => (
+                            <div key={item.phase} className="relative pl-8">
+                                <span className="absolute left-[-31px] top-1 h-3 w-3 rounded-full border border-brand bg-black" />
+                                <p className="text-sm font-semibold uppercase tracking-widest text-brand/80">{item.phase}</p>
+                                <h3 className="mt-2 text-2xl font-semibold text-white">{item.title}</h3>
+                                <p className="mt-2 text-base text-gray-300 leading-relaxed">{item.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="rounded-3xl border border-white/10 bg-white/5 px-6 py-10 text-center backdrop-blur-sm">
+                <h2 className="text-3xl font-semibold text-white">Ready to explore the Dex Platform?</h2>
+                <p className="mt-3 text-lg text-gray-300">
+                    Secure your access to Market Mapper today and help shape the next modules on the roadmap.
                 </p>
-                {user && (
-                  <Link
-                    to="/client/dashboard"
-                    className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 text-sm font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
-                  >
-                    <Lock className="h-4 w-4" />
-                    Access Platform
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Market Mapper v1 Section */}
-        <section className="mt-12 relative">
-          <div className="flex justify-center">
-            <div className="max-w-2xl w-full relative">
-              {/* Round gradient burst behind box */}
-              <div className="absolute -inset-3 rounded-full opacity-90 blur-lg" style={{
-                background: 'radial-gradient(circle, rgba(238, 158, 70, 0.8) 0%, rgba(238, 158, 70, 0.4) 50%, rgba(238, 158, 70, 0.1) 80%, transparent 100%)'
-              }}></div>
-              
-              <div className="bg-black/90 border border-brand p-8 text-center hover:border-brand hover:shadow-lg hover:shadow-brand/20 transition-all duration-200 relative backdrop-blur-sm">
-                <h3 className="text-2xl font-bold text-white mb-3 underline decoration-brand decoration-2 underline-offset-4">Market Mapper v1 - Live Beta</h3>
-                <p className="text-lg text-gray-300 mb-4 leading-relaxed">
-                  Comprehensive local competition analysis for mergers in real time. Interactive market definitions, automated regulatory assessments, and professional reporting.
-                </p>
-                <a
-                  href="/Dex - Market Mapper v1 One Pager.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors rounded-lg"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  View Demo Overview
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* What we offer */}
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold text-white mb-8">What We Offer:</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <Link
-              to="/contact"
-              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
-            >
-              <span className="text-2xl font-semibold text-white group-hover:text-brand">Local Market Analysis</span>
-              <span className="mt-2 text-sm text-gray-400">Comprehensive analysis of competition in local geographic markets. Provide high-quality preliminary assessment of retail competition even before gaining access to client data.</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
-            >
-              <span className="text-2xl font-semibold text-white group-hover:text-brand">Optimal Merger Remedies</span>
-              <span className="mt-2 text-sm text-gray-400">Meet the Bureau's new standard for merger remedies by identifying the mathematically optimal divestiture package, accounting for crown jewels.</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
-            >
-              <span className="text-2xl font-semibold text-white group-hover:text-brand">Retail Data Collection</span>
-              <span className="mt-2 text-sm text-gray-400">Proprietary workflows automatically scrape and verify retail data from public sources, including store locators, for comprehensive market coverage.</span>
-            </Link>
-            <Link
-              to="/contact"
-              className="group bg-black/80 border border-brand px-6 py-10 flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-brand hover:shadow-lg hover:-translate-y-1"
-            >
-              <span className="text-2xl font-semibold text-white group-hover:text-brand">Bespoke Analysis</span>
-              <span className="mt-2 text-sm text-gray-400">Advanced analytical tools built for your needs. Cut through the noise and uncover the evidence that supports your best case.</span>
-            </Link>
-          </div>
-        </section>
-
-        {/* Full Economics Toolkit */}
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold text-white mb-4 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">The Full Economics Toolkit, Reimagined</h2>
-          <p className="text-xl text-gray-300 mb-12 leading-relaxed">
-            Starting with local market analysis, expanding to everything. Antitrust economics covers vast terrain—market definition, competitive dynamics, consumer welfare analysis, econometric modeling. Dex brings <span className="text-brand font-medium">AI-powered precision</span> to any economic challenge your practice encounters.
-          </p>
-        </section>
-
-        {/* Design Partners Section */}
-        <section className="mt-16 bg-neutral-800 p-8 text-center">
-          <p className="text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            We're selectively engaging early design partners for our <a href="/products" className="text-gray-300 decoration-transparent hover:decoration-brand underline decoration-2 underline-offset-4 transition-all duration-200">local market analysis service</a>.
-          </p>
-          <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            For inquiries about foundational design partnerships, please contact us.
-            {user && (
-              <span className="block mt-2 text-brand">
-                Existing clients can access the platform through the Client Portal.
-              </span>
-            )}
-          </p>
-          <div className="flex justify-center gap-4">
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] transition-colors"
-            >
-              Contact Us
-            </a>
-            {user && (
-              <Link
-                to="/client/dashboard"
-                className="inline-flex items-center gap-2 bg-neutral-700 text-white px-6 py-3 text-lg font-medium hover:bg-neutral-600 transition-colors"
-              >
-                <Lock className="h-5 w-5" />
-                Client Portal
-              </Link>
-            )}
-          </div>
-        </section>
-      </main>
+                <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <Link
+                        to="/contact"
+                        className="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-base font-semibold text-black transition hover:bg-[#d68c3f]"
+                    >
+                        Book a discovery call
+                    </Link>
+                    <a
+                        href="mailto:hello@dexintelligence.ai"
+                        className="inline-flex items-center justify-center rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
+                    >
+                        Email hello@dexintelligence.ai
+                    </a>
+                </div>
+            </section>
+        </main>
     );
-  }
-  
+}
