@@ -226,7 +226,7 @@ export default function Products() {
                             <ul className="mt-6 grid gap-3 sm:grid-cols-3">
                                 {module.highlights.map((item) => (
                                     <li key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/40 p-4">
-                                        <ShieldCheck className="mt-1 h-5 w-5 text-brand" />
+                                        <ShieldCheck className="h-5 w-5 flex-shrink-0 text-brand" />
                                         <span className="text-sm text-gray-200 leading-relaxed">{item}</span>
                                     </li>
                                 ))}
@@ -286,7 +286,7 @@ export default function Products() {
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
                         <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
                             <LineChart className="mb-3 h-6 w-6 text-brand" />
-                            <h3 className="text-lg font-semibold text-white">Quantitative rigor</h3>
+                            <h3 className="text-lg font-semibold text-white">Quantitative rigour</h3>
                             <p className="mt-2 text-sm text-gray-300">
                                 Built-in methodologies for distance, drive-time, and custom catchments with transparent assumptions.
                             </p>

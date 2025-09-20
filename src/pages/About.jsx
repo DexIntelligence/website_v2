@@ -7,7 +7,7 @@ export default function About() {
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">About <span className="text-brand">Us</span></h1>
         <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-light text-gray-200 max-w-5xl mx-auto border-l-4 border-brand pl-4 sm:pl-5 italic leading-snug mb-8 sm:mb-12">
-          Dex Intelligence helps competition lawyers turn complex quantitative analysis into a strategic advantage. We combine legal practicality with economic rigor and secure, purpose-built AI workflows to deliver analysis that is fast, transparent, and defensible.
+          Dex Intelligence helps competition lawyers turn complex quantitative analysis into a strategic advantage. We combine legal practicality with economic rigour and secure, purpose-built AI workflows to deliver analysis that is fast, transparent, and defensible.
         </p>
         
         <div className="bg-black/80 border border-brand px-4 sm:px-6 py-6 sm:py-10 max-w-4xl mx-auto">
@@ -34,33 +34,36 @@ export default function About() {
 
         {/* Why Lawyers Trust Dex */}
         <section className="mt-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 hover:bg-brand hover:text-black transition-all duration-300 px-2 py-1 cursor-pointer inline-block">Why Lawyers Trust Dex</h2>
-          <div className="grid gap-6 sm:grid-cols-2 max-w-4xl mx-auto">
-            <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-6 backdrop-blur-sm transition hover:border-blue-400/60 hover:-translate-y-1">
-              <Shield className="mb-4 h-8 w-8 text-blue-400" />
-              <h3 className="text-lg font-semibold text-white mb-2">Certified Infrastructure</h3>
-              <p className="text-sm text-gray-300 leading-relaxed">
+          <h2 className="text-3xl font-semibold text-white relative mb-6">
+            Why Lawyers Trust Dex
+            <div className="absolute -bottom-2 left-0 w-16 sm:w-24 h-1 bg-brand"></div>
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <Shield className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">Certified Infrastructure</h3>
+              <p className="text-base text-gray-300 leading-relaxed">
                 Canadian data residency on SOC 2 Type II and ISO 27001 certified infrastructure
               </p>
             </div>
-            <div className="rounded-2xl border border-green-500/30 bg-gradient-to-br from-green-500/10 to-green-600/5 p-6 backdrop-blur-sm transition hover:border-green-400/60 hover:-translate-y-1">
-              <Lock className="mb-4 h-8 w-8 text-green-400" />
-              <h3 className="text-lg font-semibold text-white mb-2">Data Security</h3>
-              <p className="text-sm text-gray-300 leading-relaxed">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <Lock className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">Data Security</h3>
+              <p className="text-base text-gray-300 leading-relaxed">
                 Data encrypted in transit and at rest; no public AI systems touch client data
               </p>
             </div>
-            <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-6 backdrop-blur-sm transition hover:border-purple-400/60 hover:-translate-y-1">
-              <FileCheck className="mb-4 h-8 w-8 text-purple-400" />
-              <h3 className="text-lg font-semibold text-white mb-2">Transparent Methods</h3>
-              <p className="text-sm text-gray-300 leading-relaxed">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <FileCheck className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">Transparent Methods</h3>
+              <p className="text-base text-gray-300 leading-relaxed">
                 Transparent, reproducible methods designed for regulator and courtroom scrutiny
               </p>
             </div>
-            <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-orange-600/5 p-6 backdrop-blur-sm transition hover:border-orange-400/60 hover:-translate-y-1">
-              <Brain className="mb-4 h-8 w-8 text-orange-400" />
-              <h3 className="text-lg font-semibold text-white mb-2">AI Safety</h3>
-              <p className="text-sm text-gray-300 leading-relaxed">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <Brain className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">AI Safety</h3>
+              <p className="text-base text-gray-300 leading-relaxed">
                 Proprietary workflows ensure client data never enters public AI systems
               </p>
             </div>
