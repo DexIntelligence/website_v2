@@ -10,6 +10,7 @@ import {
     LineChart,
     ShieldCheck,
     BarChart3,
+    Play,
 } from 'lucide-react';
 import { authService } from '../utils/auth';
 
@@ -125,8 +126,8 @@ export default function Products() {
         <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-24 space-y-16">
             <section className="space-y-8">
                 <div className="space-y-6">
-                    <h1 className="text-4xl sm:text-6xl font-semibold leading-tight text-white pt-8">
-                        Competition economics, delivered as a <span className="text-brand">platform</span>
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight pt-8">
+                        Competition economics, delivered as a <span className="text-brand">platform</span>.
                     </h1>
                     <div className="border-l-4 border-brand pl-6">
                         <p className="text-lg sm:text-xl text-gray-200 leading-relaxed italic">
@@ -143,6 +144,13 @@ export default function Products() {
                         className="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-base font-semibold text-black transition hover:bg-[#d68c3f]"
                     >
                         Request a walkthrough
+                    </Link>
+                    <Link
+                        to="/demo"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
+                    >
+                        <Play className="h-4 w-4" />
+                        Watch demo
                     </Link>
                     <a
                         href="/Dex - Market Mapper v1 One Pager.pdf"

@@ -10,13 +10,11 @@ const teamMembers = [
   {
     name: "Aaron Wolf",
     title: "Founding Economist",
-    bio: "Bio placeholder - Brief description of background, expertise, and role at Dex Intelligence.",
     linkedinUrl: "https://www.linkedin.com/in/aarondwolf/"
   },
   {
     name: "Lauren Cappell",
     title: "Fractional COO",
-    bio: "Bio placeholder - Brief description of background, expertise, and role at Dex Intelligence.",
     linkedinUrl: "https://www.linkedin.com/in/lauren-cappell/"
   }
 ];
