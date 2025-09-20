@@ -29,7 +29,7 @@ If you are developing a production application, we recommend using TypeScript wi
 ### further notes:
 ## Deployment (Netlify)
 
-When deploying this React (Vite) app to Netlify, you need to configure client-side routing so that deep links (e.g., `/about`, `/products`) load correctly instead of returning a 404.
+When deploying this React (Vite) single-page app to Netlify, you need to configure client-side routing so that deep links (e.g., `/about`, `/products`) load correctly instead of returning a 404.
 
 To do this, create a file named `_redirects` in the `public/` folder with the following content:
 
