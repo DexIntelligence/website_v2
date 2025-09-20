@@ -4,19 +4,21 @@ const teamMembers = [
   {
     name: "Justin Mayne",
     title: "Founder & CEO",
-    bio: "Justin has hands-on experience leveraging AI in high-stakes competition matters, applying innovative technology to complex legal problems. Backed by a degree in mathematics and PhD-level training in econometrics, Justin founded Dex to make economic analysis accessible to competition lawyers and their clients.",
+    bio: "Justin founded Dex to revolutionize quantitative evidence in competition law. He brings a rare blend of expertise in economics, mathematics, and programming, honed by applying innovative AI solutions to high-stakes cases. Today, he leads Dex in its mission to empower lawyers and their clients with automated, accessible, and data-driven economic analysis.",
     linkedinUrl: "https://www.linkedin.com/in/justin-dd-mayne/"
   },
-  {
-    name: "Aaron Wolf",
-    title: "Founding Economist",
-    linkedinUrl: "https://www.linkedin.com/in/aarondwolf/"
-  },
-  {
-    name: "Lauren Cappell",
-    title: "Fractional COO",
-    linkedinUrl: "https://www.linkedin.com/in/lauren-cappell/"
-  }
+  // {
+  //   name: "Aaron Wolf",
+  //   title: "Founding Economist",
+  //   bio: "Bio placeholder - Brief description of background, expertise, and role at Dex Intelligence.",
+  //   linkedinUrl: "https://www.linkedin.com/in/aarondwolf/"
+  // },
+  // {
+  //   name: "Lauren Cappell",
+  //   title: "Fractional COO",
+  //   bio: "Bio placeholder - Brief description of background, expertise, and role at Dex Intelligence.",
+  //   linkedinUrl: "https://www.linkedin.com/in/lauren-cappell/"
+  // }
 ];
 
 // Reusable Team component that can be used on both Team page and About page

@@ -56,7 +56,7 @@ export default function Products() {
                 'Interactive, map-driven local competition analysis for merger review teams, complete with export-ready evidence packs.',
             highlights: [
                 'Define and compare overlap markets across drive-time, distance, or travel time in minutes.',
-                'Instantly check Competition Bureau screening thresholds and regulatory requirements.',
+                'Identify optimal merger remedies accounting for crown jewel assets and competitive dynamics.',
                 'Auto-generate polished market reports with transparent methodology notes.',
             ],
             cta: {
@@ -73,9 +73,9 @@ export default function Products() {
             description:
                 'Structured ingestion of store locator, pricing, and loyalty data to keep Market Mapper analysis current and defensible.',
             highlights: [
-                'Verified scraping of thousands of storefronts with geocoding and audit trails.',
-                'Change-detection alerts so counsel always knows when overlaps shift.',
-                'Secure pipelines ready for private retailer data drops.',
+                'Verified scraping of retailer location data from public websites with automated quality validation.',
+                'Integrated datasets combining scraped retail locations with complementary public data sources.',
+                'Rapid data assembly for cases where counsel lacks access to proprietary location databases.',
             ],
         },
         {
@@ -87,18 +87,17 @@ export default function Products() {
             description:
                 'Extends Market Mapper with collaborative workspaces, versioned case files, and remedy scenario planning so teams can manage complex geographic competition matters end-to-end.',
             highlights: [
-                'Organize every matter with secure, version-controlled project files tied to live Market Mapper data.',
-                'Model divestiture and commitment scenarios alongside automated overlap analytics in one place.',
-                'Publish regulator-ready exhibits that stay synced to the same Dex data fabric as Market Mapper v1.',
-
+                'Integrated project management platform maintaining data continuity and case files throughout matter lifecycle.',
+                'Machine learning tools harmonize diverse datasets, including customer location analysis for precise market definition.',
+                'Advanced economic modeling with gravity models and sophisticated concentration analysis for complex markets.',
             ],
         },
     ];
 
     const economistSupport = [
-        'Structured intake so we can translate complex fact patterns into Dex-ready datasets.',
-        'AI-first analyses reviewed by economists who have led merger reviews and litigation support.',
-        'Rapid-turnaround advisory when automation flags novel issues or edge-case markets.',
+        'Expert review of automated analysis by economists with hands-on merger and litigation experience.',
+        'Strategic guidance on market definition, competitive effects, and remedy design tailored to your matter.',
+        'Collaborative case planning ensuring economic analysis aligns with legal strategy and timeline.',
     ];
 
     const roadmap = [
