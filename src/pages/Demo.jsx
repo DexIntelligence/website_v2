@@ -30,7 +30,7 @@ export default function Demo() {
         <div className="relative max-w-4xl mx-auto">
           <div className="aspect-video rounded-2xl overflow-hidden border border-brand/30 bg-black/50 backdrop-blur-sm">
             <iframe
-              src={`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1&showinfo=0`}
+              src={`https://www.youtube-nocookie.com/embed/${youtubeVideoId}?rel=0&modestbranding=1&showinfo=0`}
               title="Market Mapper Demo"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
