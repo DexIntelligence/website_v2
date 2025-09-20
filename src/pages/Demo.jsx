@@ -14,7 +14,7 @@ export default function Demo() {
     {
       icon: Clock,
       title: "Instant Results",
-      description: "Watch complex geographic analysis completed in minutes, not days"
+      description: "Watch complex geographic analysis completed in minutes, not days or weeks"
     },
     {
       icon: Users,
@@ -28,27 +28,17 @@ export default function Demo() {
       {/* Video Section */}
       <section className="mb-16 pt-8">
         <div className="relative max-w-4xl mx-auto">
-          {youtubeVideoId !== "YOUR_VIDEO_ID_HERE" ? (
-            <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden border border-brand/30 bg-black/50 backdrop-blur-sm">
-              <iframe
-                src={`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1&showinfo=0`}
-                title="Market Mapper Demo"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-                style={{ aspectRatio: '16/9' }}
-              />
-            </div>
-          ) : (
-            <div className="flex items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5 rounded-2xl border border-brand/30 h-96">
-              <div className="text-center">
-                <Play className="h-16 w-16 text-brand mx-auto mb-4" />
-                <p className="text-white text-lg font-medium">Demo Video Coming Soon</p>
-                <p className="text-gray-400 text-sm mt-2">Replace YOUR_VIDEO_ID_HERE with actual YouTube video ID</p>
-              </div>
-            </div>
-          )}
+          <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden border border-brand/30 bg-black/50 backdrop-blur-sm">
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1&showinfo=0`}
+              title="Market Mapper Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+              style={{ aspectRatio: '16/9' }}
+            />
+          </div>
         </div>
       </section>
 

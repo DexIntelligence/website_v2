@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Shield, Lock, FileCheck, Brain } from 'lucide-react';
+import { Shield, Lock, FileCheck, Brain, Play } from 'lucide-react';
 import { TeamSection } from './Team.jsx';
 
 export default function About() {
@@ -15,12 +15,21 @@ export default function About() {
           <p className="text-lg text-gray-400 leading-relaxed mb-8">
             We are launching with a founder-led service focused on the most pressing client need: <span className="text-brand font-medium">local market analysis</span> for merger review and remedy matters. Insights from this work, powered by our internal '<span className="text-white font-medium">Market Mapper</span>' tool, will directly inform the development of our future real-time platform.
           </p>
-          <Link
-            to="/products"
-            className="inline-flex items-center justify-center rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-brand transition hover:bg-brand hover:text-black"
-          >
-            Explore the Dex Platform
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              to="/products"
+              className="inline-flex items-center justify-center rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-brand transition hover:bg-brand hover:text-black"
+            >
+              Explore the Dex Platform
+            </Link>
+            <Link
+              to="/demo"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-brand transition hover:bg-brand hover:text-black"
+            >
+              <Play className="h-4 w-4" />
+              Watch the demo
+            </Link>
+          </div>
         </div>
 
         {/* Why Lawyers Trust Dex */}

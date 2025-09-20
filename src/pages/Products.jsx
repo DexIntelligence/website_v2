@@ -56,7 +56,7 @@ export default function Products() {
                 'Interactive, map-driven local competition analysis for merger review teams, complete with export-ready evidence packs.',
             highlights: [
                 'Define and compare overlap markets across drive-time, distance, or travel time in minutes.',
-                'Instantly check Competition Bureau screening thresholds and provincial rules.',
+                'Instantly check Competition Bureau screening thresholds and regulatory requirements.',
                 'Auto-generate polished market reports with transparent methodology notes.',
             ],
             cta: {
@@ -112,13 +112,13 @@ export default function Products() {
             phase: 'Phase 2 · Q2 2026',
             title: 'Add sales-based market share intelligence',
             description:
-                'Blend client transaction data with Dex benchmarks to automate competitive effects analysis and rapid remedy evaluation.',
+                'Blend client transaction data with Dex benchmarks to automate market share and concentration analysis and rapid remedy evaluation.',
         },
         {
             phase: 'Phase 3 · Q4 2026 – 2027',
             title: 'Scale to mature econometrics',
             description:
-                'Full econometric suite for litigation and behavioural monitoring, built on the same trusted workflows and data fabric.',
+                'Full econometric suite for complex merger reviews and antitrust litigation, built on the same trusted workflows and data fabric.',
         },
     ];
 
@@ -163,19 +163,6 @@ export default function Products() {
                     </a>
                 </div>
 
-                {user ? (
-                    <Link
-                        to="/client/dashboard"
-                        className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-medium text-white transition hover:bg-white/20"
-                    >
-                        <Lock className="h-4 w-4" />
-                        Open the client portal
-                    </Link>
-                ) : (
-                    <p className="text-sm text-gray-400">
-                        Market Mapper v1 is in live beta with design partners — join us to see it in action.
-                    </p>
-                )}
             </section>
 
             <section className="space-y-10">
@@ -245,24 +232,35 @@ export default function Products() {
                                 ))}
                             </ul>
                             {module.cta ? (
-                                module.cta.external ? (
-                                    <a
-                                        href={module.cta.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
-                                    >
-                                        <ExternalLink className="h-4 w-4" />
-                                        {module.cta.label}
-                                    </a>
-                                ) : (
-                                    <Link
-                                        to={module.cta.href}
-                                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
-                                    >
-                                        {module.cta.label}
-                                    </Link>
-                                )
+                                <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                                    {module.cta.external ? (
+                                        <a
+                                            href={module.cta.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                        >
+                                            <ExternalLink className="h-4 w-4" />
+                                            {module.cta.label}
+                                        </a>
+                                    ) : (
+                                        <Link
+                                            to={module.cta.href}
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                        >
+                                            {module.cta.label}
+                                        </Link>
+                                    )}
+                                    {module.name === 'Market Mapper' && (
+                                        <Link
+                                            to="/demo"
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                        >
+                                            <Play className="h-4 w-4" />
+                                            Watch demo
+                                        </Link>
+                                    )}
+                                </div>
                             ) : (
                                 <p className="mt-6 text-sm text-gray-400">
                                     Interested in early access? <Link to="/contact" className="text-brand hover:text-white">Talk to the team.</Link>
@@ -361,10 +359,10 @@ export default function Products() {
                         Book a discovery call
                     </Link>
                     <a
-                        href="mailto:hello@dexintelligence.ai"
+                        href="mailto:justin@dexintelligence.ai"
                         className="inline-flex items-center justify-center rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
                     >
-                        Email hello@dexintelligence.ai
+                        Email justin@dexintelligence.ai
                     </a>
                 </div>
             </section>
