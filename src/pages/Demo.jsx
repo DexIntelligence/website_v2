@@ -28,7 +28,7 @@ export default function Demo() {
       {/* Video Section */}
       <section className="mb-16 pt-8">
         <div className="relative max-w-4xl mx-auto">
-          <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden border border-brand/30 bg-black/50 backdrop-blur-sm">
+          <div className="aspect-video rounded-2xl overflow-hidden border border-brand/30 bg-black/50 backdrop-blur-sm">
             <iframe
               src={`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&modestbranding=1&showinfo=0`}
               title="Market Mapper Demo"

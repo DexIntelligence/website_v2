@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import {
-    Lock,
     ExternalLink,
     Map,
     Network,
@@ -12,18 +10,8 @@ import {
     BarChart3,
     Play,
 } from 'lucide-react';
-import { authService } from '../utils/auth';
 
 export default function Products() {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const currentUser = await authService.getUser();
-            setUser(currentUser);
-        };
-        checkAuth();
-    }, []);
 
     const platformPillars = [
         {
