@@ -76,10 +76,10 @@ function Header() {
       } backdrop-blur bg-black text-white`}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex h-28 items-center justify-between">
+        <div className="flex h-20 items-center justify-between md:h-28">
           {/* Left: Logo (desktop size 2x) */}
           <Link to="/" className="flex items-center gap-2 group">
-             <img src="/logo.png" alt="Dex Intelligence Inc." className="h-24 w-auto" />
+            <img src="/logo.png" alt="Dex Intelligence Inc." className="h-16 w-auto md:h-24" />
           </Link>
 
 
