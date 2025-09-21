@@ -7,12 +7,12 @@ const teamMembers = [
     bio: "Justin founded Dex to revolutionize quantitative evidence in competition law. He brings a rare blend of expertise in economics, mathematics, and programming, honed by applying innovative AI solutions to high-stakes cases. Today, he leads Dex in its mission to empower lawyers and their clients with automated, accessible, and data-driven economic analysis.",
     linkedinUrl: "https://www.linkedin.com/in/justin-dd-mayne/"
   },
-  // {
-  //   name: "Aaron Wolf",
-  //   title: "Founding Economist",
-  //   bio: "Bio placeholder - Brief description of background, expertise, and role at Dex Intelligence.",
-  //   linkedinUrl: "https://www.linkedin.com/in/aarondwolf/"
-  // },
+  {
+    name: "Aaron Wolf",
+    title: "Founding Economist",
+    bio: "Aaron Wolf is a PhD Candidate in economics at Northwestern University (expected 2026) with expertise in econometrics, industrial organization, and data analysis. He previously worked as a statistician at Yale's Economic Growth Center and as an economic consultant on large-scale competition and regulatory cases in the United States. He brings deep experience in structuring complex data and applying advanced quantitative methods to real-world business and policy challenges.",
+    linkedinUrl: "https://www.linkedin.com/in/aarondwolf/"
+  },
   // {
   //   name: "Lauren Cappell",
   //   title: "Fractional COO",
