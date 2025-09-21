@@ -4,7 +4,7 @@ const teamMembers = [
   {
     name: "Justin Mayne",
     title: "Founder & CEO",
-    bio: "Justin founded Dex to revolutionize quantitative evidence in competition law. He brings a rare blend of expertise in economics, mathematics, and programming, honed by applying innovative AI solutions to high-stakes cases. Today, he leads Dex in its mission to empower lawyers and their clients with automated, accessible, and data-driven economic analysis.",
+    bio: "Justin founded Dex to revolutionize quantitative evidence in competition law. He brings a rare blend of expertise in economics, mathematics, and competition law, honed by applying innovative AI solutions to high-stakes legal cases. Today, he leads Dex in its mission to empower lawyers and their clients with automated, accessible, and data-driven economic analysis.",
     linkedinUrl: "https://www.linkedin.com/in/justin-dd-mayne/"
   },
   {
