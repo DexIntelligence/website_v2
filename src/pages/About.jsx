@@ -1,8 +1,26 @@
 import { Link } from 'react-router-dom';
-import { Shield, Lock, FileCheck, Brain, Play } from 'lucide-react';
+import { Shield, Lock, FileCheck, Brain, Play, Network, Sparkles, Users2 } from 'lucide-react';
 import { TeamSection } from './Team.jsx';
 
 export default function About() {
+    const platformPillars = [
+      {
+        icon: Network,
+        title: "Integrated Data",
+        description: "Proprietary datasets combined with secure AI workflows for comprehensive market analysis"
+      },
+      {
+        icon: Sparkles,
+        title: "AI-Powered Intelligence",
+        description: "Purpose-built AI tools that accelerate analysis while maintaining transparency and defensibility"
+      },
+      {
+        icon: Users2,
+        title: "Lawyer-Centric Design",
+        description: "Built by lawyers, for lawyers - every feature designed with legal practice requirements in mind"
+      }
+    ];
+
     return (
       <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6 sm:mb-8">About <span className="text-brand">Us</span></h1>
@@ -31,6 +49,31 @@ export default function About() {
             </Link>
           </div>
         </div>
+
+        {/* The Dex Platform pillars */}
+        <section className="mt-8">
+          <h2 className="text-3xl font-semibold text-white relative mb-6">
+            The Dex Platform pillars
+            <div className="absolute -bottom-2 left-0 w-16 sm:w-24 h-1 bg-brand"></div>
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-3 mb-16">
+            {platformPillars.map((pillar, index) => {
+              const Icon = pillar.icon;
+              return (
+                <div
+                  key={index}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1"
+                >
+                  <Icon className="mb-4 h-8 w-8 text-brand" />
+                  <h3 className="text-xl font-semibold text-white mb-3">{pillar.title}</h3>
+                  <p className="text-base text-gray-300 leading-relaxed">
+                    {pillar.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
         {/* Why Lawyers Trust Dex */}
         <section className="mt-8">
