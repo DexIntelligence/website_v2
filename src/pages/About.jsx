@@ -39,31 +39,43 @@ export default function About() {
             <div className="absolute -bottom-2 left-0 w-16 sm:w-24 h-1 bg-brand"></div>
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
-              <Shield className="mb-4 h-8 w-8 text-brand" />
-              <h3 className="text-xl font-semibold text-white mb-3">Certified Infrastructure</h3>
-              <p className="text-base text-gray-300 leading-relaxed">
+            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
+              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
+              <Shield className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
+              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+                Certified Infrastructure
+              </h3>
+              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
                 Canadian data residency on SOC 2 Type II and ISO 27001 certified infrastructure
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
-              <Lock className="mb-4 h-8 w-8 text-brand" />
-              <h3 className="text-xl font-semibold text-white mb-3">Data Security</h3>
-              <p className="text-base text-gray-300 leading-relaxed">
+            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
+              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
+              <Lock className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
+              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+                Data Security
+              </h3>
+              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
                 Data encrypted in transit and at rest; no public AI systems touch client data
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
-              <FileCheck className="mb-4 h-8 w-8 text-brand" />
-              <h3 className="text-xl font-semibold text-white mb-3">Transparent Methods</h3>
-              <p className="text-base text-gray-300 leading-relaxed">
+            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
+              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
+              <FileCheck className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
+              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+                Transparent Methods
+              </h3>
+              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
                 Transparent, reproducible methods designed for regulator and courtroom scrutiny
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
-              <Brain className="mb-4 h-8 w-8 text-brand" />
-              <h3 className="text-xl font-semibold text-white mb-3">AI Safety</h3>
-              <p className="text-base text-gray-300 leading-relaxed">
+            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
+              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
+              <Brain className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
+              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+                AI Safety
+              </h3>
+              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
                 Proprietary workflows ensure client data never enters public AI systems
               </p>
             </div>
