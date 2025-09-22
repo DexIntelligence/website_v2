@@ -40,43 +40,39 @@ export default function About() {
             <div className="absolute -bottom-2 left-0 w-16 sm:w-24 h-1 bg-brand"></div>
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
-            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
-              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
-              <Shield className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
-              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+            <div className="rounded-2xl border border-brand/30 bg-brand/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <Shield className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Certified Infrastructure
               </h3>
-              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
+              <p className="text-base text-gray-300 leading-relaxed">
                 Canadian data residency on SOC 2 Type II and ISO 27001 certified infrastructure
               </p>
             </div>
-            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
-              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
-              <Lock className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
-              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+            <div className="rounded-2xl border border-brand/30 bg-brand/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <Lock className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Data Security
               </h3>
-              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
+              <p className="text-base text-gray-300 leading-relaxed">
                 Data encrypted in transit and at rest; no public AI systems touch client data
               </p>
             </div>
-            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
-              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
-              <FileCheck className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
-              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+            <div className="rounded-2xl border border-brand/30 bg-brand/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <FileCheck className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">
                 Transparent Methods
               </h3>
-              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
+              <p className="text-base text-gray-300 leading-relaxed">
                 Transparent, reproducible methods designed for regulator and courtroom scrutiny
               </p>
             </div>
-            <div className="group rounded-2xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/50 to-black/80 p-6 backdrop-blur-sm shadow-[0_10px_30px_-15px_rgba(214,140,63,0.45)] transition hover:-translate-y-1 hover:border-brand/60">
-              <div className="mb-5 h-1 w-12 rounded-full bg-brand/60 transition-colors group-hover:bg-brand"></div>
-              <Brain className="mb-4 h-8 w-8 text-brand/80 transition-colors group-hover:text-brand/90" />
-              <h3 className="text-xl font-semibold text-white/90 mb-3 transition-colors group-hover:text-white">
+            <div className="rounded-2xl border border-brand/30 bg-brand/5 p-6 backdrop-blur-sm transition hover:border-brand/60 hover:-translate-y-1">
+              <Brain className="mb-4 h-8 w-8 text-brand" />
+              <h3 className="text-xl font-semibold text-white mb-3">
                 AI Safety
               </h3>
-              <p className="text-base text-gray-300 leading-relaxed transition-colors group-hover:text-gray-200">
+              <p className="text-base text-gray-300 leading-relaxed">
                 Proprietary workflows ensure client data never enters public AI systems
               </p>
             </div>
@@ -84,11 +80,11 @@ export default function About() {
         </section>
 
         <section className="mt-16">
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-brand/15 via-black/70 to-black/90 px-6 py-8 sm:px-8 sm:py-10">
+          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 px-6 py-8 sm:px-8 sm:py-10 backdrop-blur-sm">
             <div className="mb-6">
-              <h2 className="text-3xl font-semibold text-white relative">
+              <h2 className="text-3xl font-semibold text-white relative mb-6">
                 Your economist partners
-                <span className="absolute -bottom-2 left-0 h-1 w-16 bg-brand sm:w-20"></span>
+                <div className="absolute -bottom-2 left-0 w-16 sm:w-24 h-1 bg-brand"></div>
               </h2>
               <p className="mt-6 text-base sm:text-lg text-gray-300 leading-relaxed">
                 Dex is founder-led by economists who stay embedded with every engagement. The team pairs real-world merger review
@@ -103,29 +99,29 @@ export default function About() {
                 </li>
               ))}
             </ul>
-            <Link
-              to="/team"
-              className="mt-8 inline-flex items-center justify-center rounded-full border border-brand/60 px-5 py-2 text-sm font-semibold text-brand transition hover:bg-brand hover:text-black"
-            >
-              Meet the team
-            </Link>
           </div>
         </section>
 
+        {/* Team Section */}
+        <section className="mt-16">
+          <div className="w-24 h-px bg-white/20 mb-8"></div>
+          <TeamSection showHeader={true} />
+        </section>
+
         <section className="mt-12">
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-black/70 via-black/80 to-black/90 px-6 py-8 sm:px-8 sm:py-10">
+          <div className="rounded-2xl border border-slate-500/20 bg-black px-6 py-8 sm:px-8 sm:py-10 backdrop-blur-sm">
             <div className="mb-6">
               <h2 className="text-2xl font-semibold text-white">Roadmap at a glance</h2>
               <p className="mt-3 text-sm sm:text-base text-gray-300 leading-relaxed">
                 We are shipping quickly alongside design partners. Here's how the Dex Platform evolves over the next phases.
               </p>
             </div>
-            <div className="relative pl-6 sm:pl-8">
-              <span className="absolute left-2 top-0 h-full w-px bg-gradient-to-b from-brand/60 via-white/10 to-transparent" aria-hidden="true"></span>
+            <div className="relative pl-8">
+              <span className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-brand/60 via-white/10 to-transparent" aria-hidden="true"></span>
               <div className="space-y-6">
                 {roadmap.map((item) => (
-                  <div key={item.phase} className="relative pl-4">
-                    <span className="absolute -left-5 top-1 h-2.5 w-2.5 rounded-full border border-brand bg-black"></span>
+                  <div key={item.phase} className="relative pl-8">
+                    <span className="absolute left-[-37px] top-1 h-3 w-3 rounded-full border border-brand bg-black"></span>
                     <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand/80">{item.phase}</p>
                     <h3 className="mt-1 text-lg font-semibold text-white">{item.title}</h3>
                     <p className="mt-1 text-sm text-gray-300 leading-relaxed">{item.description}</p>
@@ -134,12 +130,6 @@ export default function About() {
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Team Section */}
-        <section className="mt-16">
-          <div className="w-24 h-px bg-white/20 mb-8"></div>
-          <TeamSection showHeader={true} />
         </section>
 
       </main>
