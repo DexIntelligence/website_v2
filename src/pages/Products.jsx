@@ -9,6 +9,7 @@ import {
     ShieldCheck,
     BarChart3,
     Play,
+    Download,
 } from 'lucide-react';
 
 export default function Products() {
@@ -146,7 +147,15 @@ export default function Products() {
                         className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
                     >
                         <ExternalLink className="h-4 w-4" />
-                        Download Market Mapper overview
+                        View Market Mapper overview
+                    </a>
+                    <a
+                        href="/Dex - Market Mapper v1 Sample Pitch Report.pdf"
+                        download
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-base font-semibold text-white transition hover:border-white/40"
+                    >
+                        <Download className="h-4 w-4" />
+                        Download Sample Companion Report
                     </a>
                 </div>
 
@@ -220,6 +229,15 @@ export default function Products() {
                             </ul>
                             {module.cta ? (
                                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                                    {module.name === 'Market Mapper' && (
+                                        <Link
+                                            to="/demo"
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                        >
+                                            <Play className="h-4 w-4" />
+                                            Watch demo
+                                        </Link>
+                                    )}
                                     {module.cta.external ? (
                                         <a
                                             href={module.cta.href}
@@ -239,13 +257,14 @@ export default function Products() {
                                         </Link>
                                     )}
                                     {module.name === 'Market Mapper' && (
-                                        <Link
-                                            to="/demo"
+                                        <a
+                                            href="/Dex - Market Mapper v1 Sample Pitch Report.pdf"
+                                            download
                                             className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
                                         >
-                                            <Play className="h-4 w-4" />
-                                            Watch demo
-                                        </Link>
+                                            <Download className="h-4 w-4" />
+                                            Download Sample Companion Report
+                                        </a>
                                     )}
                                 </div>
                             ) : (

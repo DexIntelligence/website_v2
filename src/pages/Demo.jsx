@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Play, Clock, Users, BarChart3 } from 'lucide-react';
+import { Play, Clock, Users, BarChart3, Download } from 'lucide-react';
 
 export default function Demo() {
   // Market Mapper Demo Video
@@ -90,6 +90,14 @@ export default function Demo() {
           >
             Learn More About the Platform
           </Link>
+          <a
+            href="/Dex - Market Mapper v1 Sample Pitch Report.pdf"
+            download
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-base font-semibold text-white transition hover:border-white/40"
+          >
+            <Download className="h-5 w-5" />
+            Download Sample Companion Report
+          </a>
         </div>
       </section>
     </main>
