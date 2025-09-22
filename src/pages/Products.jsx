@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import {
-    Lock,
     ExternalLink,
     Map,
     Network,
@@ -11,19 +9,11 @@ import {
     ShieldCheck,
     BarChart3,
     Play,
+    Download,
 } from 'lucide-react';
-import { authService } from '../utils/auth';
+import { economistSupport, roadmap } from '../utils/content.js';
 
 export default function Products() {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const currentUser = await authService.getUser();
-            setUser(currentUser);
-        };
-        checkAuth();
-    }, []);
 
     const platformPillars = [
         {
@@ -94,33 +84,6 @@ export default function Products() {
         },
     ];
 
-    const economistSupport = [
-        'Expert review of automated analysis by economists with hands-on merger and litigation experience.',
-        'Strategic guidance on market definition, competitive effects, and remedy design tailored to your matter.',
-        'Collaborative case planning ensuring economic analysis aligns with legal strategy and timeline.',
-    ];
-
-    const roadmap = [
-        {
-            phase: 'Phase 1 · Q4 2025',
-            title: 'Deliver best-in-class local area analysis',
-            description:
-                'Market Mapper v1 in live beta with design partners, generating regulator-ready evidence packages on-demand.',
-        },
-        {
-            phase: 'Phase 2 · Q2 2026',
-            title: 'Add sales-based market share intelligence',
-            description:
-                'Blend client transaction data with Dex benchmarks to automate market share and concentration analysis and rapid remedy evaluation.',
-        },
-        {
-            phase: 'Phase 3 · Q4 2026 – 2027',
-            title: 'Scale to mature econometrics',
-            description:
-                'Full econometric suite for complex merger reviews and antitrust litigation, built on the same trusted workflows and data fabric.',
-        },
-    ];
-
     return (
         <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-24 space-y-16">
             <section className="space-y-8">
@@ -158,7 +121,15 @@ export default function Products() {
                         className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
                     >
                         <ExternalLink className="h-4 w-4" />
-                        Download Market Mapper overview
+                        View Market Mapper overview
+                    </a>
+                    <a
+                        href="/Dex - Market Mapper v1 Sample Pitch Report.pdf"
+                        download
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-base font-semibold text-white transition hover:border-white/40"
+                    >
+                        <Download className="h-4 w-4" />
+                        Download Sample Companion Report
                     </a>
                 </div>
 
@@ -232,6 +203,15 @@ export default function Products() {
                             </ul>
                             {module.cta ? (
                                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                                    {module.name === 'Market Mapper' && (
+                                        <Link
+                                            to="/demo"
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
+                                        >
+                                            <Play className="h-4 w-4" />
+                                            Watch demo
+                                        </Link>
+                                    )}
                                     {module.cta.external ? (
                                         <a
                                             href={module.cta.href}
@@ -251,13 +231,14 @@ export default function Products() {
                                         </Link>
                                     )}
                                     {module.name === 'Market Mapper' && (
-                                        <Link
-                                            to="/demo"
+                                        <a
+                                            href="/Dex - Market Mapper v1 Sample Pitch Report.pdf"
+                                            download
                                             className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-white"
                                         >
-                                            <Play className="h-4 w-4" />
-                                            Watch demo
-                                        </Link>
+                                            <Download className="h-4 w-4" />
+                                            Download Sample Companion Report
+                                        </a>
                                     )}
                                 </div>
                             ) : (
