@@ -4,7 +4,7 @@ const teamMembers = [
   {
     name: "Justin Mayne",
     title: "Founder & CEO",
-    bio: "Justin founded Dex to revolutionize quantitative evidence in competition law. He brings a rare blend of expertise in economics, mathematics, and competition law, honed by applying innovative AI solutions to high-stakes legal cases. Today, he leads Dex in its mission to empower lawyers and their clients with automated, accessible, and data-driven economic analysis.",
+    bio: "Justin founded Dex to revolutionize quantitative evidence in competition law. He brings a rare blend of expertise in economics, mathematics, and competition law, honed by applying innovative AI solutions to high-stakes merger cases at elite Canadian law firms. Today, he leads Dex in its mission to empower lawyers and their clients with automated, accessible, and data-driven economic analysis.",
     linkedinUrl: "https://www.linkedin.com/in/justin-dd-mayne/"
   },
   {
@@ -13,12 +13,12 @@ const teamMembers = [
     bio: "Aaron Wolf is a PhD Candidate in economics at Northwestern University (expected 2026) with expertise in econometrics, industrial organization, and data analysis. He previously worked as a statistician at Yale's Economic Growth Center and as an economic consultant on large-scale competition and regulatory cases in the United States. He brings deep experience in structuring complex data and applying advanced quantitative methods to real-world business and policy challenges.",
     linkedinUrl: "https://www.linkedin.com/in/aarondwolf/"
   },
-  // {
-  //   name: "Lauren Cappell",
-  //   title: "Fractional COO",
-  //   bio: "Bio placeholder - Brief description of background, expertise, and role at Dex Intelligence.",
-  //   linkedinUrl: "https://www.linkedin.com/in/lauren-cappell/"
-  // }
+  {
+    name: "Lauren Cappell",
+    title: "Fractional COO",
+    bio: "Lauren Cappell is a senior technology executive who began her career in corporate law. Her experience spans large tech companies (Amazon, Thomson Reuters, Blackberry) and early and mid-stage startups. Lauren currently serves as a fractional COO and advisor, combining her legal background with proven operational expertise in AI and enterprise platforms.",
+    linkedinUrl: "https://www.linkedin.com/in/lauren-cappell/"
+  }
 ];
 
 // Reusable Team component that can be used on both Team page and About page
