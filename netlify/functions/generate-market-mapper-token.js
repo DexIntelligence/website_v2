@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const { createClient } = require('@supabase/supabase-js');
+import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
 
 // Rate limiting storage
 const rateLimit = new Map();
@@ -55,7 +55,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {

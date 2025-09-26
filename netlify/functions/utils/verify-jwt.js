@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { createClient } = require('@supabase/supabase-js');
+import jwt from 'jsonwebtoken';
+import { createClient } from '@supabase/supabase-js';
 
 /**
  * Verify a Supabase JWT token using the JWT secret
@@ -82,7 +82,7 @@ function extractToken(headers) {
   return parts[1];
 }
 
-module.exports = {
+export {
   verifySupabaseJWT,
   verifySupabaseSession,
   extractToken

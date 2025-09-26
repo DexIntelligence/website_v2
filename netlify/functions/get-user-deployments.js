@@ -1,5 +1,5 @@
-const { createClient } = require('@supabase/supabase-js');
-const { verifySupabaseJWT, extractToken } = require('./utils/verify-jwt');
+import { createClient } from '@supabase/supabase-js';
+import { verifySupabaseJWT, extractToken } from './utils/verify-jwt.js';
 
 // Rate limiting storage
 const rateLimit = new Map();
@@ -56,7 +56,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   console.log('get-user-deployments: Function invoked');
 
   // Handle CORS preflight
