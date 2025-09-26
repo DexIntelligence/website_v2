@@ -13,6 +13,7 @@
     "@google-cloud/storage": "^7.15.0",
     "@supabase/supabase-js": "^2.55.0",
     "@tailwindcss/typography": "^0.5.16",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.539.0",
     "marked": "^16.1.2",
     "react": "^19.1.1",
