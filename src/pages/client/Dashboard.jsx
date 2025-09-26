@@ -10,8 +10,8 @@ import MockIndicator from '../../mock/MockIndicator';
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [launchingApp, setLaunchingApp] = useState(false);
-  const [accessingFiles, setAccessingFiles] = useState(false);
+  const [launchingId, setLaunchingId] = useState(null);
+  const [fileSharingId, setFileSharingId] = useState(null);
   const [deployments, setDeployments] = useState([]);
   const [deploymentsLoading, setDeploymentsLoading] = useState(true);
   const navigate = useNavigate();
@@ -87,7 +87,23 @@ export default function Dashboard() {
 
   // Cookie-based authentication (ONLY working method in production)
   const launchMarketMapper = async (deployment) => {
-    setLaunchingApp(true);
+    const deploymentId = deployment?.id;
+    if (!deploymentId) {
+      console.error('Cannot launch Market Mapper: deployment ID is missing.');
+      return;
+    }
+
+    if (launchingId !== null && launchingId !== deploymentId) {
+      console.warn('Another deployment launch is already in progress.');
+      return;
+    }
+
+    if (fileSharingId !== null) {
+      console.warn('Cannot launch while a file sharing request is in progress.');
+      return;
+    }
+
+    setLaunchingId(deploymentId);
     try {
       // Get current user from auth service
       const currentUser = await authService.getUser();
@@ -109,7 +125,7 @@ export default function Dashboard() {
           'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
-          deploymentId: deployment.id
+          deploymentId
         }),
       });
 
@@ -157,19 +173,34 @@ export default function Dashboard() {
       
       alert(errorMessage);
     } finally {
-      setLaunchingApp(false);
+      setLaunchingId(null);
     }
   };
 
 
   // Access shared data bucket for team collaboration
-  const accessDataSharing = async () => {
-    setAccessingFiles(true);
+  const accessDataSharing = async (deployment) => {
+    const deploymentId = deployment?.id;
+    if (!deploymentId) {
+      console.error('Cannot access shared files: deployment ID is missing.');
+      return;
+    }
+
+    if (fileSharingId !== null && fileSharingId !== deploymentId) {
+      console.warn('Another file sharing request is already in progress.');
+      return;
+    }
+
+    if (launchingId !== null) {
+      console.warn('Cannot access shared files while a deployment is launching.');
+      return;
+    }
+
+    setFileSharingId(deploymentId);
     try {
       // MOCK MODE CHECK - Remove this block to disable mock
       if (mockSystem.isMockMode()) {
-        await mockSystem.mockAccessFileSharing({ name: 'Mock Deployment' });
-        setAccessingFiles(false);
+        await mockSystem.mockAccessFileSharing(deployment);
         return;
       }
       // END MOCK MODE CHECK
@@ -193,7 +224,7 @@ export default function Dashboard() {
           'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
-          deploymentId: deployments[0]?.id // Use first deployment for file sharing
+          deploymentId
         }),
       });
 
@@ -227,7 +258,7 @@ export default function Dashboard() {
       
       alert(errorMessage);
     } finally {
-      setAccessingFiles(false);
+      setFileSharingId(null);
     }
   };
 
@@ -313,10 +344,10 @@ export default function Dashboard() {
                         <div className="mt-4 flex flex-wrap justify-end gap-3">
                           <button
                             onClick={() => launchMarketMapper(deployment)}
-                            disabled={launchingApp || accessingFiles}
+                            disabled={launchingId === deployment.id || fileSharingId !== null}
                             className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#d68c3f] disabled:cursor-not-allowed disabled:opacity-50"
                           >
-                            {launchingApp ? (
+                            {launchingId === deployment.id ? (
                               <>
                                 <Loader2 className="h-4 w-4 animate-spin" />
                                 Launching App...
@@ -331,11 +362,11 @@ export default function Dashboard() {
                           </button>
 
                           <button
-                            onClick={() => accessDataSharing()}
-                            disabled={accessingFiles || launchingApp}
+                            onClick={() => accessDataSharing(deployment)}
+                            disabled={fileSharingId === deployment.id || launchingId !== null}
                             className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                           >
-                            {accessingFiles ? (
+                            {fileSharingId === deployment.id ? (
                               <>
                                 <Loader2 className="h-4 w-4 animate-spin" />
                                 Accessing Files...
