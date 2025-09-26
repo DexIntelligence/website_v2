@@ -46,6 +46,82 @@ export const authService = {
     return () => subscription?.unsubscribe();
   },
 
+  async resetPasswordForEmail(email) {
+    if (!supabase) {
+      throw new Error('Authentication service not configured');
+    }
+
+    const redirectTo = `${window.location.origin}/client/reset-password`;
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo,
+    });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async updatePassword(newPassword) {
+    if (!supabase) {
+      throw new Error('Authentication service not configured');
+    }
+
+    const { data, error } = await supabase.auth.updateUser({
+      password: newPassword
+    });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async updateEmail(newEmail) {
+    if (!supabase) {
+      throw new Error('Authentication service not configured');
+    }
+
+    const redirectTo = `${window.location.origin}/client/dashboard`;
+
+    const { data, error } = await supabase.auth.updateUser({
+      email: newEmail
+    }, {
+      emailRedirectTo: redirectTo
+    });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async signInWithOtp(email) {
+    if (!supabase) {
+      throw new Error('Authentication service not configured');
+    }
+
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: false,
+      }
+    });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async verifyOtp(email, token) {
+    if (!supabase) {
+      throw new Error('Authentication service not configured');
+    }
+
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: 'email'
+    });
+
+    if (error) throw error;
+    return data;
+  },
+
   // NOTE: generateAppToken is no longer used - Dashboard.jsx handles token generation directly
   // Keeping for backwards compatibility but should not be used for new implementations
   async generateAppToken(user) {

@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const { verifySupabaseJWT, extractToken } = require('./utils/verify-jwt');
 
 // Rate limiting storage
 const rateLimit = new Map();
@@ -35,32 +36,15 @@ function cleanupRateLimits() {
 // Run cleanup every 5 minutes
 setInterval(cleanupRateLimits, 300000);
 
-// Verify Supabase session token
+// Verify Supabase session token using proper JWT verification
 async function verifySupabaseToken(token) {
-  if (!token || !token.startsWith('eyJ')) {
-    return null;
-  }
-  
-  try {
-    // Decode JWT payload (without verification for now)
-    const parts = token.split('.');
-    if (parts.length !== 3) return null;
-    
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
-    
-    // Check if token is expired
-    if (payload.exp && payload.exp * 1000 < Date.now()) {
-      return null;
-    }
-    
-    return {
-      userId: payload.sub,
-      email: payload.email,
-    };
-  } catch (error) {
-    console.error('Token decode error:', error);
-    return null;
-  }
+  const decoded = await verifySupabaseJWT(token);
+  if (!decoded) return null;
+
+  return {
+    userId: decoded.sub,
+    email: decoded.email,
+  };
 }
 
 const headers = {
@@ -108,18 +92,16 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Verify authorization header
-    const authHeader = event.headers.authorization || event.headers.Authorization || '';
-    
-    if (!authHeader.startsWith('Bearer ')) {
+    // Extract and verify token
+    const supabaseToken = extractToken(event.headers);
+
+    if (!supabaseToken) {
       return {
         statusCode: 401,
         headers,
         body: JSON.stringify({ error: 'Authorization required' }),
       };
     }
-    
-    const supabaseToken = authHeader.substring(7);
     
     // Verify Supabase session
     const user = await verifySupabaseToken(supabaseToken);

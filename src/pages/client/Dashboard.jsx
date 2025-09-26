@@ -342,13 +342,13 @@ export default function Dashboard() {
                 <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
                 <span className="text-gray-300 group-hover:text-white">View Insights</span>
               </a>
-              <button
+              <Link
+                to="/client/account"
                 className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
-                disabled
               >
-                <Settings className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-600">Account Settings (Coming Soon)</span>
-              </button>
+                <Settings className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                <span className="text-gray-400 group-hover:text-brand">Account Settings</span>
+              </Link>
             </div>
           </div>
         </div>
