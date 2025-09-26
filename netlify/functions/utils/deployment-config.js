@@ -1,4 +1,4 @@
-const { createClient } = require('@supabase/supabase-js');
+import { createClient } from '@supabase/supabase-js';
 
 // Get deployment-specific environment variables by deployment ID
 async function getDeploymentConfig(deploymentId) {
@@ -81,7 +81,7 @@ function getEnvVar(envConfig, varName, fallback = null) {
   return envConfig[varName] || fallback;
 }
 
-module.exports = {
+export {
   getDeploymentConfig,
   getDeploymentConfigByUser,
   getEnvVar

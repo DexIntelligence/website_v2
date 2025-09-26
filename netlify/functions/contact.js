@@ -1,5 +1,5 @@
-const { Resend } = require('resend');
-const { createClient } = require('@supabase/supabase-js');
+import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -245,7 +245,7 @@ Technical Details: IP: ${clientIP}
   };
 }
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Set CORS headers
   const headers = {
     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development' 
