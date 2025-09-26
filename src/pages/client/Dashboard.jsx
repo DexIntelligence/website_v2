@@ -3,6 +3,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files } from 'lucide-react';
 import { authService } from '../../utils/auth';
 
+// MOCK SYSTEM - Remove these 2 lines to disable mock functionality
+import mockSystem from '../../mock/mockSystem';
+import MockIndicator from '../../mock/MockIndicator';
+
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,6 +36,16 @@ export default function Dashboard() {
 
   const loadUserDeployments = async () => {
     try {
+      // MOCK MODE CHECK - Remove this block to disable mock
+      if (mockSystem && mockSystem.isMockMode()) {
+        const mockData = await mockSystem.mockLoadDeployments();
+        setDeployments(mockData.deployments || []);
+        console.log(`MOCK: Loaded ${mockData.deployments?.length || 0} fake deployments`);
+        setDeploymentsLoading(false);
+        return;
+      }
+      // END MOCK MODE CHECK
+
       const session = await authService.getSession();
       if (!session) {
         throw new Error('No active session');
@@ -152,6 +166,13 @@ export default function Dashboard() {
   const accessDataSharing = async () => {
     setAccessingFiles(true);
     try {
+      // MOCK MODE CHECK - Remove this block to disable mock
+      if (mockSystem.isMockMode()) {
+        await mockSystem.mockAccessFileSharing({ name: 'Mock Deployment' });
+        setAccessingFiles(false);
+        return;
+      }
+      // END MOCK MODE CHECK
       // Get current user from auth service
       const currentUser = await authService.getUser();
       if (!currentUser) {
@@ -383,6 +404,8 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      {/* MOCK INDICATOR - Remove this line to disable mock UI */}
+      <MockIndicator />
     </main>
   );
 }
