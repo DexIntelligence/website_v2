@@ -268,7 +268,7 @@ export default function Dashboard() {
                 )}
               </div>
 
-              <div className="max-h-[32rem] overflow-y-auto">
+              <div>
                 {deploymentsLoading && (
                   <div className="flex items-center justify-center gap-3 px-6 py-10">
                     <Loader2 className="h-6 w-6 text-brand animate-spin" />
