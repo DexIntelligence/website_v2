@@ -237,118 +237,132 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Deployments Loading */}
-          {deploymentsLoading && (
-            <div className="lg:col-span-2 bg-neutral-800/30 border border-gray-700 rounded-lg p-8">
-              <div className="flex items-center justify-center">
-                <Loader2 className="h-8 w-8 text-brand animate-spin" />
-                <span className="ml-3 text-gray-300">Loading deployments...</span>
+        <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-6">
+          <div className="space-y-6">
+            <div className="bg-neutral-800/30 border border-gray-700 rounded-xl overflow-hidden">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
+                <h2 className="text-lg font-semibold text-white">Deployments</h2>
+                {!deploymentsLoading && (
+                  <span className="text-sm text-gray-400">{deployments.length} active</span>
+                )}
               </div>
-            </div>
-          )}
 
-          {/* No Deployments */}
-          {!deploymentsLoading && deployments.length === 0 && (
-            <div className="lg:col-span-2 bg-neutral-800/30 border border-gray-700 rounded-lg p-8">
-              <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">No Deployments Available</h3>
-                <p className="text-gray-400">Contact your administrator to get access to Market Mapper deployments.</p>
-              </div>
-            </div>
-          )}
+              <div className="max-h-[32rem] overflow-y-auto">
+                {deploymentsLoading && (
+                  <div className="flex items-center justify-center gap-3 px-6 py-10">
+                    <Loader2 className="h-6 w-6 text-brand animate-spin" />
+                    <span className="text-gray-300">Loading deployments...</span>
+                  </div>
+                )}
 
-          {/* Dynamic Deployment Cards */}
-          {!deploymentsLoading && deployments.map((deployment) => (
-            <div key={deployment.id} className="lg:col-span-2 bg-gradient-to-br from-brand/20 to-brand/5 border border-brand/50 rounded-lg p-8">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-brand/20 rounded-lg">
-                    <BarChart3 className="h-6 w-6 text-brand" />
+                {!deploymentsLoading && deployments.length === 0 && (
+                  <div className="px-6 py-10 text-center space-y-2">
+                    <h3 className="text-lg font-semibold text-white">No Deployments Available</h3>
+                    <p className="text-sm text-gray-400">
+                      Contact your administrator to get access to Market Mapper deployments.
+                    </p>
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-semibold text-white">{deployment.name}</h2>
-                    <p className="text-gray-400">{deployment.description || 'Market Mapper deployment'}</p>
+                )}
+
+                {!deploymentsLoading && deployments.length > 0 && (
+                  <div className="p-4 space-y-4">
+                    {deployments.map((deployment) => (
+                      <div
+                        key={deployment.id}
+                        className="rounded-lg border border-brand/40 bg-gradient-to-br from-brand/15 via-brand/5 to-transparent p-4 shadow-sm"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                          <div className="flex items-start gap-3">
+                            <div className="p-2 bg-brand/20 rounded-md">
+                              <BarChart3 className="h-5 w-5 text-brand" />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-semibold text-white">{deployment.name}</h3>
+                              <p className="text-sm text-gray-400">
+                                {deployment.description || 'Market Mapper deployment'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p className="mt-3 text-sm text-gray-300">
+                          Access market analysis, competitive intelligence, and data-driven insights tailored to your team.
+                        </p>
+
+                        <div className="mt-4 flex flex-wrap justify-end gap-3">
+                          <button
+                            onClick={() => launchMarketMapper(deployment)}
+                            disabled={launchingApp || accessingFiles}
+                            className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#d68c3f] disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {launchingApp ? (
+                              <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Launching App...
+                              </>
+                            ) : (
+                              <>
+                                <BarChart3 className="h-4 w-4" />
+                                Launch
+                                <ExternalLink className="h-3.5 w-3.5" />
+                              </>
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => accessDataSharing()}
+                            disabled={accessingFiles || launchingApp}
+                            className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {accessingFiles ? (
+                              <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Accessing Files...
+                              </>
+                            ) : (
+                              <>
+                                <Files className="h-4 w-4" />
+                                Shared Files
+                                <ExternalLink className="h-3.5 w-3.5" />
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <p className="text-gray-300 leading-relaxed">
-                  Access comprehensive market analysis tools, competitive intelligence, and data-driven insights 
-                  for your antitrust and competition matters.
-                </p>
-                
-                <div className="pt-4">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      onClick={() => launchMarketMapper(deployment)}
-                      disabled={launchingApp || accessingFiles}
-                      className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
-                    >
-                      {launchingApp ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Launching App...
-                        </>
-                      ) : (
-                        <>
-                          <BarChart3 className="h-5 w-5" />
-                          Launch Market Mapper
-                          <ExternalLink className="h-4 w-4" />
-                        </>
-                      )}
-                    </button>
-                    
-                    <button
-                      onClick={() => accessDataSharing()}
-                      disabled={accessingFiles || launchingApp}
-                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 text-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
-                    >
-                      {accessingFiles ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Accessing Files...
-                        </>
-                      ) : (
-                        <>
-                          <Files className="h-5 w-5" />
-                          Access File Sharing
-                          <ExternalLink className="h-4 w-4" />
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          ))}
+          </div>
 
           {/* Quick Links Card */}
-          <div className="bg-neutral-800/50 border border-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
-            <div className="space-y-3">
-              <Link
-                to="/contact"
-                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
-              >
-                <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                <span className="text-gray-300 group-hover:text-white">Request Support</span>
-              </Link>
-              <a
-                href="/insights"
-                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
-              >
-                <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                <span className="text-gray-300 group-hover:text-white">View Insights</span>
-              </a>
-              <Link
-                to="/client/account"
-                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
-              >
-                <Settings className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                <span className="text-gray-400 group-hover:text-brand">Account Settings</span>
-              </Link>
+          <div className="space-y-6 lg:sticky lg:top-40">
+            <div className="bg-neutral-800/50 border border-gray-700 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+              <div className="space-y-3">
+                <Link
+                  to="/contact"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-white">Request Support</span>
+                </Link>
+                <a
+                  href="/insights"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-white">View Insights</span>
+                </a>
+                <Link
+                  to="/client/account"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
+                >
+                  <Settings className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-400 group-hover:text-brand">Account Settings</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
