@@ -57,8 +57,6 @@ const headers = {
 };
 
 export const handler = async (event, context) => {
-  console.log('get-user-deployments: Function invoked');
-
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -94,8 +92,6 @@ export const handler = async (event, context) => {
   }
 
   try {
-    console.log('get-user-deployments: Extracting token');
-
     // Extract and verify token
     const supabaseToken = extractToken(event.headers);
 
@@ -107,12 +103,8 @@ export const handler = async (event, context) => {
       };
     }
     
-    console.log('get-user-deployments: Verifying token');
-
     // Verify Supabase session
     const user = await verifySupabaseToken(supabaseToken);
-
-    console.log('get-user-deployments: User verified:', user?.email);
     
     if (!user) {
       return {
@@ -122,14 +114,9 @@ export const handler = async (event, context) => {
       };
     }
 
-    console.log('get-user-deployments: Initializing deployments database');
-
     // Initialize Supabase client
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
-
-    console.log('get-user-deployments: DB URL exists:', !!supabaseUrl);
-    console.log('get-user-deployments: DB Key exists:', !!supabaseServiceKey);
     
     if (!supabaseUrl || !supabaseServiceKey) {
       console.error('Supabase configuration missing');
@@ -141,8 +128,6 @@ export const handler = async (event, context) => {
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    console.log('get-user-deployments: Querying deployments for user:', user.email);
 
     // Fetch deployments the user has access to (email-based)
     // Note: env_config is excluded from user-facing API for security
@@ -201,8 +186,7 @@ export const handler = async (event, context) => {
     };
 
   } catch (error) {
-    console.error('get-user-deployments: Caught error:', error.message);
-    console.error('get-user-deployments: Stack trace:', error.stack);
+    console.error('Get user deployments error:', error);
     return {
       statusCode: 500,
       headers,
