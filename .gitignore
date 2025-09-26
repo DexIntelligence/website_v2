@@ -51,6 +51,7 @@ DEPLOYMENT_ADMIN_GUIDE.md
 DEPLOYMENT_CLONING_SYSTEM.md
 GCS_ENVIRONMENT_SETUP.md
 MULTI_CLIENT_DASHBOARD_INTEGRATION.md
+SUPABASE_AUTH_SETUP.md
 demo-clone.txt
 
 # Database setup files (contain production configurations)
