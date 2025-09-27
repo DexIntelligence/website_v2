@@ -179,10 +179,16 @@ export default function Dashboard() {
 
 
   // Access shared data bucket for team collaboration
-  const accessDataSharing = async (deployment) => {
-    const deploymentId = deployment?.id;
+  const accessDataSharing = async (deploymentId) => {
     if (!deploymentId) {
       console.error('Cannot access shared files: deployment ID is missing.');
+      return;
+    }
+
+    const deployment = deployments.find((item) => item.id === deploymentId);
+    if (!deployment?.gcsBucket) {
+      console.warn('Shared file storage is not configured for this deployment.');
+      alert('Shared file storage is not yet configured for this deployment. Please contact your administrator.');
       return;
     }
 
@@ -224,7 +230,7 @@ export default function Dashboard() {
           'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
-          deploymentId
+          deploymentId,
         }),
       });
 
@@ -318,11 +324,14 @@ export default function Dashboard() {
 
                 {!deploymentsLoading && deployments.length > 0 && (
                   <div className="p-4 space-y-4">
-                    {deployments.map((deployment) => (
-                      <div
-                        key={deployment.id}
-                        className="rounded-lg border border-brand/40 bg-gradient-to-br from-brand/15 via-brand/5 to-transparent p-4 shadow-sm"
-                      >
+                    {deployments.map((deployment) => {
+                      const hasSharedBucket = Boolean(deployment.gcsBucket);
+
+                      return (
+                        <div
+                          key={deployment.id}
+                          className="rounded-lg border border-brand/40 bg-gradient-to-br from-brand/15 via-brand/5 to-transparent p-4 shadow-sm"
+                        >
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                           <div className="flex items-start gap-3">
                             <div className="p-2 bg-brand/20 rounded-md">
@@ -362,8 +371,13 @@ export default function Dashboard() {
                           </button>
 
                           <button
-                            onClick={() => accessDataSharing(deployment)}
-                            disabled={fileSharingId === deployment.id || launchingId !== null}
+                            onClick={() => accessDataSharing(deployment.id)}
+                            disabled={!hasSharedBucket || fileSharingId === deployment.id || launchingId !== null}
+                            title={
+                              !hasSharedBucket
+                                ? 'Shared file storage is not yet configured for this deployment.'
+                                : undefined
+                            }
                             className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             {fileSharingId === deployment.id ? (
@@ -381,7 +395,8 @@ export default function Dashboard() {
                           </button>
                         </div>
                       </div>
-                    ))}
+                    );
+                    })}
                   </div>
                 )}
               </div>
