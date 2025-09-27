@@ -3,10 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files } from 'lucide-react';
 import { authService } from '../../utils/auth';
 
-// MOCK SYSTEM - Remove these 2 lines to disable mock functionality
-import mockSystem from '../../mock/mockSystem';
-import MockIndicator from '../../mock/MockIndicator';
-
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -36,16 +32,6 @@ export default function Dashboard() {
 
   const loadUserDeployments = async () => {
     try {
-      // MOCK MODE CHECK - Remove this block to disable mock
-      if (mockSystem && mockSystem.isMockMode()) {
-        const mockData = await mockSystem.mockLoadDeployments();
-        setDeployments(mockData.deployments || []);
-        console.log(`MOCK: Loaded ${mockData.deployments?.length || 0} fake deployments`);
-        setDeploymentsLoading(false);
-        return;
-      }
-      // END MOCK MODE CHECK
-
       const session = await authService.getSession();
       if (!session) {
         throw new Error('No active session');
@@ -66,7 +52,6 @@ export default function Dashboard() {
 
       const data = await response.json();
       setDeployments(data.deployments || []);
-      console.log(`Loaded ${data.deployments?.length || 0} deployments for user`);
 
     } catch (error) {
       console.error('Failed to load deployments:', error);
@@ -105,13 +90,6 @@ export default function Dashboard() {
 
     setLaunchingId(deploymentId);
     try {
-      // MOCK MODE CHECK - Remove this block to disable mock
-      if (mockSystem && mockSystem.isMockMode()) {
-        await mockSystem.mockLaunchMarketMapper(deployment);
-        return;
-      }
-      // END MOCK MODE CHECK
-
       // Get current user from auth service
       const currentUser = await authService.getUser();
       if (!currentUser) {
@@ -163,14 +141,8 @@ export default function Dashboard() {
                           (hostname === 'localhost' ? '' : 'secure; ') + // No secure flag on localhost
                           `samesite=lax; ` +                              // Allow cross-subdomain
                           `max-age=3600`;                                 // 1 hour
-      
-      console.log('Setting cookie:', cookieString);
-      document.cookie = cookieString;
-      
-      // Verify cookie was set
-      console.log('All cookies after setting:', document.cookie);
-      console.log(`Redirecting to: ${deployment.cloudRunUrl} (no token in URL)`);
 
+      document.cookie = cookieString;
       // Redirect to Market Mapper app (NO token in URL)
       window.location.href = deployment.cloudRunUrl;
       
@@ -213,12 +185,6 @@ export default function Dashboard() {
 
     setFileSharingId(deploymentId);
     try {
-      // MOCK MODE CHECK - Remove this block to disable mock
-      if (mockSystem.isMockMode()) {
-        await mockSystem.mockAccessFileSharing(deployment);
-        return;
-      }
-      // END MOCK MODE CHECK
       // Get current user from auth service
       const currentUser = await authService.getUser();
       if (!currentUser) {
@@ -253,8 +219,6 @@ export default function Dashboard() {
       if (!url) {
         throw new Error('No access URL received from server');
       }
-
-      console.log('Opening shared bucket access:', url);
 
       // Open GCS Console for shared bucket in new tab
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -459,8 +423,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      {/* MOCK INDICATOR - Remove this line to disable mock UI */}
-      <MockIndicator />
     </main>
   );
 }
