@@ -435,14 +435,9 @@ export default function Dashboard() {
         </div>
 
 
-        {/* Additional Features Section */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm">
-            <h3 className="text-lg font-semibold text-gray-100 mb-3">Recent Activity</h3>
-            <p className="text-gray-400 text-sm">No recent activity to display</p>
-          </div>
-          
-          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm">
+        {/* Resources Section */}
+        <div className="mt-8">
+          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm max-w-md">
             <h3 className="text-lg font-semibold text-gray-100 mb-3">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
