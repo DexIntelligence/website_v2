@@ -178,15 +178,47 @@ export default function Dashboard() {
   };
 
 
+  const getDeploymentSharedBucket = (deployment) => {
+    if (!deployment) {
+      return undefined;
+    }
+
+    return (
+      deployment.gcsBucket ||
+      deployment.sharedBucket ||
+      deployment.sharedBucketName ||
+      deployment.sharedStorage?.bucket ||
+      deployment.sharedStorage?.bucketName ||
+      deployment.storage?.shared?.bucket ||
+      deployment.storage?.shared?.bucketName
+    );
+  };
+
   // Access shared data bucket for team collaboration
-  const accessDataSharing = async (deploymentId) => {
+  const accessDataSharing = async (deploymentOrId) => {
+    const deploymentId =
+      typeof deploymentOrId === 'object' && deploymentOrId !== null
+        ? deploymentOrId.id
+        : deploymentOrId;
+
     if (!deploymentId) {
       console.error('Cannot access shared files: deployment ID is missing.');
       return;
     }
 
-    const deployment = deployments.find((item) => item.id === deploymentId);
-    if (!deployment?.gcsBucket) {
+    const deployment =
+      typeof deploymentOrId === 'object' && deploymentOrId !== null
+        ? deploymentOrId
+        : deployments.find((item) => item.id === deploymentId);
+
+    if (!deployment) {
+      console.error('Cannot access shared files: deployment not found for ID', deploymentId);
+      alert('We could not locate that deployment. Please refresh the page and try again.');
+      return;
+    }
+
+    const sharedBucketName = getDeploymentSharedBucket(deployment);
+    if (!sharedBucketName) {
       console.warn('Shared file storage is not configured for this deployment.');
       alert('Shared file storage is not yet configured for this deployment. Please contact your administrator.');
       return;
@@ -205,8 +237,12 @@ export default function Dashboard() {
     setFileSharingId(deploymentId);
     try {
       // MOCK MODE CHECK - Remove this block to disable mock
-      if (mockSystem.isMockMode()) {
-        await mockSystem.mockAccessFileSharing(deployment);
+      if (mockSystem && mockSystem.isMockMode()) {
+        const mockDeployment = deployment.gcsBucket
+          ? deployment
+          : { ...deployment, gcsBucket: sharedBucketName };
+
+        await mockSystem.mockAccessFileSharing(mockDeployment);
         return;
       }
       // END MOCK MODE CHECK
@@ -325,7 +361,8 @@ export default function Dashboard() {
                 {!deploymentsLoading && deployments.length > 0 && (
                   <div className="p-4 space-y-4">
                     {deployments.map((deployment) => {
-                      const hasSharedBucket = Boolean(deployment.gcsBucket);
+                      const sharedBucketName = getDeploymentSharedBucket(deployment);
+                      const hasSharedBucket = Boolean(sharedBucketName);
 
                       return (
                         <div
@@ -349,6 +386,12 @@ export default function Dashboard() {
                         <p className="mt-3 text-sm text-gray-300">
                           Access market analysis, competitive intelligence, and data-driven insights tailored to your team.
                         </p>
+
+                        {!hasSharedBucket && (
+                          <p className="mt-2 text-sm text-amber-300/80">
+                            Shared file storage is not yet configured for this deployment.
+                          </p>
+                        )}
 
                         <div className="mt-4 flex flex-wrap justify-end gap-3">
                           <button
