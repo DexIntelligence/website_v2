@@ -276,7 +276,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white">Client Dashboard</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-100">Client Dashboard</h1>
             <p className="mt-2 text-gray-400">Welcome back, {user?.email}</p>
           </div>
           <button
@@ -291,9 +291,9 @@ export default function Dashboard() {
         {/* Main Content Grid */}
         <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-6">
           <div className="space-y-6">
-            <div className="bg-neutral-800/30 border border-gray-700 rounded-xl overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
-                <h2 className="text-lg font-semibold text-white">Deployments</h2>
+            <div className="bg-black/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+                <h2 className="text-lg font-semibold text-gray-100">Deployments</h2>
                 {!deploymentsLoading && (
                   <span className="text-sm text-gray-400">{deployments.length} active</span>
                 )}
@@ -309,7 +309,7 @@ export default function Dashboard() {
 
                 {!deploymentsLoading && deployments.length === 0 && (
                   <div className="px-6 py-10 text-center space-y-2">
-                    <h3 className="text-lg font-semibold text-white">No Deployments Available</h3>
+                    <h3 className="text-lg font-semibold text-gray-100">No Deployments Available</h3>
                     <p className="text-sm text-gray-400">
                       Contact your administrator to get access to Market Mapper deployments.
                     </p>
@@ -321,7 +321,7 @@ export default function Dashboard() {
                     {deployments.map((deployment) => (
                       <div
                         key={deployment.id}
-                        className="rounded-lg border border-brand/40 bg-gradient-to-br from-brand/15 via-brand/5 to-transparent p-4 shadow-sm"
+                        className="rounded-lg border border-brand/30 bg-brand/5 p-4 shadow-sm backdrop-blur-sm hover:border-brand/40 transition-colors"
                       >
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                           <div className="flex items-start gap-3">
@@ -329,7 +329,7 @@ export default function Dashboard() {
                               <BarChart3 className="h-5 w-5 text-brand" />
                             </div>
                             <div>
-                              <h3 className="text-xl font-semibold text-white">{deployment.name}</h3>
+                              <h3 className="text-xl font-semibold text-gray-100">{deployment.name}</h3>
                               <p className="text-sm text-gray-400">
                                 {deployment.description || 'Market Mapper deployment'}
                               </p>
@@ -390,22 +390,22 @@ export default function Dashboard() {
 
           {/* Quick Links Card */}
           <div className="space-y-6 lg:sticky lg:top-40">
-            <div className="bg-neutral-800/50 border border-gray-700 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+            <div className="bg-black/80 border border-brand/20 rounded-lg p-6 backdrop-blur-sm">
+              <h3 className="text-lg font-semibold text-gray-100 mb-4">Quick Links</h3>
               <div className="space-y-3">
                 <Link
                   to="/contact"
                   className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
                 >
                   <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                  <span className="text-gray-300 group-hover:text-white">Request Support</span>
+                  <span className="text-gray-300 group-hover:text-gray-100">Request Support</span>
                 </Link>
                 <a
                   href="/insights"
                   className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
                 >
                   <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                  <span className="text-gray-300 group-hover:text-white">View Insights</span>
+                  <span className="text-gray-300 group-hover:text-gray-100">View Insights</span>
                 </a>
                 <Link
                   to="/client/account"
@@ -422,13 +422,13 @@ export default function Dashboard() {
 
         {/* Additional Features Section */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-neutral-800/30 border border-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-3">Recent Activity</h3>
+          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm">
+            <h3 className="text-lg font-semibold text-gray-100 mb-3">Recent Activity</h3>
             <p className="text-gray-400 text-sm">No recent activity to display</p>
           </div>
           
-          <div className="bg-neutral-800/30 border border-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
+          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm">
+            <h3 className="text-lg font-semibold text-gray-100 mb-3">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#" className="text-gray-400 hover:text-brand transition-colors">
