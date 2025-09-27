@@ -105,6 +105,13 @@ export default function Dashboard() {
 
     setLaunchingId(deploymentId);
     try {
+      // MOCK MODE CHECK - Remove this block to disable mock
+      if (mockSystem && mockSystem.isMockMode()) {
+        await mockSystem.mockLaunchMarketMapper(deployment);
+        return;
+      }
+      // END MOCK MODE CHECK
+
       // Get current user from auth service
       const currentUser = await authService.getUser();
       if (!currentUser) {
@@ -142,12 +149,20 @@ export default function Dashboard() {
 
       // Set cookie with proper domain for cross-subdomain access
       // This is the ONLY authentication method that works in production
+      const hostname = window.location.hostname;
+      let cookieDomain = '';
+
+      // Only set domain for production - for localhost/staging, let browser handle it
+      if (hostname.includes('dexintelligence.ai')) {
+        cookieDomain = `domain=.dexintelligence.ai; `; // Leading dot for subdomains
+      }
+
       const cookieString = `market_mapper_token=${token}; ` +
-                          `domain=.dexintelligence.ai; ` +  // Leading dot for subdomains
+                          cookieDomain +
                           `path=/; ` +
-                          `secure; ` +                       // HTTPS only
-                          `samesite=lax; ` +                 // Allow cross-subdomain
-                          `max-age=3600`;                    // 1 hour
+                          (hostname === 'localhost' ? '' : 'secure; ') + // No secure flag on localhost
+                          `samesite=lax; ` +                              // Allow cross-subdomain
+                          `max-age=3600`;                                 // 1 hour
       
       console.log('Setting cookie:', cookieString);
       document.cookie = cookieString;
