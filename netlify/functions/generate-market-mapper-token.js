@@ -1,5 +1,6 @@
-const crypto = require('crypto');
-const { createClient } = require('@supabase/supabase-js');
+import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
+import { verifySupabaseJWT, extractToken } from './utils/verify-jwt.js';
 
 // Rate limiting storage
 const rateLimit = new Map();
@@ -10,40 +11,25 @@ function checkRateLimit(ip) {
   const now = Date.now();
   const userRequests = rateLimit.get(ip) || [];
   const recentRequests = userRequests.filter(t => now - t < WINDOW_MS);
-  
+
   if (recentRequests.length >= MAX_REQUESTS) {
     return false; // Rate limited
   }
-  
+
   recentRequests.push(now);
   rateLimit.set(ip, recentRequests);
   return true; // Allowed
 }
 
-// Verify Supabase session token
+// Verify Supabase session token using proper JWT verification
 async function verifySupabaseToken(token) {
-  if (!token || !token.startsWith('eyJ')) {
-    return null;
-  }
-  
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) return null;
-    
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
-    
-    if (payload.exp && payload.exp * 1000 < Date.now()) {
-      return null;
-    }
-    
-    return {
-      userId: payload.sub,
-      email: payload.email,
-    };
-  } catch (error) {
-    console.error('Token decode error:', error);
-    return null;
-  }
+  const decoded = await verifySupabaseJWT(token);
+  if (!decoded) return null;
+
+  return {
+    userId: decoded.sub,
+    email: decoded.email,
+  };
 }
 
 const headers = {
@@ -55,7 +41,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -84,17 +70,17 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const authHeader = event.headers.authorization || event.headers.Authorization || '';
-    
-    if (!authHeader.startsWith('Bearer ')) {
+    // Extract and verify token
+    const supabaseToken = extractToken(event.headers);
+
+    if (!supabaseToken) {
       return {
         statusCode: 401,
         headers,
         body: JSON.stringify({ error: 'Authorization required' }),
       };
     }
-    
-    const supabaseToken = authHeader.substring(7);
+
     const user = await verifySupabaseToken(supabaseToken);
     
     if (!user) {

@@ -6,8 +6,8 @@ import { authService } from '../../utils/auth';
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [launchingApp, setLaunchingApp] = useState(false);
-  const [accessingFiles, setAccessingFiles] = useState(false);
+  const [launchingId, setLaunchingId] = useState(null);
+  const [fileSharingId, setFileSharingId] = useState(null);
   const [deployments, setDeployments] = useState([]);
   const [deploymentsLoading, setDeploymentsLoading] = useState(true);
   const navigate = useNavigate();
@@ -52,7 +52,6 @@ export default function Dashboard() {
 
       const data = await response.json();
       setDeployments(data.deployments || []);
-      console.log(`Loaded ${data.deployments?.length || 0} deployments for user`);
 
     } catch (error) {
       console.error('Failed to load deployments:', error);
@@ -73,7 +72,23 @@ export default function Dashboard() {
 
   // Cookie-based authentication (ONLY working method in production)
   const launchMarketMapper = async (deployment) => {
-    setLaunchingApp(true);
+    const deploymentId = deployment?.id;
+    if (!deploymentId) {
+      console.error('Cannot launch Market Mapper: deployment ID is missing.');
+      return;
+    }
+
+    if (launchingId !== null && launchingId !== deploymentId) {
+      console.warn('Another deployment launch is already in progress.');
+      return;
+    }
+
+    if (fileSharingId !== null) {
+      console.warn('Cannot launch while a file sharing request is in progress.');
+      return;
+    }
+
+    setLaunchingId(deploymentId);
     try {
       // Get current user from auth service
       const currentUser = await authService.getUser();
@@ -95,7 +110,7 @@ export default function Dashboard() {
           'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
-          deploymentId: deployment.id
+          deploymentId
         }),
       });
 
@@ -112,20 +127,22 @@ export default function Dashboard() {
 
       // Set cookie with proper domain for cross-subdomain access
       // This is the ONLY authentication method that works in production
-      const cookieString = `market_mapper_token=${token}; ` +
-                          `domain=.dexintelligence.ai; ` +  // Leading dot for subdomains
-                          `path=/; ` +
-                          `secure; ` +                       // HTTPS only
-                          `samesite=lax; ` +                 // Allow cross-subdomain
-                          `max-age=3600`;                    // 1 hour
-      
-      console.log('Setting cookie:', cookieString);
-      document.cookie = cookieString;
-      
-      // Verify cookie was set
-      console.log('All cookies after setting:', document.cookie);
-      console.log(`Redirecting to: ${deployment.cloudRunUrl} (no token in URL)`);
+      const hostname = window.location.hostname;
+      let cookieDomain = '';
 
+      // Only set domain for production - for localhost/staging, let browser handle it
+      if (hostname.includes('dexintelligence.ai')) {
+        cookieDomain = `domain=.dexintelligence.ai; `; // Leading dot for subdomains
+      }
+
+      const cookieString = `market_mapper_token=${token}; ` +
+                          cookieDomain +
+                          `path=/; ` +
+                          (hostname === 'localhost' ? '' : 'secure; ') + // No secure flag on localhost
+                          `samesite=lax; ` +                              // Allow cross-subdomain
+                          `max-age=3600`;                                 // 1 hour
+
+      document.cookie = cookieString;
       // Redirect to Market Mapper app (NO token in URL)
       window.location.href = deployment.cloudRunUrl;
       
@@ -143,14 +160,30 @@ export default function Dashboard() {
       
       alert(errorMessage);
     } finally {
-      setLaunchingApp(false);
+      setLaunchingId(null);
     }
   };
 
 
   // Access shared data bucket for team collaboration
-  const accessDataSharing = async () => {
-    setAccessingFiles(true);
+  const accessDataSharing = async (deployment) => {
+    const deploymentId = deployment?.id;
+    if (!deploymentId) {
+      console.error('Cannot access shared files: deployment ID is missing.');
+      return;
+    }
+
+    if (fileSharingId !== null && fileSharingId !== deploymentId) {
+      console.warn('Another file sharing request is already in progress.');
+      return;
+    }
+
+    if (launchingId !== null) {
+      console.warn('Cannot access shared files while a deployment is launching.');
+      return;
+    }
+
+    setFileSharingId(deploymentId);
     try {
       // Get current user from auth service
       const currentUser = await authService.getUser();
@@ -172,7 +205,7 @@ export default function Dashboard() {
           'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
-          deploymentId: deployments[0]?.id // Use first deployment for file sharing
+          deploymentId
         }),
       });
 
@@ -186,8 +219,6 @@ export default function Dashboard() {
       if (!url) {
         throw new Error('No access URL received from server');
       }
-
-      console.log('Opening shared bucket access:', url);
 
       // Open GCS Console for shared bucket in new tab
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -206,7 +237,7 @@ export default function Dashboard() {
       
       alert(errorMessage);
     } finally {
-      setAccessingFiles(false);
+      setFileSharingId(null);
     }
   };
 
@@ -224,7 +255,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white">Client Dashboard</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-100">Client Dashboard</h1>
             <p className="mt-2 text-gray-400">Welcome back, {user?.email}</p>
           </div>
           <button
@@ -237,132 +268,141 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Deployments Loading */}
-          {deploymentsLoading && (
-            <div className="lg:col-span-2 bg-neutral-800/30 border border-gray-700 rounded-lg p-8">
-              <div className="flex items-center justify-center">
-                <Loader2 className="h-8 w-8 text-brand animate-spin" />
-                <span className="ml-3 text-gray-300">Loading deployments...</span>
+        <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-6">
+          <div className="space-y-6">
+            <div className="bg-black/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+                <h2 className="text-lg font-semibold text-gray-100">Deployments</h2>
+                {!deploymentsLoading && (
+                  <span className="text-sm text-gray-400">{deployments.length} active</span>
+                )}
               </div>
-            </div>
-          )}
 
-          {/* No Deployments */}
-          {!deploymentsLoading && deployments.length === 0 && (
-            <div className="lg:col-span-2 bg-neutral-800/30 border border-gray-700 rounded-lg p-8">
-              <div className="text-center">
-                <h3 className="text-xl font-semibold text-white mb-2">No Deployments Available</h3>
-                <p className="text-gray-400">Contact your administrator to get access to Market Mapper deployments.</p>
-              </div>
-            </div>
-          )}
+              <div>
+                {deploymentsLoading && (
+                  <div className="flex items-center justify-center gap-3 px-6 py-10">
+                    <Loader2 className="h-6 w-6 text-brand animate-spin" />
+                    <span className="text-gray-300">Loading deployments...</span>
+                  </div>
+                )}
 
-          {/* Dynamic Deployment Cards */}
-          {!deploymentsLoading && deployments.map((deployment) => (
-            <div key={deployment.id} className="lg:col-span-2 bg-gradient-to-br from-brand/20 to-brand/5 border border-brand/50 rounded-lg p-8">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-brand/20 rounded-lg">
-                    <BarChart3 className="h-6 w-6 text-brand" />
+                {!deploymentsLoading && deployments.length === 0 && (
+                  <div className="px-6 py-10 text-center space-y-2">
+                    <h3 className="text-lg font-semibold text-gray-100">No Deployments Available</h3>
+                    <p className="text-sm text-gray-400">
+                      Contact your administrator to get access to Market Mapper deployments.
+                    </p>
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-semibold text-white">{deployment.name}</h2>
-                    <p className="text-gray-400">{deployment.description || 'Market Mapper deployment'}</p>
+                )}
+
+                {!deploymentsLoading && deployments.length > 0 && (
+                  <div className="p-4 space-y-4">
+                    {deployments.map((deployment) => (
+                      <div
+                        key={deployment.id}
+                        className="rounded-lg border border-brand/30 bg-brand/5 p-4 shadow-sm backdrop-blur-sm hover:border-brand/40 transition-colors"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                          <div className="flex items-start gap-3">
+                            <div className="p-2 bg-brand/20 rounded-md">
+                              <BarChart3 className="h-5 w-5 text-brand" />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-semibold text-gray-100">{deployment.name}</h3>
+                              <p className="text-sm text-gray-400">
+                                {deployment.description || 'Market Mapper deployment'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p className="mt-3 text-sm text-gray-300">
+                          Access market analysis, competitive intelligence, and data-driven insights tailored to your team.
+                        </p>
+
+                        <div className="mt-4 flex flex-wrap justify-end gap-3">
+                          <button
+                            onClick={() => launchMarketMapper(deployment)}
+                            disabled={launchingId === deployment.id || fileSharingId !== null}
+                            className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#d68c3f] disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {launchingId === deployment.id ? (
+                              <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Launching App...
+                              </>
+                            ) : (
+                              <>
+                                <BarChart3 className="h-4 w-4" />
+                                Launch
+                                <ExternalLink className="h-3.5 w-3.5" />
+                              </>
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => accessDataSharing(deployment)}
+                            disabled={fileSharingId === deployment.id || launchingId !== null}
+                            className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {fileSharingId === deployment.id ? (
+                              <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Accessing Files...
+                              </>
+                            ) : (
+                              <>
+                                <Files className="h-4 w-4" />
+                                Shared Files
+                                <ExternalLink className="h-3.5 w-3.5" />
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <p className="text-gray-300 leading-relaxed">
-                  Access comprehensive market analysis tools, competitive intelligence, and data-driven insights 
-                  for your antitrust and competition matters.
-                </p>
-                
-                <div className="pt-4">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      onClick={() => launchMarketMapper(deployment)}
-                      disabled={launchingApp || accessingFiles}
-                      className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 text-lg font-medium hover:bg-[#d68c3f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
-                    >
-                      {launchingApp ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Launching App...
-                        </>
-                      ) : (
-                        <>
-                          <BarChart3 className="h-5 w-5" />
-                          Launch Market Mapper
-                          <ExternalLink className="h-4 w-4" />
-                        </>
-                      )}
-                    </button>
-                    
-                    <button
-                      onClick={() => accessDataSharing()}
-                      disabled={accessingFiles || launchingApp}
-                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 text-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
-                    >
-                      {accessingFiles ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Accessing Files...
-                        </>
-                      ) : (
-                        <>
-                          <Files className="h-5 w-5" />
-                          Access File Sharing
-                          <ExternalLink className="h-4 w-4" />
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          ))}
+          </div>
 
           {/* Quick Links Card */}
-          <div className="bg-neutral-800/50 border border-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
-            <div className="space-y-3">
-              <Link
-                to="/contact"
-                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
-              >
-                <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                <span className="text-gray-300 group-hover:text-white">Request Support</span>
-              </Link>
-              <a
-                href="/insights"
-                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
-              >
-                <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                <span className="text-gray-300 group-hover:text-white">View Insights</span>
-              </a>
-              <button
-                className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
-                disabled
-              >
-                <Settings className="h-5 w-5 text-gray-600" />
-                <span className="text-gray-600">Account Settings (Coming Soon)</span>
-              </button>
+          <div className="space-y-6 lg:sticky lg:top-40">
+            <div className="bg-black/80 border border-brand/20 rounded-lg p-6 backdrop-blur-sm">
+              <h3 className="text-lg font-semibold text-gray-100 mb-4">Quick Links</h3>
+              <div className="space-y-3">
+                <Link
+                  to="/contact"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-gray-100">Request Support</span>
+                </Link>
+                <a
+                  href="/insights"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-gray-100">View Insights</span>
+                </a>
+                <Link
+                  to="/client/account"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
+                >
+                  <Settings className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-400 group-hover:text-brand">Account Settings</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
 
-        {/* Additional Features Section */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-neutral-800/30 border border-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-3">Recent Activity</h3>
-            <p className="text-gray-400 text-sm">No recent activity to display</p>
-          </div>
-          
-          <div className="bg-neutral-800/30 border border-gray-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
+        {/* Resources Section */}
+        <div className="mt-8">
+          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm max-w-md">
+            <h3 className="text-lg font-semibold text-gray-100 mb-3">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/client/user-guide" className="text-gray-400 hover:text-brand transition-colors">

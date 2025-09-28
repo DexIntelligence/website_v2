@@ -21,7 +21,7 @@ const teamMembers = [
   }
 ];
 
-// Reusable Team component that can be used on both Team page and About page
+// Reusable Team component that can be used on both Team page and About pages
 export function TeamSection({ showHeader = true, className = "" }) {
   return (
     <section className={className}>

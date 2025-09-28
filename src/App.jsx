@@ -13,7 +13,9 @@ import Contact from "./pages/Contact.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Login from "./pages/client/Login.jsx";
 import Dashboard from "./pages/client/Dashboard.jsx";
-import UserGuide from "./pages/client/app-user-guide/UserGuide.jsx";
+import ForgotPassword from "./pages/client/ForgotPassword.jsx";
+import ResetPassword from "./pages/client/ResetPassword.jsx";
+import AccountSettings from "./pages/client/AccountSettings.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { authService } from "./utils/auth.js";
 
@@ -251,6 +253,8 @@ export default function App() {
         <Route path="/privacy" element={<Privacy />} />
         {/* Client Portal Routes */}
         <Route path="/client/login" element={<Login />} />
+        <Route path="/client/forgot-password" element={<ForgotPassword />} />
+        <Route path="/client/reset-password" element={<ResetPassword />} />
         <Route
           path="/client/dashboard"
           element={
@@ -260,10 +264,10 @@ export default function App() {
           }
         />
         <Route
-          path="/client/user-guide"
+          path="/client/account"
           element={
             <ProtectedRoute>
-              <UserGuide />
+              <AccountSettings />
             </ProtectedRoute>
           }
         />

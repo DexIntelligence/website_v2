@@ -6,7 +6,7 @@
       "Bash(npm run dev:*)",
       "Bash(npm run build:*)",
       "Bash(git checkout:*)",
-      "WebSearch"
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
