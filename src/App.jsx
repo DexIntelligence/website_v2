@@ -13,6 +13,7 @@ import Contact from "./pages/Contact.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Login from "./pages/client/Login.jsx";
 import Dashboard from "./pages/client/Dashboard.jsx";
+import UserGuide from "./pages/client/app-user-guide/UserGuide.jsx";
 import ForgotPassword from "./pages/client/ForgotPassword.jsx";
 import ResetPassword from "./pages/client/ResetPassword.jsx";
 import AccountSettings from "./pages/client/AccountSettings.jsx";
@@ -268,6 +269,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <AccountSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/client/user-guide"
+          element={
+            <ProtectedRoute>
+              <UserGuide />
             </ProtectedRoute>
           }
         />
