@@ -71,8 +71,6 @@ The application will automatically geocode your addresses to get latitude/longit
 - **Fallback Services**: Mapbox or OpenStreetMap Nominatim
 - **Pre-geocoded Data**: If no locations in the data are missing coordinates, you can skip this step
 
-![Select geocoding service option - showing the geocoding service options](/user-guide-content/geocoding.png)
-
 ### Geocoding Progress
 - Real-time progress indicator shows completion percentage
 - Failed addresses are logged and the user can retry geocoding with a different service, or manually correct geocodes
@@ -85,26 +83,32 @@ The application will automatically geocode your addresses to get latitude/longit
 - **Memory usage**: ~0.065 MB per location
 - **Geocoding speed**: ~3-4 ddresses per second (varies by service)
 
-<div class="screenshot-placeholder">
-[Screenshot: Geocoding progress bar and results summary]
-</div>
-
 ### Partially Pre-geocoded Data
-- **Processing capacity**: Up to 5,000+ locations
-- **Memory usage**: ~0.065 MB per location
-- **Geocoding speed**: ~1-2 seconds per address (varies by service)
-- **Batch processing**: Handles large datasets efficiently
+- **Address Configuration**: User specifies columns for addresses for locations still to be geocoded
 
-<div class="screenshot-placeholder">
-[Screenshot: completing opartially geocoded data]
-</div>
+![Specifying address to complete partially geocoded data - showing the column mapping for single column scenario](/user-guide-content/partial-geocoding-address.png)
+
+- **Completing the Geocodes**: User must select "Try Another Service" to geocode all remaining locations
+
+![Completing the remaining geocodes - showing the process for finishing location geocoding for partially geocoded data](/user-guide-content/partial-geocoding-retry.png)
+
+- User can select any of the services, here using Google Maps:
+
+![Completing the remaining geocodes with Google Maps service - showing the process for finishing location geocoding for partially geocoded data](/user-guide-content/partial-geocoding-retry-google.png)
+
+## Step 6: Map Overview
+
+User can review location summary statistics and locations on a map:
+
+![Viewing overview map - showing the overview map with locations in data](/user-guide-content/map-overview.png)
 
 ## Best Practices
 
 - **Data Quality**: Ensure addresses are complete and properly formatted
-- **Unique IDs**: Every location must have a unique identifier
+- **Unique IDs**: Every location should have a unique identifier
 - **Brand Names**: Use consistent naming for brands (e.g., always "McDonald's" not "McDonalds" or "McDonald's Restaurant")
-- **Save Your Work**: Download the geocoded results for future use
+- **Save Your Work**: After geocoding, download the geocoded results so geocoding does not need to be repeated for future analysis
+- **Batch Process Large Datasets**: For large datasets that can be divided by region (e.g., by province) conduct the analysis in segments
 
 ## Troubleshooting
 
@@ -128,6 +132,4 @@ The application will automatically geocode your addresses to get latitude/longit
 
 Once your data is successfully uploaded and geocoded, you're ready to proceed to **Tab 2: Market Overview** for multi-market analysis.
 
-<div class="screenshot-placeholder">
-[Screenshot: Success message and "Proceed to Analysis" button]
-</div>
+- **Note**: use the uploaded data preview, summary statistics, and map, to confirm that data was uploaded correctly with correct column mapping.
