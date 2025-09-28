@@ -97,7 +97,7 @@ export default function AccountSettings() {
 
   if (!user) {
     return (
-      <main className="min-h-screen pt-24">
+      <main className="min-h-screen pt-40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-gray-400">Loading...</p>
@@ -108,7 +108,7 @@ export default function AccountSettings() {
   }
 
   return (
-    <main className="min-h-screen pt-24">
+    <main className="min-h-screen pt-40">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <Link
