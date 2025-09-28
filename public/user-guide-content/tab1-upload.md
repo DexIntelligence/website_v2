@@ -18,11 +18,11 @@ Before uploading, ensure your Excel file contains the following columns:
 
 ### Excel Format Example
 
-| Location ID | Address | Brand | Revenue |
+| Location Name | Address | Brand | Revenue |
 |------------|---------|-------|---------|
-| 001 | 123 Main St, Toronto, ON | Brand A | 500000 |
-| 002 | 456 Oak Ave, Toronto, ON | Brand B | 750000 |
-| 003 | 789 Pine St, Mississauga, ON | Target Co | 900000 |
+| Main Branch | 123 Main St, Toronto, ON | Competitor A | 500000 |
+| Oak Branch | 456 Oak Ave, Toronto, ON | Competitor B | 750000 |
+| Pine Branch | 789 Pine St, Mississauga, ON | Target | 900000 |
 
 
 ## Step 2: Uploading Your File
@@ -38,6 +38,9 @@ Before uploading, ensure your Excel file contains the following columns:
 After upload, you'll need to map your Excel columns to the required fields:
 
 1. **Existing Coordinates**: If data has existing geocodes for some locations, indicate them here
+
+![Specify if geocodes exist - showing the option to use existing geocodes](/user-guide-content/existing-geocodes.png)
+
 2. **Address Configuration**: Specify if addresses are presented in one or multiple columns
 3. **Location Column**: Select which column contains unique location identifiers / location name (Note: if location names are duplicates, app adds suffix to make them unique)
 4. **Economic Value Column** (optional): Select if you have revenue/sales data
@@ -52,6 +55,7 @@ This critical step defines which companies are involved in the merger:
 
 - **Purchaser**: Select the acquiring company from the dropdown
 - **Target**: Select the company being acquired
+- **Independent**: Identify any category that gives common identifier to entities that are not affiliated
 
 The system will automatically identify all unique brands in your data and present them as options.
 
@@ -61,14 +65,14 @@ The system will automatically identify all unique brands in your data and presen
 
 The application will automatically geocode your addresses to get latitude/longitude coordinates:
 
-- **Primary Service**: OpenStreetMap Nominatim (free)
-- **Fallback Services**: Google Maps or Mapbox (if configured)
-- **Pre-geocoded Data**: If your data already has coordinates, you can skip this step
+- **Primary Service**: Google Maps
+- **Fallback Services**: Mapbox or OpenStreetMap Nominatim
+- **Pre-geocoded Data**: If no locations in the data are missing coordinates, you can skip this step
 
 ### Geocoding Progress
 - Real-time progress indicator shows completion percentage
-- Failed addresses are logged and can be manually corrected
-- **Coordinate Spreading**: Duplicate coordinates automatically spread using golden-angle spiral algorithm for perfect visualization
+- Failed addresses are logged and the user can retry geocoding with a different service, or manually correct geocodes
+- Duplicate coordinates automatically spread small distance (using a golden-angle spiral algorithm) to eliminate coordinate duplication for perfect visualization
 
 ### Performance Expectations
 - **Processing capacity**: Up to 5,000+ locations
@@ -78,6 +82,16 @@ The application will automatically geocode your addresses to get latitude/longit
 
 <div class="screenshot-placeholder">
 [Screenshot: Geocoding progress bar and results summary]
+</div>
+
+### Partially Pre-geocoded Data
+- **Processing capacity**: Up to 5,000+ locations
+- **Memory usage**: ~0.065 MB per location
+- **Geocoding speed**: ~1-2 seconds per address (varies by service)
+- **Batch processing**: Handles large datasets efficiently
+
+<div class="screenshot-placeholder">
+[Screenshot: completing opartially geocoded data]
 </div>
 
 ## Best Practices
@@ -93,7 +107,7 @@ The application will automatically geocode your addresses to get latitude/longit
 
 **File Won't Upload**
 - Check file format (must be .xlsx or .xls)
-- Ensure file size is under 10MB
+- Ensure file size is under 200MB
 - Verify no password protection on the file
 
 **Geocoding Failures**
@@ -104,7 +118,6 @@ The application will automatically geocode your addresses to get latitude/longit
 **Missing Brands**
 - Ensure the competitor column has values for all rows
 - Check for inconsistent brand naming
-- Remove any blank rows from your Excel file
 
 ## Next Steps
 
