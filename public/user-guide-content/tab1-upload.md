@@ -128,7 +128,9 @@ User can review location summary statistics and locations on a map:
 - Ensure the competitor column has values for all rows
 - Check for inconsistent brand naming
 
-## Next Steps
+***
+
+# Next Steps
 
 Once your data is successfully uploaded and geocoded, you're ready to proceed to **Tab 2: Market Overview** for multi-market analysis.
 
