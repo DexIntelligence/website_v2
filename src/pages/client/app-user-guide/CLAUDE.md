@@ -1,0 +1,1 @@
+The purpose of this folder is to host an interactive user manual for the Market Mapper v1.
