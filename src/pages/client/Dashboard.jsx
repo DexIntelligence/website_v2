@@ -373,53 +373,35 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold text-gray-100 mb-4">Quick Links</h3>
               <div className="space-y-3">
                 <Link
-                  to="/contact"
-                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
-                >
-                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                  <span className="text-gray-300 group-hover:text-gray-100">Request Support</span>
-                </Link>
-                <a
-                  href="/insights"
-                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
-                >
-                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                  <span className="text-gray-300 group-hover:text-gray-100">View Insights</span>
-                </a>
-                <Link
                   to="/client/account"
                   className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group w-full text-left"
                 >
                   <Settings className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                  <span className="text-gray-400 group-hover:text-brand">Account Settings</span>
+                  <span className="text-gray-300 group-hover:text-gray-100">Account Settings</span>
+                </Link>
+                <Link
+                  to="/client/user-guide"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-gray-100">Market Mapper User Guide</span>
+                </Link>
+                <a
+                  href="#"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-gray-100">API Documentation (Coming Soon)</span>
+                </a>
+                <Link
+                  to="/privacy"
+                  className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
+                >
+                  <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
+                  <span className="text-gray-300 group-hover:text-gray-100">Privacy Policy</span>
                 </Link>
               </div>
             </div>
-          </div>
-        </div>
-
-
-        {/* Resources Section */}
-        <div className="mt-8">
-          <div className="bg-black/50 border border-white/10 rounded-lg p-6 backdrop-blur-sm max-w-md">
-            <h3 className="text-lg font-semibold text-gray-100 mb-3">Resources</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/client/user-guide" className="text-gray-400 hover:text-brand transition-colors">
-                  Market Mapper User Guide
-                </Link>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-brand transition-colors">
-                  API Documentation (Coming Soon)
-                </a>
-              </li>
-              <li>
-                <Link to="/privacy" className="text-gray-400 hover:text-brand transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
