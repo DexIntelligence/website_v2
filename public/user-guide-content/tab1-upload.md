@@ -49,7 +49,9 @@ After upload, you'll need to map your Excel columns to the required fields:
 
 ![COnfigure data columns - showing the column mapping interface](/user-guide-content/column-mapping.png)
 
-## Step 4: Identifying Merger Parties
+Press "Validate Data Structure" to move on to the next step.
+
+## Step 4: Identifying Relevant Parties
 
 This critical step defines which companies are involved in the merger:
 
@@ -74,32 +76,39 @@ The application will automatically geocode your addresses to get latitude/longit
 - Failed addresses are logged and the user can retry geocoding with a different service, or manually correct geocodes
 - Duplicate coordinates automatically spread small distance (using a golden-angle spiral algorithm) to eliminate coordinate duplication for perfect visualization
 
-### Performance Expectations
-- **Processing capacity**: Up to 5,000+ locations
-- **Memory usage**: ~0.065 MB per location
-- **Geocoding speed**: ~1-2 seconds per address (varies by service)
-- **Batch processing**: Handles large datasets efficiently
+![Geocoding status updates - showing the geocoding service status process](/user-guide-content/geocoding-progress.png)
 
-<div class="screenshot-placeholder">
-[Screenshot: Geocoding progress bar and results summary]
-</div>
+### Performance Expectations
+- **Processing capacity**: Tested up to 10,000+ locations
+- **Memory usage**: ~0.065 MB per location
+- **Geocoding speed**: ~3-4 ddresses per second (varies by service)
 
 ### Partially Pre-geocoded Data
-- **Processing capacity**: Up to 5,000+ locations
-- **Memory usage**: ~0.065 MB per location
-- **Geocoding speed**: ~1-2 seconds per address (varies by service)
-- **Batch processing**: Handles large datasets efficiently
+- **Address Configuration**: User specifies columns for addresses for locations still to be geocoded
 
-<div class="screenshot-placeholder">
-[Screenshot: completing opartially geocoded data]
-</div>
+![Specifying address to complete partially geocoded data - showing the column mapping for single column scenario](/user-guide-content/partial-geocoding-address.png)
+
+- **Completing the Geocodes**: User must select "Try Another Service" to geocode all remaining locations
+
+![Completing the remaining geocodes - showing the process for finishing location geocoding for partially geocoded data](/user-guide-content/partial-geocoding-retry.png)
+
+- User can select any of the services, here using Google Maps:
+
+![Completing the remaining geocodes with Google Maps service - showing the process for finishing location geocoding for partially geocoded data](/user-guide-content/partial-geocoding-retry-google.png)
+
+## Step 6: Map Overview
+
+User can review location summary statistics and locations on a map:
+
+![Viewing overview map - showing the overview map with locations in data](/user-guide-content/map-overview.png)
 
 ## Best Practices
 
 - **Data Quality**: Ensure addresses are complete and properly formatted
-- **Unique IDs**: Every location must have a unique identifier
+- **Unique IDs**: Every location should have a unique identifier
 - **Brand Names**: Use consistent naming for brands (e.g., always "McDonald's" not "McDonalds" or "McDonald's Restaurant")
-- **Save Your Work**: Download the geocoded results for future use
+- **Save Your Work**: After geocoding, download the geocoded results so geocoding does not need to be repeated for future analysis
+- **Batch Process Large Datasets**: For large datasets that can be divided by region (e.g., by province) conduct the analysis in segments
 
 ## Troubleshooting
 
@@ -123,6 +132,4 @@ The application will automatically geocode your addresses to get latitude/longit
 
 Once your data is successfully uploaded and geocoded, you're ready to proceed to **Tab 2: Market Overview** for multi-market analysis.
 
-<div class="screenshot-placeholder">
-[Screenshot: Success message and "Proceed to Analysis" button]
-</div>
+- **Note**: use the uploaded data preview, summary statistics, and map, to confirm that data was uploaded correctly with correct column mapping.
