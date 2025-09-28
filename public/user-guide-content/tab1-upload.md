@@ -49,7 +49,9 @@ After upload, you'll need to map your Excel columns to the required fields:
 
 ![COnfigure data columns - showing the column mapping interface](/user-guide-content/column-mapping.png)
 
-## Step 4: Identifying Merger Parties
+Press "Validate Data Structure" to move on to the next step.
+
+## Step 4: Identifying Relevant Parties
 
 This critical step defines which companies are involved in the merger:
 
@@ -69,16 +71,19 @@ The application will automatically geocode your addresses to get latitude/longit
 - **Fallback Services**: Mapbox or OpenStreetMap Nominatim
 - **Pre-geocoded Data**: If no locations in the data are missing coordinates, you can skip this step
 
+![Select geocoding service option - showing the geocoding service options](/user-guide-content/geocoding.png)
+
 ### Geocoding Progress
 - Real-time progress indicator shows completion percentage
 - Failed addresses are logged and the user can retry geocoding with a different service, or manually correct geocodes
 - Duplicate coordinates automatically spread small distance (using a golden-angle spiral algorithm) to eliminate coordinate duplication for perfect visualization
 
+![Geocoding status updates - showing the geocoding service status process](/user-guide-content/geocoding-progress.png)
+
 ### Performance Expectations
-- **Processing capacity**: Up to 5,000+ locations
+- **Processing capacity**: Tested up to 10,000+ locations
 - **Memory usage**: ~0.065 MB per location
-- **Geocoding speed**: ~1-2 seconds per address (varies by service)
-- **Batch processing**: Handles large datasets efficiently
+- **Geocoding speed**: ~3-4 ddresses per second (varies by service)
 
 <div class="screenshot-placeholder">
 [Screenshot: Geocoding progress bar and results summary]
