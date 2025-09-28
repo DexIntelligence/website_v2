@@ -365,9 +365,9 @@ export default function Dashboard() {
             <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-gray-400 hover:text-brand transition-colors">
-                  Market Mapper User Guide (Coming Soon)
-                </a>
+                <Link to="/client/user-guide" className="text-gray-400 hover:text-brand transition-colors">
+                  Market Mapper User Guide
+                </Link>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-brand transition-colors">

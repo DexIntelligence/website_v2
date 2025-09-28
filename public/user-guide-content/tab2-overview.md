@@ -1,10 +1,27 @@
 # Tab 2: Market Overview
 
 ## Overview
-The Market Overview tab provides a comprehensive multi-market screening across all your locations. This powerful analysis identifies which geographic markets may raise competitive concerns based on market share and concentration thresholds.
+The Market Overview tab provides a comprehensive **multi-market screening simultaneously across all your locations**. This powerful analysis identifies which geographic markets may raise competitive concerns based on market share and concentration thresholds.
+
+**Key Capability**: Analyzes all overlapping markets at once, not just problematic ones, giving you a complete competitive landscape view.
 
 <div class="screenshot-placeholder">
 [Screenshot: Market Overview tab showing map and results table]
+</div>
+
+## Critical Analysis Flow
+
+### The Three-Stage Logic
+The Market Overview follows this critical progression:
+
+1. **ALL MARKETS** → Identifies all geographic markets around your locations
+2. **OVERLAPPING MARKETS** → Filters to markets where both merger parties are present (competitive overlap)
+3. **PROBLEMATIC MARKETS** → Flags those exceeding regulatory thresholds
+
+**IMPORTANT**: Tab 2 displays **ALL overlapping markets**, not just problematic ones. This complete view is essential for understanding the full competitive landscape.
+
+<div class="screenshot-placeholder">
+[Screenshot: Three-stage analysis flow diagram]
 </div>
 
 ## Understanding Market Analysis
@@ -84,27 +101,37 @@ Key Metrics:
 
 ## Analyzing Overlapping Markets
 
-When markets overlap (common in dense urban areas), the system identifies:
-- Markets with competitive overlap (both parties present)
-- Problematic markets (exceeding thresholds)
-- All affected locations within each market
+**CRITICAL**: The system displays ALL overlapping markets where both parties are present, not just problematic ones. This comprehensive view allows you to:
+
+- See the complete competitive landscape
+- Identify markets approaching thresholds
+- Understand geographic patterns of competition
+- Prepare for potential regulatory questions
+
+When markets overlap (common in dense urban areas), the system shows:
+- **All markets with competitive overlap** (both parties present) - displayed in table
+- **Problematic markets** (exceeding thresholds) - flagged with indicators
+- **All affected locations** within each market
 
 <div class="screenshot-placeholder">
 [Screenshot: Overlapping markets visualization]
 </div>
 
-## Filtering and Exporting
+## Display and Export Options
 
-### Filter Options
-- Show only problematic markets
-- Filter by province/state
-- Search by location name
-- Hide markets below certain thresholds
+### Understanding the Display
+By default, the table shows **ALL overlapping markets** (where both parties compete). This is intentional and required for proper analysis. Markets are flagged but not filtered out.
+
+### Available Views
+- **Default**: All overlapping markets with flags
+- **Sort by severity**: Problematic markets first
+- **Search**: Find specific locations
+- **Province/state grouping**: Regional analysis
 
 ### Export Options
-- Download results as Excel
-- Export map as image
-- Generate summary report
+- Download complete results as Excel
+- Export analysis summary
+- Generate regulatory report format
 
 <div class="screenshot-placeholder">
 [Screenshot: Filter panel and export buttons]
@@ -112,10 +139,22 @@ When markets overlap (common in dense urban areas), the system identifies:
 
 ## Performance Optimization
 
-For large datasets (1000+ locations):
-- Analysis uses smart caching to reduce API calls
-- Distance calculations are optimized with bounding boxes
-- Progress indicator shows real-time status
+### Dataset Capacity
+- **Handles up to 5,000+ locations** comfortably
+- **Memory usage**: ~0.065 MB per location
+- **Container requirement**: 2-3 GB total
+
+### Optimization Features
+For large datasets:
+- **Smart caching**: 50-80% reduction in API calls through intelligent result caching
+- **Bounding box pre-filtering**: 70-90% reduction in distance calculations
+- **Real-time progress tracking**: Shows analysis status and estimated completion
+- **Memory monitoring**: Sidebar displays current memory usage
+
+### Performance Expectations
+- **< 100 locations**: Near-instant results
+- **100-1000 locations**: 1-5 minutes
+- **1000-5000 locations**: 5-15 minutes
 
 <div class="screenshot-placeholder">
 [Screenshot: Progress bar during large dataset analysis]

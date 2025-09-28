@@ -13,6 +13,7 @@ import Contact from "./pages/Contact.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Login from "./pages/client/Login.jsx";
 import Dashboard from "./pages/client/Dashboard.jsx";
+import UserGuide from "./pages/client/app-user-guide/UserGuide.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { authService } from "./utils/auth.js";
 
@@ -255,6 +256,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/client/user-guide"
+          element={
+            <ProtectedRoute>
+              <UserGuide />
             </ProtectedRoute>
           }
         />

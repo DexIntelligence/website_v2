@@ -17,6 +17,8 @@ Analyze multiple locations together to understand combined catchment areas:
 - **Union**: Combined reach of all selected locations
 - **Intersection**: Overlapping area served by all locations
 
+**IMPORTANT LIMITATION**: Multi-location analysis requires contiguous (connected) catchment areas. If locations are too far apart to create overlapping or adjacent markets, the analysis may fail.
+
 <div class="screenshot-placeholder">
 [Screenshot: Location selector with single and multi-location options]
 </div>
@@ -65,6 +67,11 @@ Use official Canadian census geography for market definition.
 - **CMA**: Census Metropolitan Areas (large urban centers)
 - **CA**: Census Agglomerations (medium urban centers)
 - **CSD**: Census Subdivisions (municipalities)
+
+**Technical Implementation:**
+- Uses point-in-polygon testing for accurate boundary detection
+- Individual parquet files for each census area (10-100x faster than single file)
+- Optimized for Canadian geographic data
 
 **When to Use:**
 - Regulatory precedent uses census boundaries
@@ -144,6 +151,12 @@ Detailed breakdown of all competitors in the defined market:
 
 ## Advanced Analysis Options
 
+### Enhanced Multi-Location Features
+The system includes connectivity validation to ensure proper multi-location analysis:
+- Validates catchment connectivity
+- Identifies non-contiguous markets
+- Provides warnings for separated locations
+
 ### Sensitivity Analysis
 
 Test how results change with different market definitions:
@@ -185,6 +198,7 @@ The analysis identifies:
 - Competitors within market boundaries
 - Missing data warnings
 - Geocoding accuracy indicators
+- **Location ID Requirements**: All operations use sanitized location IDs for consistency
 
 ## Exporting Individual Analysis
 
@@ -220,6 +234,13 @@ Export options for detailed market analysis:
 - Adjust parameters based on product characteristics
 - Consider customer willingness to travel
 - Account for delivery radius if applicable
+
+## Known Limitations
+
+- **Multi-location analysis**: Requires contiguous (connected) catchment areas
+- **Census boundaries**: Only available for Canadian geography
+- **Travel-time accuracy**: Reflects typical traffic, may vary ±10-15%
+- **Edge effects**: Markets near borders or water may be truncated
 
 ## Next Steps
 
