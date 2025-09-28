@@ -11,10 +11,10 @@ The Upload Data tab is your starting point for any market analysis. This is wher
 
 Before uploading, ensure your Excel file contains the following columns:
 
-- **Location ID**: Unique identifier for each location
-- **Address**: Full address for geocoding (street, city, province/state)
-- **Competitor/Brand**: The company or brand operating at this location
-- **Economic Value** (optional): Revenue, sales, or other metric for weighting
+- **Location Name**: Unique identifier for each location
+- **Address**: Full address for geocoding (street, city, province/state) (Note: address components can be provided in multiple columns, e.g., "Street Address", "City", "Province" and "Postal Code")
+- **Competitor/Brand**: The company or brand operating at this location (Note: use one consistent value for each competitor category)
+- **Economic Value** (optional): Revenue, sales, or other metric for calculating market shares (e.g., sales, volume, capacity)
 
 ### Excel Format Example
 
@@ -24,32 +24,27 @@ Before uploading, ensure your Excel file contains the following columns:
 | 002 | 456 Oak Ave, Toronto, ON | Brand B | 750000 |
 | 003 | 789 Pine St, Mississauga, ON | Target Co | 900000 |
 
-<div class="screenshot-placeholder">
-[Screenshot: Example Excel file showing proper data format]
-</div>
 
 ## Step 2: Uploading Your File
 
 1. Click the **"Upload Excel File"** button
 2. Select your prepared Excel file
-3. Wait for the file to be processed
+3. If the Excel file has more than one active sheet, specify the correct sheet
+4. Wait for the file to be processed
 
-<div class="screenshot-placeholder">
-[Screenshot: File upload dialog and processing indicator]
-</div>
 
 ## Step 3: Column Mapping
 
 After upload, you'll need to map your Excel columns to the required fields:
 
-1. **Location Column**: Select which column contains unique location identifiers
-2. **Address Column**: Select the column with full addresses
-3. **Competitor Column**: Choose the column identifying the brand/company
+1. **Existing Coordinates**: If data has existing geocodes for some locations, indicate them here
+2. **Address Configuration**: Specify if addresses are presented in one or multiple columns
+3. **Location Column**: Select which column contains unique location identifiers / location name (Note: if location names are duplicates, app adds suffix to make them unique)
 4. **Economic Value Column** (optional): Select if you have revenue/sales data
+5. **Competitor Column**: Choose the column identifying the brand/company
+6. **Address Column**: Select the column(s) with full addresses (address components)
 
-<div class="screenshot-placeholder">
-[Screenshot: Column mapping interface with dropdown selections]
-</div>
+![COnfigure data columns - showing the column mapping interface](/user-guide-content/column-mapping.png)
 
 ## Step 4: Identifying Merger Parties
 
@@ -60,9 +55,7 @@ This critical step defines which companies are involved in the merger:
 
 The system will automatically identify all unique brands in your data and present them as options.
 
-<div class="screenshot-placeholder">
-[Screenshot: Purchaser and Target selection dropdowns]
-</div>
+![Identify Party Identifiers - showing the part ID interface](/user-guide-content/party-ID.png)
 
 ## Step 5: Geocoding
 

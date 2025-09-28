@@ -79,7 +79,7 @@ const UserGuide = () => {
         {/* Tab Navigation */}
         <div className="mb-8">
           <div className="border-b border-gray-700">
-            <nav className="-mb-px flex space-x-8 overflow-x-auto">
+            <nav className="-mb-px flex space-x-4 overflow-x-auto">
               {tabs.map((tab, index) => {
                 const Icon = tab.icon;
                 return (
