@@ -1,0 +1,128 @@
+# Tab 1: Upload Data
+
+## Overview
+The Upload Data tab is your starting point for any market analysis. This is where you import your location data, map the columns to the required fields, and prepare your dataset for analysis.
+
+**Performance Capacity**: The system efficiently handles datasets up to 5,000+ locations with optimized memory management.
+
+![Upload Data tab overview - showing the main upload interface](/user-guide-content/data-upload.png)
+
+## Step 1: Preparing Your Excel File
+
+Before uploading, ensure your Excel file contains the following columns:
+
+- **Location Name**: Unique identifier for each location
+- **Address**: Full address for geocoding (street, city, province/state) (Note: address components can be provided in multiple columns, e.g., "Street Address", "City", "Province" and "Postal Code")
+- **Competitor/Brand**: The company or brand operating at this location (Note: use one consistent value for each competitor category)
+- **Economic Value** (optional): Revenue, sales, or other metric for calculating market shares (e.g., sales, volume, capacity)
+
+### Excel Format Example
+
+| Location Name | Address | Brand | Revenue |
+|------------|---------|-------|---------|
+| Main Branch | 123 Main St, Toronto, ON | Competitor A | 500000 |
+| Oak Branch | 456 Oak Ave, Toronto, ON | Competitor B | 750000 |
+| Pine Branch | 789 Pine St, Mississauga, ON | Target | 900000 |
+
+
+## Step 2: Uploading Your File
+
+1. Click the **"Upload Excel File"** button
+2. Select your prepared Excel file
+3. If the Excel file has more than one active sheet, specify the correct sheet
+4. Wait for the file to be processed
+
+
+## Step 3: Column Mapping
+
+After upload, you'll need to map your Excel columns to the required fields:
+
+1. **Existing Coordinates**: If data has existing geocodes for some locations, indicate them here
+
+![Specify if geocodes exist - showing the option to use existing geocodes](/user-guide-content/existing-geocodes.png)
+
+2. **Address Configuration**: Specify if addresses are presented in one or multiple columns
+3. **Location Column**: Select which column contains unique location identifiers / location name (Note: if location names are duplicates, app adds suffix to make them unique)
+4. **Economic Value Column** (optional): Select if you have revenue/sales data
+5. **Competitor Column**: Choose the column identifying the brand/company
+6. **Address Column**: Select the column(s) with full addresses (address components)
+
+![COnfigure data columns - showing the column mapping interface](/user-guide-content/column-mapping.png)
+
+## Step 4: Identifying Merger Parties
+
+This critical step defines which companies are involved in the merger:
+
+- **Purchaser**: Select the acquiring company from the dropdown
+- **Target**: Select the company being acquired
+- **Independent**: Identify any category that gives common identifier to entities that are not affiliated
+
+The system will automatically identify all unique brands in your data and present them as options.
+
+![Identify Party Identifiers - showing the part ID interface](/user-guide-content/party-ID.png)
+
+## Step 5: Geocoding
+
+The application will automatically geocode your addresses to get latitude/longitude coordinates:
+
+- **Primary Service**: Google Maps
+- **Fallback Services**: Mapbox or OpenStreetMap Nominatim
+- **Pre-geocoded Data**: If no locations in the data are missing coordinates, you can skip this step
+
+### Geocoding Progress
+- Real-time progress indicator shows completion percentage
+- Failed addresses are logged and the user can retry geocoding with a different service, or manually correct geocodes
+- Duplicate coordinates automatically spread small distance (using a golden-angle spiral algorithm) to eliminate coordinate duplication for perfect visualization
+
+### Performance Expectations
+- **Processing capacity**: Up to 5,000+ locations
+- **Memory usage**: ~0.065 MB per location
+- **Geocoding speed**: ~1-2 seconds per address (varies by service)
+- **Batch processing**: Handles large datasets efficiently
+
+<div class="screenshot-placeholder">
+[Screenshot: Geocoding progress bar and results summary]
+</div>
+
+### Partially Pre-geocoded Data
+- **Processing capacity**: Up to 5,000+ locations
+- **Memory usage**: ~0.065 MB per location
+- **Geocoding speed**: ~1-2 seconds per address (varies by service)
+- **Batch processing**: Handles large datasets efficiently
+
+<div class="screenshot-placeholder">
+[Screenshot: completing opartially geocoded data]
+</div>
+
+## Best Practices
+
+- **Data Quality**: Ensure addresses are complete and properly formatted
+- **Unique IDs**: Every location must have a unique identifier
+- **Brand Names**: Use consistent naming for brands (e.g., always "McDonald's" not "McDonalds" or "McDonald's Restaurant")
+- **Save Your Work**: Download the geocoded results for future use
+
+## Troubleshooting
+
+### Common Issues
+
+**File Won't Upload**
+- Check file format (must be .xlsx or .xls)
+- Ensure file size is under 200MB
+- Verify no password protection on the file
+
+**Geocoding Failures**
+- Review address format (include city and province/state)
+- Check for special characters or typos
+- Consider using pre-geocoded data if available
+
+**Missing Brands**
+- Ensure the competitor column has values for all rows
+- Check for inconsistent brand naming
+
+## Next Steps
+
+Once your data is successfully uploaded and geocoded, you're ready to proceed to **Tab 2: Market Overview** for multi-market analysis.
+
+<div class="screenshot-placeholder">
+[Screenshot: Success message and "Proceed to Analysis" button]
+</div>
