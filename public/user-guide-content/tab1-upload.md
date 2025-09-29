@@ -3,7 +3,7 @@
 ## Overview
 The Upload Data tab is your starting point for any market analysis. This is where you import your location data, map the columns to the required fields, and prepare your dataset for analysis.
 
-**Performance Capacity**: The system efficiently handles datasets up to 5,000+ locations with optimized memory management.
+**Performance Capacity**: The system efficiently handles datasets up to 10,000+ locations with optimized memory management.
 
 ![Upload Data tab overview - showing the main upload interface](/user-guide-content/data-upload.png)
 

@@ -121,9 +121,7 @@ A: Yes, use Tab 3 for individual market analysis with custom parameters.
 
 **Q: How accurate are travel-time isochrones?**
 A: They reflect typical traffic conditions and are generally within 10-15% of actual drive times.
-
 ***
-
 # Next Steps
 
 After identifying problematic markets, proceed to:
