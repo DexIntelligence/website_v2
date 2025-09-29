@@ -46,7 +46,17 @@ There are two options for analyzing multiple locations together:
 
 ## Analyzing Census Boundaries
 
+Analyze competition in any census boundary where the parties have competitive overlap:
 
+![Analyzing competition in census boundaries](/user-guide-content/census-boundaries.png)
+
+There are three options for analyzing multiple locations together:
+
+-**Census Metropolitan Area (CMA)**
+-**Census Agglomeration (CA)**
+-**Census Subdivisions (CSD)**
+
+All census boundaries are stored as files in a library in the secure cloud environment
 
 ## Understanding the Results
 
