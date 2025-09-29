@@ -58,19 +58,11 @@ There are three options for analyzing multiple locations together:
 
 All census boundaries are stored as files in a library in the secure cloud environment
 
-## Understanding the Results
+## Analaysis Results
 
 ### Market Map Visualization
 
-The interactive map shows:
-- Selected location(s) with markers
-- Market boundary in orange
-- Competitor locations within market
-- Color coding by brand
-
-<div class="screenshot-placeholder">
-[Screenshot: Detailed market map with all elements labeled]
-</div>
+The interactive map shows the boundary of the market, highlighting all locations in the market boundary:
 
 ### Competitor Analysis Table
 
