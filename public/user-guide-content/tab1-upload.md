@@ -3,7 +3,7 @@
 ## Overview
 The Upload Data tab is your starting point for any market analysis. This is where you import your location data, map the columns to the required fields, and prepare your dataset for analysis.
 
-**Performance Capacity**: The system efficiently handles datasets up to 5,000+ locations with optimized memory management.
+**Performance Capacity**: The system efficiently handles datasets up to 10,000+ locations with optimized memory management.
 
 ![Upload Data tab overview - showing the main upload interface](/user-guide-content/data-upload.png)
 
@@ -128,7 +128,9 @@ User can review location summary statistics and locations on a map:
 - Ensure the competitor column has values for all rows
 - Check for inconsistent brand naming
 
-## Next Steps
+***
+
+# Next Steps
 
 Once your data is successfully uploaded and geocoded, you're ready to proceed to **Tab 2: Market Overview** for multi-market analysis.
 

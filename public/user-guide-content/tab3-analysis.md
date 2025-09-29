@@ -3,106 +3,50 @@
 ## Overview
 The Individual Market Analysis tab allows you to perform detailed analysis of specific locations with full control over market definition methods. This is essential for markets requiring special consideration or different parameters than the broad screening.
 
-<div class="screenshot-placeholder">
-[Screenshot: Individual Market Analysis tab interface]
-</div>
+![Options for analysis of individual markets](/user-guide-content/tab3.png)
 
-## Selecting Locations for Analysis
+## Options for Analysis
 
-### Single Location Analysis
-Select one location to analyze its surrounding market in detail.
+### A. Single Location Analysis
+Select one location to analyze its surrounding market in detail. As with Tab 2, users can choose:
+ - **Distance**: Boundaries defined by a radius of stright-line distance
+ - **Drive Time:** Boundaries defined by the territory that can be reached from the central point within a given time by car (a/k/a "drive-time isochrone")
 
-### Multi-Location Analysis
+### B. Multi-Location Analysis
 Analyze multiple locations together to understand combined catchment areas:
 - **Union**: Combined reach of all selected locations
 - **Intersection**: Overlapping area served by all locations
 
 **IMPORTANT LIMITATION**: Multi-location analysis requires contiguous (connected) catchment areas. If locations are too far apart to create overlapping or adjacent markets, the analysis may fail.
 
-<div class="screenshot-placeholder">
-[Screenshot: Location selector with single and multi-location options]
-</div>
+### C. Census Boundaries
+Analyze competition and party overlap in markets defined by census boundaries, including:
+-**Census Metropolitan Area (CMA)**
+-**Census Agglomeration (CA)**
+-**Census Subdivisions (CSD)**
 
-## Market Definition Methods
+## Analyzing Individual Markets
 
-### Method 1: Distance Radius
+Analyze the competing locations around any Purchaser or Target location in the dataset:
+ - **Select Market Definition**: Choose either distance- or drive-time-based market definition, and choose market size
 
-Simple circular markets based on straight-line distance.
-
-**When to Use:**
-- Urban areas with uniform density
-- Preliminary screening
-- When travel patterns are not critical
-
-**Configuration:**
-- Select radius: 2km, 5km, 10km, 15km, or 20km
-- Custom radius option available
-
-<div class="screenshot-placeholder">
-[Screenshot: Distance radius selector and resulting circular market]
-</div>
-
-### Method 2: Travel-Time Isochrone
-
-Market boundaries based on actual driving time.
-
-**When to Use:**
-- Suburban or rural areas
-- Markets with natural barriers (rivers, mountains)
-- When customer travel patterns matter
-
-**Configuration:**
-- Drive time: 5, 10, 15, 20, or 30 minutes
-- Traffic conditions: Typical weekday patterns
-
-<div class="screenshot-placeholder">
-[Screenshot: Travel-time selector and irregular isochrone shape]
-</div>
-
-### Method 3: Census Boundaries
-
-Use official Canadian census geography for market definition.
-
-**Available Boundaries:**
-- **CMA**: Census Metropolitan Areas (large urban centers)
-- **CA**: Census Agglomerations (medium urban centers)
-- **CSD**: Census Subdivisions (municipalities)
-
-**Technical Implementation:**
-- Uses point-in-polygon testing for accurate boundary detection
-- Individual parquet files for each census area (10-100x faster than single file)
-- Optimized for Canadian geographic data
-
-**When to Use:**
-- Regulatory precedent uses census boundaries
-- Need consistent, official boundaries
-- Comparing to demographic data
-
-<div class="screenshot-placeholder">
-[Screenshot: Census boundary selector with map showing official boundaries]
-</div>
+![Selecting market definition for individual market analysis](/user-guide-content/tab3-ind-defn.png)
 
 ## Analyzing Combined Catchments
 
-When analyzing multiple locations together:
+Analyze markets that are combinations of individual location catchments by checking the "Multi-location analysis" checkbox:
 
-### Union Method
-Shows the total area served by any of the selected locations.
+![Selecting the option to analyze multiple catchments](/user-guide-content/multi-location-checkbox.png)
 
-**Use Case**: Understanding the combined reach of multiple stores that will be under common ownership post-merger.
+There are two options for analyzing multiple locations together:
 
-<div class="screenshot-placeholder">
-[Screenshot: Union of three store catchment areas]
-</div>
+**1. Union Method**: Shows the total area served by any of the selected locations
 
-### Intersection Method
-Shows only the area served by all selected locations.
+**2. Intersection Method**: Shows only the area served by all selected locations
 
-**Use Case**: Identifying the core market area where all stores compete directly.
+## Analyzing Census Boundaries
 
-<div class="screenshot-placeholder">
-[Screenshot: Intersection showing overlapping coverage area]
-</div>
+
 
 ## Understanding the Results
 
