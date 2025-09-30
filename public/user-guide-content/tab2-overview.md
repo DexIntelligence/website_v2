@@ -65,10 +65,15 @@ After configuring market definition and market centers, press "Analyze Markets"
 
 ### Results Table
 
-The table shows detailed metrics for each market, according to the geographic market definition provided above.
-- **Concern Reason**: Provides reasons for regulatory concern under the thresholds (cnofigurable on Tab 5)
+The top table shows detailed metrics for each market, according to the geographic market definition provided above.
 
 ![Table with competition metrics for all overlapping markets](/user-guide-content/tab2-results.png)
+
+## Filtered Results
+
+The app provides a bar chart summarizing market shares, and below that, the user can view filtered resuolts in greater detail:
+
+![Table with filtered competition metrics for overlapping markets](/user-guide-content/tab2-results-filtered.png)
 
 # Step 3: Save Results
 
@@ -80,20 +85,13 @@ The table shows detailed metrics for each market, according to the geographic ma
 ## Performance Optimization
 
 ### Dataset Capacity
-- **Handles up to 5,000+ locations** comfortably
-- **Memory usage**: ~0.065 MB per location
-
-### Optimization Features
-For large datasets:
-- **Smart caching**: 50-80% reduction in API calls through intelligent result caching
-- **Bounding box pre-filtering**: 70-90% reduction in distance calculations
-- **Real-time progress tracking**: Shows analysis status and estimated completion
+- **Handles up to 10,000+ locations** comfortably
 
 ### Performance Expectations
 - **< 100 locations**: Near-instant results
-- **100-1000 locations**: 1-5 minutes
-- **1000-5000 locations**: 5-15 minutes
-- **5000-10000 locations**: 15-40 minutes
+- **100-1,000 locations**: 1-5 minutes
+- **1,000-5,000 locations**: 5-15 minutes
+- **5,000-10,000 locations**: 15-40 minutes
 
 ### Drive Time Isochrones
 - **Processing Time**: For datasets with many Party locations included in the multimarket analysis, drive-time catchments are retrieved from Mapbox at a rate of about 400/minute 

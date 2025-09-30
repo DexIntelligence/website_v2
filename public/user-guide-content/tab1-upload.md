@@ -16,6 +16,8 @@ Before uploading, ensure your Excel file contains the following columns:
 - **Competitor/Brand**: The company or brand operating at this location (Note: use one consistent value for each competitor category)
 - **Economic Value** (optional): Revenue, sales, or other metric for calculating market shares (e.g., sales, volume, capacity)
 
+**Note**: Download and review the sample dataset for the correct data format
+
 ### Excel Format Example
 
 | Location Name | Address | Brand | Revenue |
