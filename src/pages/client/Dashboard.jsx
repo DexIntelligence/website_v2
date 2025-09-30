@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files } from 'lucide-react';
+import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files, MessageSquare } from 'lucide-react';
 import { authService } from '../../utils/auth';
+import FeedbackModal from '../../components/FeedbackModal';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -10,6 +11,7 @@ export default function Dashboard() {
   const [fileSharingId, setFileSharingId] = useState(null);
   const [deployments, setDeployments] = useState([]);
   const [deploymentsLoading, setDeploymentsLoading] = useState(true);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -143,8 +145,8 @@ export default function Dashboard() {
                           `max-age=3600`;                                 // 1 hour
 
       document.cookie = cookieString;
-      // Redirect to Market Mapper app (NO token in URL)
-      window.location.href = deployment.cloudRunUrl;
+      // Open Market Mapper app in new tab (NO token in URL)
+      window.open(deployment.cloudRunUrl, '_blank', 'noopener,noreferrer');
       
     } catch (error) {
       console.error('Failed to launch Market Mapper:', error);
@@ -369,6 +371,15 @@ export default function Dashboard() {
 
           {/* Quick Links Card */}
           <div className="space-y-6 lg:sticky lg:top-40">
+            {/* Feedback Button - Highlighted */}
+            <button
+              onClick={() => setFeedbackModalOpen(true)}
+              className="w-full bg-gradient-to-r from-brand to-[#d68c3f] hover:from-[#d68c3f] hover:to-brand text-white font-medium py-3 px-4 rounded-lg transition-all shadow-lg hover:shadow-brand/50 flex items-center justify-center gap-2"
+            >
+              <MessageSquare className="h-5 w-5" />
+              Send Feedback
+            </button>
+
             <div className="bg-black/80 border border-brand/20 rounded-lg p-6 backdrop-blur-sm">
               <h3 className="text-lg font-semibold text-gray-100 mb-4">Quick Links</h3>
               <div className="space-y-3">
@@ -405,6 +416,13 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={feedbackModalOpen}
+        onClose={() => setFeedbackModalOpen(false)}
+        deployments={deployments}
+      />
     </main>
   );
 }
