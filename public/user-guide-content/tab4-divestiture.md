@@ -115,9 +115,6 @@ On tab 5, user can generate comprehensive remedy proposal including:
 **Q: Why is the optimization taking so long?**
 A: Dense urban markets with many overlaps create complex optimization problems. Consider breaking into regions.
 
-**Q: Can I manually override recommendations?**
-A: Yes, you can manually select/deselect locations and re-run analysis.
-
 **Q: What if no solution exists?**
 A: This means thresholds cannot be met with any divestiture combination. Consider behavioral remedies or market exit.
 
