@@ -1,4 +1,4 @@
-const { createClient } = require('@supabase/supabase-js');
+import { createClient } from '@supabase/supabase-js';
 
 // Rate limiting map (in-memory, resets on function cold start)
 const rateLimitMap = new Map();
@@ -23,7 +23,7 @@ function isRateLimited(identifier) {
   return false;
 }
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development'
