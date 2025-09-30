@@ -9,7 +9,7 @@ The Individual Market Analysis tab allows you to perform detailed analysis of sp
 
 ### A. Single Location Analysis
 Select one location to analyze its surrounding market in detail. As with Tab 2, users can choose:
- - **Distance**: Boundaries defined by a radius of stright-line distance
+ - **Distance**: Boundaries defined by a radius of straight-line distance
  - **Drive Time:** Boundaries defined by the territory that can be reached from the central point within a given time by car (a/k/a "drive-time isochrone")
 
 ### B. Multi-Location Analysis
@@ -46,52 +46,38 @@ There are two options for analyzing multiple locations together:
 
 ## Analyzing Census Boundaries
 
+Analyze competition in any census boundary where the parties have competitive overlap:
 
+![Analyzing competition in census boundaries](/user-guide-content/census-boundaries.png)
 
-## Understanding the Results
+There are three options for analyzing multiple locations together:
+
+-**Census Metropolitan Area (CMA)**
+-**Census Agglomeration (CA)**
+-**Census Subdivisions (CSD)**
+
+All census boundaries are stored as files in a library in the secure cloud environment
+
+## Analysis Results
 
 ### Market Map Visualization
 
-The interactive map shows:
-- Selected location(s) with markers
-- Market boundary in orange
-- Competitor locations within market
-- Color coding by brand
+The interactive map shows the boundary of the market, highlighting all locations in the market boundary:
 
-<div class="screenshot-placeholder">
-[Screenshot: Detailed market map with all elements labeled]
-</div>
+![Map of individual market](/user-guide-content/tab3-map.png)
+
+
+### Market Share and HHI results
+
+Below the map the app presents detailed competition metrics for the defined market:
+
+![Competition metrics for single market analysis](/user-guide-content/tab3-metrics.png)
 
 ### Competitor Analysis Table
 
 Detailed breakdown of all competitors in the defined market:
 
-| Brand | Locations | Market Share | Revenue |
-|-------|-----------|--------------|---------|
-| Purchaser | 3 | 28% | $2.5M |
-| Target | 2 | 15% | $1.3M |
-| Competitor A | 4 | 35% | $3.1M |
-| Competitor B | 2 | 22% | $1.9M |
-
-<div class="screenshot-placeholder">
-[Screenshot: Competitor analysis table with market shares]
-</div>
-
-### Market Concentration Metrics
-
-**Pre-Merger Metrics:**
-- HHI: 1,750
-- Purchaser Share: 28%
-- Target Share: 15%
-
-**Post-Merger Metrics:**
-- HHI: 2,200 (Δ450)
-- Combined Share: 43%
-- Concentration Level: Moderately Concentrated → Highly Concentrated
-
-<div class="screenshot-placeholder">
-[Screenshot: Pre/post merger metrics comparison]
-</div>
+![Competitive composition of individual market](/user-guide-content/tab3-breakdown.png)
 
 ## Advanced Analysis Options
 
@@ -108,20 +94,12 @@ Test how results change with different market definitions:
 - Compare 10-minute vs 15-minute drive time
 - Document which definition is most appropriate
 
-<div class="screenshot-placeholder">
-[Screenshot: Side-by-side comparison of different market definitions]
-</div>
-
 ### Economic Value Weighting
 
 If you provided economic values (revenue, sales):
 - Market shares are weighted by economic value
 - More accurate representation of competitive significance
 - Critical for markets with varying store sizes
-
-<div class="screenshot-placeholder">
-[Screenshot: Toggle between unit-based and value-based market shares]
-</div>
 
 ## Special Considerations
 
@@ -132,28 +110,11 @@ For locations near boundaries (provincial borders, coastlines):
 - Consider adjusting analysis method
 - Document any limitations in your analysis
 
-<div class="screenshot-placeholder">
-[Screenshot: Market near water boundary showing truncated catchment]
-</div>
-
-### Data Completeness
-
-The analysis identifies:
-- Competitors within market boundaries
-- Missing data warnings
-- Geocoding accuracy indicators
-- **Location ID Requirements**: All operations use sanitized location IDs for consistency
-
 ## Exporting Individual Analysis
 
-Export options for detailed market analysis:
-- **PDF Report**: Full analysis with maps and tables
-- **Excel Details**: Raw data for further analysis
-- **Map Image**: High-resolution market map
+All analysis is saved for future reference and inclusion in the Excel report, generated on Tab 5 of the app
 
-<div class="screenshot-placeholder">
-[Screenshot: Export menu with format options]
-</div>
+![Individual market analysis is saved for future use and exporting to report](/user-guide-content/tab3-saved.png)
 
 ## Best Practices
 
@@ -162,36 +123,8 @@ Export options for detailed market analysis:
 3. **Consider Multiple Scenarios**: Regulators may question your market definition
 4. **Validate with Local Knowledge**: Confirm results make business sense
 
-## Common Use Cases
-
-### Urban Retail Analysis
-- Use 5-10km radius or 10-15 minute drive time
-- Consider census subdivisions for official boundaries
-- Account for public transit accessibility
-
-### Rural/Suburban Markets
-- Use larger radius (15-20km) or longer drive times (20-30 minutes)
-- Census agglomerations often appropriate
-- Consider seasonal variations
-
-### Specialized Markets
-- Adjust parameters based on product characteristics
-- Consider customer willingness to travel
-- Account for delivery radius if applicable
-
-## Known Limitations
-
-- **Multi-location analysis**: Requires contiguous (connected) catchment areas
-- **Census boundaries**: Only available for Canadian geography
-- **Travel-time accuracy**: Reflects typical traffic, may vary ±10-15%
-- **Edge effects**: Markets near borders or water may be truncated
-
 ## Next Steps
 
 After completing individual market analyses:
 - **Tab 4: Optimal Divestiture** - If remedies are needed
 - **Tab 5: Settings & Export** - Generate comprehensive reports
-
-<div class="screenshot-placeholder">
-[Screenshot: Navigation to next steps]
-</div>

@@ -16,6 +16,8 @@ Before uploading, ensure your Excel file contains the following columns:
 - **Competitor/Brand**: The company or brand operating at this location (Note: use one consistent value for each competitor category)
 - **Economic Value** (optional): Revenue, sales, or other metric for calculating market shares (e.g., sales, volume, capacity)
 
+**Note**: Download and review the sample dataset for the correct data format
+
 ### Excel Format Example
 
 | Location Name | Address | Brand | Revenue |
@@ -47,7 +49,7 @@ After upload, you'll need to map your Excel columns to the required fields:
 5. **Competitor Column**: Choose the column identifying the brand/company
 6. **Address Column**: Select the column(s) with full addresses (address components)
 
-![COnfigure data columns - showing the column mapping interface](/user-guide-content/column-mapping.png)
+![Configure data columns - showing the column mapping interface](/user-guide-content/column-mapping.png)
 
 Press "Validate Data Structure" to move on to the next step.
 
@@ -81,7 +83,7 @@ The application will automatically geocode your addresses to get latitude/longit
 ### Performance Expectations
 - **Processing capacity**: Tested up to 10,000+ locations
 - **Memory usage**: ~0.065 MB per location
-- **Geocoding speed**: ~3-4 ddresses per second (varies by service)
+- **Geocoding speed**: ~3-4 addresses per second (varies by service)
 
 ### Partially Pre-geocoded Data
 - **Address Configuration**: User specifies columns for addresses for locations still to be geocoded

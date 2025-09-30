@@ -3,9 +3,7 @@
 ## Overview
 The Optimal Divestiture Analysis tab uses advanced optimization algorithms to calculate the minimum set of locations that must be divested to meet regulatory requirements. This powerful tool helps structure remedies that resolve competition concerns while minimizing business impact.
 
-<div class="screenshot-placeholder">
-[Screenshot: Divestiture Analysis tab main interface]
-</div>
+![Tab 4: optimal remedy analysis](/user-guide-content/tab4.png)
 
 ## Understanding Divestiture Analysis
 
@@ -17,24 +15,22 @@ A divestiture is the sale of specific business assets (in this case, store locat
 - **Ensure Compliance**: Meet all regulatory thresholds
 - **Maintain Viability**: Preserve business operations in key markets
 
-<div class="screenshot-placeholder">
-[Screenshot: Divestiture concept diagram]
-</div>
-
 ## Configuration Options
 
 ### Step 1: Select Problematic Markets
 
-The system automatically identifies markets requiring remedies based on:
-- Markets exceeding threshold from Tab 2 analysis
-- Custom market selections
-- Regulatory feedback on specific markets
-
-<div class="screenshot-placeholder">
-[Screenshot: Problematic markets selection interface]
-</div>
+The system automatically identifies markets requiring remedies based on markets exceeding threshold from Tab 2 analysis:
+ - **Select** the analysis from the dropdown menu
 
 ### Step 2: Set Divestiture Constraints
+
+#### Market share and HHI thresholds
+
+Optimization identifies the assets to be divested to get market shares and/or concentration below given thresholds:
+
+**1.** It is unlikely that the Competition Bureau will require divestitures to result in market shares below the statutory thresholds, but the precise standard remains uncertain
+
+**2.** The thresholds targeted by the algorithm can be configured in Tab 5 of the app (see part 5 of this user guide)
 
 #### Crown Jewel Protection
 Identify locations that should be divested only as a last resort:
@@ -42,31 +38,17 @@ Identify locations that should be divested only as a last resort:
 - Recently renovated locations
 - Strategic market positions
 
-<div class="screenshot-placeholder">
-[Screenshot: Crown jewel designation interface]
-</div>
+![Selecting crown jewels for remedy analysis](/user-guide-content/crown-jewels.png)
 
-#### Divestiture Preferences
-Set priorities for which locations to divest first:
-- **Target First**: Prioritize divesting acquired locations
-- **Purchaser First**: Consider divesting buyer's locations
-- **Economic Value**: Divest lower-value locations first
-- **No Preference**: Let algorithm optimize freely
+### Step 4: Choose Solution Method
 
-<div class="screenshot-placeholder">
-[Screenshot: Divestiture preference settings]
-</div>
+The optimizatin procedure has different setting for extremely large datasets. For most datasets, "Full" is the best option, and will complete in a few minutes.
 
-### Step 3: Define Success Criteria
+For larger datasets (e.g., 500+ merging party locations), assess the solution progressivley:
+ - **Start Fast**: Select "Quick" for initial estimate of solution
+ - **Progress To More Precise Methods**: depending on the complexity of the problem, and how long the solution is taking, gradually get more precise results by assessing the solution first with Quickest, then Quick, then Medium, and if time permits, the Full solution. Use the Estimate Time button to see estimated time to completion for the solution at different precision levels.
 
-Set target thresholds for post-divestiture markets:
-- **Market Share Target**: Maximum combined share (e.g., < 30%)
-- **HHI Target**: Maximum HHI level (e.g., < 1800)
-- **ΔHHI Target**: Maximum HHI increase (e.g., < 100)
-
-<div class="screenshot-placeholder">
-[Screenshot: Threshold configuration panel]
-</div>
+![Selecting optimization precision](/user-guide-content/tab4-options.png)
 
 ## Understanding the Optimization Process
 
@@ -77,24 +59,6 @@ The system uses the **CBC (Coin-or Branch and Cut) solver** for mixed-integer li
 2. **CBC Optimization**: Branch-and-cut algorithm refines to find true minimum
 3. **Multi-Market Conflict Resolution**: Handles overlapping market constraints
 4. **Validation Phase**: Verify all constraints are met
-
-**Key Technical Features**:
-- Linear programming with integer constraints
-- Crown jewel penalty weights in objective function
-- Real-time progress tracking during solve
-
-<div class="screenshot-placeholder">
-[Screenshot: Optimization progress indicator with phases]
-</div>
-
-### Processing Time Expectations
-
-**IMPORTANT**: Dense urban markets with many overlaps can be computationally intensive.
-
-- Small problems (< 20 markets): 1-5 minutes
-- Medium problems (20-50 markets): 5-15 minutes
-- Large problems (50+ markets): 15-60 minutes
-- **Very complex urban markets**: Can exceed 2-4 hours
 
 **Performance Tips**:
 - For very large problems, consider breaking into regions
@@ -110,128 +74,37 @@ The optimization results show:
 - **Markets Resolved**: Number of problematic markets addressed
 - **Business Impact**: Revenue/economic value of divested locations
 
-<div class="screenshot-placeholder">
-[Screenshot: Divestiture summary statistics]
-</div>
+![Remedy package results](/user-guide-content/tab4-results.png)
+
+### Strategic Multi-market Locations Summary
+
+The app identifies the locations that affect market shares in many different markets, and provides detailed information on their impact on the divestiture:
+
+![Breakdown of multi-market impact locations](/user-guide-content/tab4-multi-market.png)
 
 ### Market-by-Market Breakdown
 
-Detailed table showing remedies for each problematic market:
+Detailed table showing details of the remedy recommended for each problematic market:
 
-| Market | Locations to Divest | Post-Remedy Share | Post-Remedy HHI |
-|--------|-------------------|-------------------|-----------------|
-| Toronto Downtown | Store #123, #456 | 29% | 1,750 |
-| Mississauga | Store #789 | 25% | 1,650 |
-| Scarborough | Store #234 | 28% | 1,700 |
-
-<div class="screenshot-placeholder">
-[Screenshot: Detailed market remedy table]
-</div>
-
-### Divestiture Map
-
-Visual representation showing:
-- 🔴 Locations to divest (red markers)
-- 🟢 Locations to retain (green markers)
-- 🟡 Crown jewels avoided (yellow markers)
-- Market boundaries with resolution status
-
-<div class="screenshot-placeholder">
-[Screenshot: Map showing divestiture recommendations]
-</div>
-
-## Alternative Scenarios
-
-### Scenario Testing
-Run multiple scenarios to understand options:
-
-1. **Minimum Divestiture**: Absolute minimum required
-2. **Clean Sweep**: Divest all target locations in problematic markets
-3. **Balanced Approach**: Mix of purchaser and target divestitures
-4. **Crown Jewel Protection**: Avoid key assets at all costs
-
-<div class="screenshot-placeholder">
-[Screenshot: Scenario comparison interface]
-</div>
-
-### Sensitivity Analysis
-
-Test how results change with different thresholds:
-- What if regulators require < 25% market share?
-- Impact of stricter HHI requirements
-- Trade-offs between different markets
-
-<div class="screenshot-placeholder">
-[Screenshot: Sensitivity analysis controls and results]
-</div>
-
-## Package Deal Options
-
-### Creating Divestiture Packages
-
-Group locations for sale to single buyer:
-- Maintain operational viability
-- Ensure effective competition
-- Meet buyer interest
-
-Package Considerations:
-- Geographic clustering
-- Brand consistency
-- Operational synergies
-- Economic viability
-
-<div class="screenshot-placeholder">
-[Screenshot: Package creation interface]
-</div>
+![Overview of individual market divestitures](/user-guide-content/tab4-markets.png)
 
 ## Exporting Remedy Proposals
 
+All remedies are saved for future reference and inclusion in the Excel report, generated on Tab 5 of the app
+
+![All remedies are saved for future use and exporting to report](/user-guide-content/tab4-saved.png)
+
 ### Regulatory Submission Package
 
-Generate comprehensive remedy proposal including:
+On tab 5, user can generate comprehensive remedy proposal including:
 - Executive summary
 - Market-by-market analysis
 - Divestiture list with rationale
-- Post-remedy market structures
 - Supporting methodology
-
-<div class="screenshot-placeholder">
-[Screenshot: Export package options]
-</div>
-
-### Internal Reporting
-
-Create internal documents for decision-making:
-- Business impact assessment
-- Alternative scenario comparison
-- Implementation timeline
-- Buyer identification priorities
-
-## Implementation Considerations
-
-### Practical Constraints
-
-Real-world factors to consider:
-- **Lease Terms**: Can locations be transferred?
-- **Employee Impact**: Staffing considerations
-- **Brand Requirements**: Franchise agreements
-- **Timing**: How quickly can divestitures be completed?
-
-### Buyer Requirements
-
-Ensure divested package is attractive:
-- Sufficient scale for viability
-- Geographic coherence
-- Positive cash flow potential
-- Operational independence
-
-<div class="screenshot-placeholder">
-[Screenshot: Implementation checklist]
-</div>
 
 ## Best Practices
 
-1. **Run Multiple Scenarios**: Don't rely on single optimization
+1. **Run Multiple Scenarios**: To determine the sensisitivy of results to different market definitions and target thresholds
 2. **Document Assumptions**: Clear rationale for constraints
 3. **Consider Buyer Perspective**: Ensure packages are viable
 4. **Plan for Negotiation**: Have fallback options ready
@@ -241,9 +114,6 @@ Ensure divested package is attractive:
 
 **Q: Why is the optimization taking so long?**
 A: Dense urban markets with many overlaps create complex optimization problems. Consider breaking into regions.
-
-**Q: Can I manually override recommendations?**
-A: Yes, you can manually select/deselect locations and re-run analysis.
 
 **Q: What if no solution exists?**
 A: This means thresholds cannot be met with any divestiture combination. Consider behavioral remedies or market exit.
@@ -261,7 +131,3 @@ After determining optimal divestitures:
 - **Tab 5: Settings & Export** - Generate final reports
 - **Download remedy package** for regulatory submission
 - **Share results** with legal and business teams
-
-<div class="screenshot-placeholder">
-[Screenshot: Next steps and export options]
-</div>
