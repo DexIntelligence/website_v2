@@ -24,6 +24,14 @@ The system automatically identifies markets requiring remedies based on markets 
 
 ### Step 2: Set Divestiture Constraints
 
+#### Market share and HHI thresholds
+
+Optimization identifies the assets to be divested to get marekt shares and/or concentration below given thresholds:
+
+**1.** It is unlikely that the Competition Bureau will require divestitures to result in market shares below the statutory thresholds, but the precise standard remains uncertain
+
+**2.** The thresholds targeted by the algorithm can be configured in Tab 5 of the app (see part 5 opf this user guide)
+
 #### Crown Jewel Protection
 Identify locations that should be divested only as a last resort:
 - Flagship stores
@@ -32,7 +40,7 @@ Identify locations that should be divested only as a last resort:
 
 ![Selecting crown jewels for remedy analysis](/user-guide-content/crown-jewels.png)
 
-### Step 3: Choose Solution Method
+### Step 4: Choose Solution Method
 
 The optimizatin procedure has different setting for extremely large datasets. For most datasets, "Full" is the best option, and will complete in a few minutes.
 
@@ -51,11 +59,6 @@ The system uses the **CBC (Coin-or Branch and Cut) solver** for mixed-integer li
 2. **CBC Optimization**: Branch-and-cut algorithm refines to find true minimum
 3. **Multi-Market Conflict Resolution**: Handles overlapping market constraints
 4. **Validation Phase**: Verify all constraints are met
-
-**Key Technical Features**:
-- Linear programming with integer constraints
-- Crown jewel penalty weights in objective function
-- Real-time progress tracking during solve
 
 **Performance Tips**:
 - For very large problems, consider breaking into regions
