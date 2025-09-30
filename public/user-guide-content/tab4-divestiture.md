@@ -26,11 +26,11 @@ The system automatically identifies markets requiring remedies based on markets 
 
 #### Market share and HHI thresholds
 
-Optimization identifies the assets to be divested to get marekt shares and/or concentration below given thresholds:
+Optimization identifies the assets to be divested to get market shares and/or concentration below given thresholds:
 
 **1.** It is unlikely that the Competition Bureau will require divestitures to result in market shares below the statutory thresholds, but the precise standard remains uncertain
 
-**2.** The thresholds targeted by the algorithm can be configured in Tab 5 of the app (see part 5 opf this user guide)
+**2.** The thresholds targeted by the algorithm can be configured in Tab 5 of the app (see part 5 of this user guide)
 
 #### Crown Jewel Protection
 Identify locations that should be divested only as a last resort:
@@ -78,7 +78,7 @@ The optimization results show:
 
 ### Strategic Multi-market Locations Summary
 
-The app identifies the locations that affedct market shares in many different markets, and provides detailed information on their impact on the divestiture:
+The app identifies the locations that affect market shares in many different markets, and provides detailed information on their impact on the divestiture:
 
 ![Breakdown of multi-market impact locations](/user-guide-content/tab4-multi-market.png)
 

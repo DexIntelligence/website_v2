@@ -9,7 +9,7 @@ The Individual Market Analysis tab allows you to perform detailed analysis of sp
 
 ### A. Single Location Analysis
 Select one location to analyze its surrounding market in detail. As with Tab 2, users can choose:
- - **Distance**: Boundaries defined by a radius of stright-line distance
+ - **Distance**: Boundaries defined by a radius of straight-line distance
  - **Drive Time:** Boundaries defined by the territory that can be reached from the central point within a given time by car (a/k/a "drive-time isochrone")
 
 ### B. Multi-Location Analysis
@@ -58,7 +58,7 @@ There are three options for analyzing multiple locations together:
 
 All census boundaries are stored as files in a library in the secure cloud environment
 
-## Analaysis Results
+## Analysis Results
 
 ### Market Map Visualization
 
@@ -112,9 +112,9 @@ For locations near boundaries (provincial borders, coastlines):
 
 ## Exporting Individual Analysis
 
-All analysis is saved for future reference and onclusion in the Excel report, generated on Tab 5 of the app
+All analysis is saved for future reference and inclusion in the Excel report, generated on Tab 5 of the app
 
-![Individual marekt analysis is saved for futre use and exporting to report](/user-guide-content/tab3-saved.png)
+![Individual market analysis is saved for future use and exporting to report](/user-guide-content/tab3-saved.png)
 
 ## Best Practices
 

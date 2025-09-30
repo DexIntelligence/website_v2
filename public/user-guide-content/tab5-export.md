@@ -29,7 +29,7 @@ The thresholds configured in tab 5 will apply to all new analysis, but will not 
 Configure what to include in exports:
 - [ ] Multimarket analysis
 - [ ] Individual market analysis
-- [ ] Remedy recomendations
+- [ ] Remedy recommendations
 - [ ] Optional technical methodology
 - [ ] Optional data appendix
 
@@ -77,7 +77,7 @@ After selecting the content to be included in the report:
 
 Use the System Management section to clear existing analysis:
 
-![Manage system meory and saved analysis](/user-guide-content/tab5-system.png)
+![Manage system memory and saved analysis](/user-guide-content/tab5-system.png)
 
 ## Best Practices
 
@@ -103,4 +103,4 @@ A: Detailed explanations of calculations, formulas, and academic references.
 After configuring and exporting:
 1. **Review all reports** for accuracy
 2. **Save analysis state** for future reference
-3. **Download backup** of all data (using the data appendix functioinality of the report)
+3. **Download backup** of all data (using the data appendix functionality of the report)

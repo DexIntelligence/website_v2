@@ -58,7 +58,7 @@ After configuring market definition and market centers, press "Analyze Markets"
 
 ### Interactive Map
 
-**Map Display**: The map displays all analyzed markets with grey marekt boundaries
+**Map Display**: The map displays all analyzed markets with grey market boundaries
 - Note: map display shows all market boundaries, not just overlapping markets
 
 ![See overview map of all market boundaries](/user-guide-content/tab2-map.png)
@@ -71,7 +71,7 @@ The top table shows detailed metrics for each market, according to the geographi
 
 ## Filtered Results
 
-The app provides a bar chart summarizing market shares, and below that, the user can view filtered resuolts in greater detail:
+The app provides a bar chart summarizing market shares, and below that, the user can view filtered results in greater detail:
 
 ![Table with filtered competition metrics for overlapping markets](/user-guide-content/tab2-results-filtered.png)
 
