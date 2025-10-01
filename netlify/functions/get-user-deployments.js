@@ -142,7 +142,8 @@ export const handler = async (event, context) => {
         project_id,
         region,
         created_at,
-        authorized_emails
+        authorized_emails,
+        file_sharing_enabled
       `)
       .eq('is_active', true)
       .contains('authorized_emails', [user.email])
@@ -167,6 +168,7 @@ export const handler = async (event, context) => {
       projectId: deployment.project_id,
       region: deployment.region,
       authorizedEmails: deployment.authorized_emails,
+      fileSharingEnabled: deployment.file_sharing_enabled,
     }));
 
     // Log successful fetch for audit
