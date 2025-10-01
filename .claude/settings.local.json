@@ -6,7 +6,8 @@
       "Bash(npm run dev:*)",
       "Bash(npm run build:*)",
       "Bash(git checkout:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(node -e \"console.log(require(''crypto'').randomBytes(64).toString(''hex''))\")"
     ],
     "deny": [],
     "ask": []

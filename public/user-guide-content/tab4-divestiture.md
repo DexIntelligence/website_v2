@@ -20,8 +20,10 @@ A divestiture is the sale of specific business assets (in this case, store locat
 ### Step 1: Select Problematic Markets
 
 The system automatically identifies markets requiring remedies based on markets exceeding threshold from Tab 2 analysis:
+ - Tab 2 analysis based on either: distance, drive-time, or census boundary
  - **Select** the analysis from the dropdown menu
-
+ - The remedy solver will identify the divestiture that eliminates competition concerns according to the market definition selected in the dropdown menu
+ 
 ### Step 2: Set Divestiture Constraints
 
 #### Market share and HHI thresholds

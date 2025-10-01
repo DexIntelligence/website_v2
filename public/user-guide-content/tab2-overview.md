@@ -18,12 +18,13 @@ The Market Overview follows this critical progression:
 
 ## Relevant Geographic Market
 
-Tab 2 allows the user to investigate the degree of party competitive overlap, and estimate competitive metrics, under two geographic market definition methods: 
+Tab 2 allows the user to investigate the degree of party competitive overlap, and estimate competitive metrics, under three geographic market definition methods: 
 
 1. **Distance Radius**: Fixed radius circles (e.g., 5km, 10km)
 2. **Travel Time Isochrone**: Areas reachable within a certain drive time (e.g., 15 minutes)
+3. **Census Boundaries**: All CMAs, CAs, and CBDs from the most recent census.
 
-Both methods create geographic markets around each location in the data (more advanced methods of market definition are available in Tab 3):
+Methods 1 and 2 create geographic markets around each location in the data, and method 3 analyzes all census boundaries where the parties both have a presence (more advanced methods of market definition are available in Tab 3):
 
 # Step 1: Configuring Your Analysis
 
@@ -41,6 +42,11 @@ Both methods create geographic markets around each location in the data (more ad
 - Realistic drive-time boundaries
 - Accounts for roads, traffic patterns, and barriers
 - More accurate for suburban/rural areas
+
+**Census Boundaries**:
+- Searches all census boundaries (CMA, CA and CSD) for overlap between the parties
+- Full search takes ~40 seconds per ten locations
+- Users can limit searches to specific census boundary catgegories to increase search efficiency 
 
 ![Configure market definition for multimarket overview](/user-guide-content/tab2-config.png)
 
