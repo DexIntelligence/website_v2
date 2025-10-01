@@ -73,6 +73,8 @@ After selecting the content to be included in the report:
 
 ![Name, generate and download excel report](/user-guide-content/tab5-download.png)
 
+Note: Methodological Appendix is only available to support competition authority filings on paid engagements.
+
 ### Session Management
 
 Use the System Management section to clear existing analysis:
