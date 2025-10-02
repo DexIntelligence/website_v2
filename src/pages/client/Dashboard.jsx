@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files, MessageSquare } from 'lucide-react';
+import { LogOut, ExternalLink, BarChart3, FileText, Settings, Loader2, Files, MessageSquare, Bell } from 'lucide-react';
 import { authService } from '../../utils/auth';
 import FeedbackModal from '../../components/FeedbackModal';
 
@@ -11,11 +11,14 @@ export default function Dashboard() {
   const [fileSharingId, setFileSharingId] = useState(null);
   const [deployments, setDeployments] = useState([]);
   const [deploymentsLoading, setDeploymentsLoading] = useState(true);
+  const [recentUpdates, setRecentUpdates] = useState([]);
+  const [updatesLoading, setUpdatesLoading] = useState(true);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     loadUser();
+    loadRecentUpdates();
   }, []);
 
   const loadUser = async () => {
@@ -29,6 +32,30 @@ export default function Dashboard() {
       console.error('Failed to load user:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadRecentUpdates = async () => {
+    try {
+      const response = await fetch('/.netlify/functions/get-recent-updates', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch recent updates');
+      }
+
+      const data = await response.json();
+      setRecentUpdates(data.updates || []);
+
+    } catch (error) {
+      console.error('Failed to load recent updates:', error);
+      setRecentUpdates([]);
+    } finally {
+      setUpdatesLoading(false);
     }
   };
 
@@ -361,6 +388,55 @@ export default function Dashboard() {
                               </>
                             )}
                           </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Recent Updates Section */}
+            <div className="bg-black/80 border border-brand/20 rounded-lg overflow-hidden backdrop-blur-sm">
+              <div className="flex items-center gap-2 px-6 py-3 border-b border-brand/20">
+                <Bell className="h-4 w-4 text-brand" />
+                <h2 className="text-sm font-medium text-gray-400">Recent Updates</h2>
+              </div>
+
+              <div className="p-4">
+                {updatesLoading && (
+                  <div className="flex items-center justify-center gap-3 py-6">
+                    <Loader2 className="h-5 w-5 text-gray-500 animate-spin" />
+                    <span className="text-gray-400 text-sm">Loading updates...</span>
+                  </div>
+                )}
+
+                {!updatesLoading && recentUpdates.length === 0 && (
+                  <div className="py-6 text-center">
+                    <p className="text-sm text-gray-500">No recent updates available.</p>
+                  </div>
+                )}
+
+                {!updatesLoading && recentUpdates.length > 0 && (
+                  <div className="space-y-2">
+                    {recentUpdates.map((update) => (
+                      <div
+                        key={update.id}
+                        className="p-3 rounded bg-black/20 border border-gray-700/20 hover:border-brand/30 transition-colors"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-sm font-medium text-brand">{update.title}</h3>
+                            {update.description && (
+                              <p className="mt-1 text-xs text-gray-500">{update.description}</p>
+                            )}
+                          </div>
+                          <time className="text-xs text-gray-600 whitespace-nowrap">
+                            {new Date(update.date).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric'
+                            })}
+                          </time>
                         </div>
                       </div>
                     ))}

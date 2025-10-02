@@ -56,3 +56,6 @@ demo-clone.txt
 
 # Database setup files (contain production configurations)
 database/
+
+# Local Netlify folder
+.netlify
