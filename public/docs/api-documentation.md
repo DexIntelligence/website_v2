@@ -11,6 +11,10 @@ The Market Analysis Application uses two external API services to provide geocod
 
 API keys are pre-configured in the application. This documentation explains how these services support the application's functionality.
 
+### Data Privacy & API Usage
+
+**Important:** Client data is never sent to external APIs. Only abstracted location information (addresses or coordinates) is transmitted to geocoding and mapping services. No sensitive business data, customer names, transaction details, or proprietary information leaves the secure application environment. The APIs receive only the minimum geographic data necessary to provide mapping and analysis services.
+
 * * *
 
 Google Maps API
@@ -99,11 +103,11 @@ Performance & Limitations
 
 **Dataset Size Expectations:**
 
-* **< 100 locations**: 30-60 seconds
-* **100-500 locations**: 2-5 minutes
-* **500-1,000 locations**: 5-10 minutes
-* **1,000-5,000 locations**: 15-45 minutes
-* **5,000-10,000 locations**: 45-90 minutes
+* **< 100 locations**: <30 seconds
+* **100-500 locations**: 30 seconds - 2 minutes
+* **500-1,000 locations**: 2-5 minutes
+* **1,000-5,000 locations**: 5-25 minutes
+* **5,000-10,000 locations**: 25-60 minutes
 
 ### Isochrone Generation Performance
 
@@ -255,7 +259,7 @@ Technical Specifications
 
 * API: Mapbox Isochrone API
 * Profile: Driving
-* Contour Types: Time-based (5, 10, 15, 20, 25, 30 minutes)
+* Contour Types: Time-based 
 * Rate: ~400 requests per minute (application-managed)
 
 **Geocoding Service** (fallback):
