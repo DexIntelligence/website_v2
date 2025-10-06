@@ -474,13 +474,13 @@ export default function Dashboard() {
                   <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
                   <span className="text-gray-300 group-hover:text-gray-100">Market Mapper User Guide</span>
                 </Link>
-                <a
-                  href="#"
+                <Link
+                  to="/client/api-documentation"
                   className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
                 >
                   <FileText className="h-5 w-5 text-gray-400 group-hover:text-brand" />
-                  <span className="text-gray-300 group-hover:text-gray-100">API Documentation (Coming Soon)</span>
-                </a>
+                  <span className="text-gray-300 group-hover:text-gray-100">API Documentation</span>
+                </Link>
                 <Link
                   to="/privacy"
                   className="flex items-center gap-3 p-3 hover:bg-black/30 rounded-lg transition-colors group"
