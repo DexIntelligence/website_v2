@@ -107,9 +107,15 @@ export default function MarketMapper() {
                             </h2>
                         </div>
                         <div className="flex items-start justify-between gap-6">
-                            <p className="text-lg sm:text-xl text-gray-300 leading-relaxed flex-1">
-                                Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
-                            </p>
+                            <div className="space-y-3 flex-1">
+                                <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+                                    Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
+                                </p>
+                                <p className="text-base text-gray-400 flex items-start gap-2">
+                                    <span className="text-brand mt-1">•</span>
+                                    <span>Get started with basic location data (or let us collect data for you)</span>
+                                </p>
+                            </div>
                             <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-4 py-2 flex-shrink-0">
                                 <span className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Live Now</span>
                             </div>
