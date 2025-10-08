@@ -208,20 +208,6 @@ export default function MarketMapper() {
                         </ul>
                     </div>
                 </div>
-
-                <div className="rounded-3xl border border-sky-400/40 bg-gradient-to-br from-sky-500/20 via-transparent to-black/40 p-8 text-center">
-                    <h3 className="text-2xl font-semibold text-white mb-3">Join the Early Access Program</h3>
-                    <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
-                        Influence the roadmap and get priority access to Market Mapper Pro when it launches in Q4 2026.
-                    </p>
-                    <Link
-                        to="/contact"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-400 px-8 py-4 text-lg font-semibold text-black transition hover:bg-sky-300"
-                    >
-                        Request Early Access
-                        <ArrowRight className="h-5 w-5" />
-                    </Link>
-                </div>
             </section>
 
             <section className="rounded-3xl border border-brand/40 bg-gradient-to-br from-brand/20 via-transparent to-black/60 p-8 text-center">
