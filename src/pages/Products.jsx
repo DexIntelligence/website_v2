@@ -39,29 +39,29 @@ export default function Products() {
     const platformModules = [
         {
             name: 'Market Mapper',
-            status: 'Live beta',
+            status: 'Live',
             statusTone: 'text-emerald-300 bg-emerald-500/10 border border-emerald-400/40',
             tagline: 'Local area analysis available today.',
             description:
                 'Interactive, map-driven local competition analysis for merger review teams, complete with export-ready evidence packs.',
             highlights: [
-                'Define and compare overlap markets across drive-time, distance, or travel time in minutes.',
+                'Define and compare overlap markets across drive-time, distance, and census boundaries.',
                 'Identify optimal merger remedies accounting for crown jewel assets and competitive dynamics.',
-                'Auto-generate polished market reports with transparent methodology notes.',
+                'Comprehensive market share and HHI risk assessment in minutes — backed up by regulator-ready methodology.',
             ],
             cta: {
-                label: 'View Market Mapper overview',
+                label: 'View Market Mapper Details',
                 href: '/Dex - Market Mapper v1 One Pager.pdf',
                 external: true,
             },
         },
         {
             name: 'Retail Data Collector',
-            status: 'Alpha build',
+            status: 'Live Beta',
             statusTone: 'text-amber-300 bg-amber-500/10 border border-amber-400/40',
             tagline: 'Automated sourcing for national and local competitor coverage.',
             description:
-                'Structured ingestion of store locator, pricing, and loyalty data to keep Market Mapper analysis current and defensible.',
+                'Rapid high-quality data collection for retail mergers, leveraging cutting-edge agentic AI tools.',
             highlights: [
                 'Verified scraping of retailer location data from public websites with automated quality validation.',
                 'Integrated datasets combining scraped retail locations with complementary public data sources.',
@@ -71,11 +71,11 @@ export default function Products() {
         {
 
             name: 'Market Mapper Pro',
-            status: 'In design',
+            status: 'In Active Development',
             statusTone: 'text-sky-300 bg-sky-500/10 border border-sky-400/40',
             tagline: 'Advanced project file management and competition analytics for geographic competition.',
             description:
-                'Extends Market Mapper with collaborative workspaces, versioned case files, and remedy scenario planning so teams can manage complex geographic competition matters end-to-end.',
+                'Extends Market Mapper with collaborative workspaces with persistent file management and advanced data and competition analysis tools.',
             highlights: [
                 'Integrated project management platform maintaining data continuity and case files throughout matter lifecycle.',
                 'Machine learning tools harmonize diverse datasets, including customer location analysis for precise market definition.',
