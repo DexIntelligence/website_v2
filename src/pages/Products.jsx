@@ -51,8 +51,8 @@ export default function Products() {
             ],
             cta: {
                 label: 'View Market Mapper Details',
-                href: '/Dex - Market Mapper v1 One Pager.pdf',
-                external: true,
+                href: '/market-mapper',
+                external: false,
             },
         },
         {
@@ -80,6 +80,32 @@ export default function Products() {
                 'Integrated project management platform maintaining data continuity and case files throughout matter lifecycle.',
                 'Machine learning tools harmonize diverse datasets, including customer location analysis for precise market definition.',
                 'Advanced economic modeling with gravity models and sophisticated concentration analysis for complex markets.',
+            ],
+        },
+        {
+            name: 'Market Share & Concentration Analytics',
+            status: 'Planned',
+            statusTone: 'text-violet-300 bg-violet-500/10 border border-violet-400/40',
+            tagline: 'Non-geographic market share and HHI analysis platform.',
+            description:
+                'General market share and concentration analysis for non-geographic markets, leveraging ML-based data harmonization to process diverse product and service datasets.',
+            highlights: [
+                'Automated data harmonization using machine learning to unify disparate product catalogs and service definitions.',
+                'Flexible market definition tools for product-based and service-based competition analysis.',
+                'HHI and market share calculations with transparent methodology and regulator-ready documentation.',
+            ],
+        },
+        {
+            name: 'Full Merger Review Toolkit',
+            status: 'Planned',
+            statusTone: 'text-violet-300 bg-violet-500/10 border border-violet-400/40',
+            tagline: 'Comprehensive economic analysis platform for merger reviews.',
+            description:
+                'End-to-end merger review platform built on harmonized data foundations, covering the complete toolkit of economic analyses including merger simulations and competitive effects modeling.',
+            highlights: [
+                'Unified data infrastructure supporting all stages of merger review from initial screening to litigation support.',
+                'Advanced merger simulation models including UPP, GUPPI, and full structural demand estimation.',
+                'Integrated competitive effects analysis including vertical foreclosure, coordinated effects, and efficiency assessments.',
             ],
         },
     ];
@@ -114,15 +140,13 @@ export default function Products() {
                         <Play className="h-4 w-4" />
                         Watch demo
                     </Link>
-                    <a
-                        href="/Dex - Market Mapper v1 One Pager.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        to="/market-mapper"
                         className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
                     >
                         <ExternalLink className="h-4 w-4" />
                         View Market Mapper overview
-                    </a>
+                    </Link>
                     <a
                         href="/Dex - Market Mapper v1 Sample Pitch Report.pdf"
                         download
@@ -181,12 +205,29 @@ export default function Products() {
                     {platformModules.map((module) => (
                         <div
                             key={module.name}
-                            className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-transparent to-white/5 p-8 transition hover:border-brand/60"
+                            className={`rounded-3xl p-8 transition ${
+                                module.status === 'Planned'
+                                    ? 'border-2 border-dashed border-violet-400/30 bg-gradient-to-br from-violet-500/5 via-transparent to-black/20 hover:border-violet-400/50'
+                                    : 'border border-white/10 bg-gradient-to-br from-white/5 via-transparent to-white/5 hover:border-brand/60'
+                            }`}
                         >
                             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 <div className="space-y-2">
                                     <h3 className="text-2xl font-semibold text-white">{module.name}</h3>
-                                    <p className="text-base font-medium text-brand/90">{module.tagline}</p>
+                                    <p className="text-base font-medium text-brand/90">
+                                        {module.tagline}
+                                        {module.name === 'Market Mapper' && (
+                                            <>
+                                                {' '}
+                                                <Link
+                                                    to="/market-mapper"
+                                                    className="text-brand hover:text-white transition underline"
+                                                >
+                                                    See Details
+                                                </Link>
+                                            </>
+                                        )}
+                                    </p>
                                 </div>
                                 <span className={`inline-flex items-center rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-widest ${module.statusTone}`}>
                                     {module.status}
