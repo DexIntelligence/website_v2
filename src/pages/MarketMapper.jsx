@@ -50,16 +50,24 @@ export default function MarketMapper() {
 
             {/* Market Mapper - Live Now */}
             <section className="space-y-8">
-                <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-4 py-2">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Live Now</span>
+                <div className="space-y-6">
+                    <div className="text-center">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+                            <span className="text-white">Comprehensive </span>
+                            <span className="text-brand">
+                                geographic competition
+                            </span>
+                            <span className="text-white"> analysis</span>
+                        </h2>
                     </div>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white">
-                        Comprehensive geographic competition analysis
-                    </h2>
-                    <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                        Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
-                    </p>
+                    <div className="flex items-start justify-between gap-6">
+                        <p className="text-lg sm:text-xl text-gray-300 leading-relaxed flex-1">
+                            Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
+                        </p>
+                        <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-4 py-2 flex-shrink-0">
+                            <span className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Live Now</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -75,7 +83,7 @@ export default function MarketMapper() {
                         <Zap className="h-8 w-8 text-brand mb-4" />
                         <h3 className="text-xl font-semibold text-white mb-3">Advanced Market Analysis</h3>
                         <p className="text-gray-300 leading-relaxed">
-                            Analyze sophisticated market definitions including combined catchments to accommodate complex dynamics like commuter traffic patterns across multiple drive-time zones.
+                            Analyze sophisticated market definitions including combined catchments to accommodate complex dynamics like commuter traffic patterns across multiple drive-time catchments.
                         </p>
                     </div>
 
