@@ -6,6 +6,8 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Products from "./pages/Products.jsx";
 import MarketMapper from "./pages/MarketMapper.jsx";
+import CensusBoundaryDemo from "./pages/CensusBoundaryDemo.jsx";
+import MarketXrayDemo from "./pages/MarketXrayDemo.jsx";
 import Team from "./pages/Team.jsx";
 import Demo from "./pages/Demo.jsx";
 import Insights from "./pages/Insights.jsx";
@@ -249,6 +251,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/market-mapper" element={<MarketMapper />} />
+        <Route path="/demos/census-boundary" element={<CensusBoundaryDemo />} />
+        <Route path="/demos/market-xray" element={<MarketXrayDemo />} />
         <Route path="/team" element={<Team />} />
         <Route path="/demo" element={<Demo />} />
         <Route path="/insights" element={<Insights />} />
