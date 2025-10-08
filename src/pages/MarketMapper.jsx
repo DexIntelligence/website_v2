@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import {
     Map,
     ArrowRight,
@@ -9,10 +10,13 @@ import {
     Calendar,
     Sparkles,
     Database,
-    Users
+    Users,
+    ChevronDown,
+    Play
 } from 'lucide-react';
 
 export default function MarketMapper() {
+    const [showDemoMenu, setShowDemoMenu] = useState(false);
     return (
         <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-24 space-y-16">
             <section className="space-y-8">
@@ -39,12 +43,44 @@ export default function MarketMapper() {
                     >
                         Request access
                     </Link>
-                    <Link
-                        to="/demo"
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand"
-                    >
-                        Watch demo
-                    </Link>
+                    <div className="relative">
+                        <button
+                            onClick={() => setShowDemoMenu(!showDemoMenu)}
+                            className="inline-flex items-center justify-center gap-2 rounded-full border border-brand/60 px-6 py-3 text-base font-semibold text-white transition hover:border-brand w-full sm:w-auto"
+                        >
+                            <Play className="h-4 w-4" />
+                            Watch demos
+                            <ChevronDown className={`h-4 w-4 transition-transform ${showDemoMenu ? 'rotate-180' : ''}`} />
+                        </button>
+                        {showDemoMenu && (
+                            <div className="absolute top-full mt-2 left-0 right-0 sm:left-0 sm:right-auto sm:min-w-[320px] rounded-2xl border border-brand/30 bg-black/95 backdrop-blur-sm shadow-xl z-10 overflow-hidden">
+                                <Link
+                                    to="/demos/census-boundary"
+                                    className="block px-6 py-4 text-white hover:bg-brand/10 transition border-b border-white/10"
+                                    onClick={() => setShowDemoMenu(false)}
+                                >
+                                    <div className="font-semibold text-sm mb-1">Census Boundary Analysis</div>
+                                    <div className="text-xs text-gray-400">Quickly get maps of any census boundary with overlap</div>
+                                </Link>
+                                <Link
+                                    to="/demos/market-xray"
+                                    className="block px-6 py-4 text-white hover:bg-brand/10 transition border-b border-white/10"
+                                    onClick={() => setShowDemoMenu(false)}
+                                >
+                                    <div className="font-semibold text-sm mb-1">Market X-Ray Analysis</div>
+                                    <div className="text-xs text-gray-400">Generate x-ray heatmap of antitrust risk</div>
+                                </Link>
+                                <Link
+                                    to="/demo"
+                                    className="block px-6 py-4 text-white hover:bg-brand/10 transition"
+                                    onClick={() => setShowDemoMenu(false)}
+                                >
+                                    <div className="font-semibold text-sm mb-1">Full Product Walkthrough</div>
+                                    <div className="text-xs text-gray-400">Complete overview of Market Mapper</div>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
 
@@ -71,9 +107,15 @@ export default function MarketMapper() {
                             </h2>
                         </div>
                         <div className="flex items-start justify-between gap-6">
-                            <p className="text-lg sm:text-xl text-gray-300 leading-relaxed flex-1">
-                                Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
-                            </p>
+                            <div className="space-y-3 flex-1">
+                                <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+                                    Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
+                                </p>
+                                <p className="text-base text-gray-400 flex items-start gap-2">
+                                    <span className="text-brand mt-1">•</span>
+                                    <span>Get started with basic location data (or let us collect data for you)</span>
+                                </p>
+                            </div>
                             <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-4 py-2 flex-shrink-0">
                                 <span className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Live Now</span>
                             </div>
