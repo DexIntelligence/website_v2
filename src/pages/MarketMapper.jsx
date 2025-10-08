@@ -50,11 +50,11 @@ export default function MarketMapper() {
 
             {/* Market Mapper - Live Now */}
             <section className="space-y-8">
-                <div className="grid lg:grid-cols-2 gap-8 items-start">
+                <div className="grid lg:grid-cols-[auto_1fr] gap-8 items-center">
                     {/* Hero Screenshot - Now inline on left */}
-                    <div className="rounded-2xl border border-brand/30 bg-gradient-to-br from-brand/10 via-transparent to-black/20 p-3 overflow-hidden">
+                    <div className="rounded-2xl border border-brand/30 bg-gradient-to-br from-brand/10 via-transparent to-black/20 p-3 overflow-hidden max-w-md">
                         <img
-                            src="/user-guide-content/tab3-map.png"
+                            src="/market-mapper-hero.png"
                             alt="Market Mapper interactive map interface showing competitive overlap analysis"
                             className="w-full h-auto rounded-lg shadow-xl"
                         />
