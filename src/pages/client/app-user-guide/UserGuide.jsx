@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { marked } from 'marked';
-import { ChevronRight, FileText, Map, BarChart3, Package, Settings } from 'lucide-react';
+import { ChevronRight, FileText, Map, BarChart3, Package, Settings, Zap } from 'lucide-react';
 
 const UserGuide = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -21,22 +21,28 @@ const UserGuide = () => {
       file: 'tab2-overview.md'
     },
     {
+      id: 'market-xray',
+      label: 'Tab 3: Market X-Ray (Beta)',
+      icon: Zap,
+      file: 'tab3-market-xray.md'
+    },
+    {
       id: 'analysis',
-      label: 'Tab 3: Individual Analysis',
+      label: 'Tab 4: Individual Analysis',
       icon: BarChart3,
-      file: 'tab3-analysis.md'
+      file: 'tab4-analysis.md'
     },
     {
       id: 'divestiture',
-      label: 'Tab 4: Divestiture',
+      label: 'Tab 5: Divestiture',
       icon: Package,
-      file: 'tab4-divestiture.md'
+      file: 'tab5-divestiture.md'
     },
     {
       id: 'export',
-      label: 'Tab 5: Settings & Export',
+      label: 'Tab 6: Settings & Export',
       icon: Settings,
-      file: 'tab5-export.md'
+      file: 'tab6-export.md'
     }
   ];
 
