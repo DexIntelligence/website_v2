@@ -36,7 +36,7 @@ The country selection automatically configures:
 
 **Geographic Boundaries:**
 - Canada: Statistics Canada 2021 Census Boundaries (CMA, CA, CSD)
-- United States: Commuter Zones (US Census Bureau census boundaries will be incorporated in future releases)
+- United States: Commuter Zones (US Census Bureau census boundaries to be incorporated in future releases)
 - (UK, EU and Australia coming soon)
 
 ### Active Configuration Display
