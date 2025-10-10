@@ -1,9 +1,9 @@
-# Tab 3: Individual Market Analysis
+# Tab 4: Individual Market Analysis
 
 ## Overview
 The Individual Market Analysis tab allows you to perform detailed analysis of specific locations with full control over market definition methods. This is essential for markets requiring special consideration or different parameters than the broad screening.
 
-![Options for analysis of individual markets](/user-guide-content/tab3.png)
+![Options for analysis of individual markets](/user-guide-content/tab4.png)
 
 ## Options for Analysis
 
@@ -30,7 +30,7 @@ Analyze competition and party overlap in markets defined by census boundaries, i
 Analyze the competing locations around any Purchaser or Target location in the dataset:
  - **Select Market Definition**: Choose either distance- or drive-time-based market definition, and choose market size
 
-![Selecting market definition for individual market analysis](/user-guide-content/tab3-ind-defn.png)
+![Selecting market definition for individual market analysis](/user-guide-content/tab4-ind-defn.png)
 
 ## Analyzing Combined Catchments
 
@@ -64,20 +64,20 @@ All census boundaries are stored as files in a library in the secure cloud envir
 
 The interactive map shows the boundary of the market, highlighting all locations in the market boundary:
 
-![Map of individual market](/user-guide-content/tab3-map.png)
+![Map of individual market](/user-guide-content/tab4-map.png)
 
 
 ### Market Share and HHI results
 
 Below the map the app presents detailed competition metrics for the defined market:
 
-![Competition metrics for single market analysis](/user-guide-content/tab3-metrics.png)
+![Competition metrics for single market analysis](/user-guide-content/tab4-metrics.png)
 
 ### Competitor Analysis Table
 
 Detailed breakdown of all competitors in the defined market:
 
-![Competitive composition of individual market](/user-guide-content/tab3-breakdown.png)
+![Competitive composition of individual market](/user-guide-content/tab4-breakdown.png)
 
 ## Advanced Analysis Options
 
@@ -112,9 +112,9 @@ For locations near boundaries (provincial borders, coastlines):
 
 ## Exporting Individual Analysis
 
-All analysis is saved for future reference and inclusion in the Excel report, generated on Tab 5 of the app
+All analysis is saved for future reference and inclusion in the Excel report, generated on Tab 6 of the app
 
-![Individual market analysis is saved for future use and exporting to report](/user-guide-content/tab3-saved.png)
+![Individual market analysis is saved for future use and exporting to report](/user-guide-content/tab4-saved.png)
 
 ## Best Practices
 
@@ -126,5 +126,5 @@ All analysis is saved for future reference and inclusion in the Excel report, ge
 ## Next Steps
 
 After completing individual market analyses:
-- **Tab 4: Optimal Divestiture** - If remedies are needed
-- **Tab 5: Settings & Export** - Generate comprehensive reports
+- **Tab 5: Optimal Divestiture** - If remedies are needed
+- **Tab 6: Settings & Export** - Generate comprehensive reports

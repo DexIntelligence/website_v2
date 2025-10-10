@@ -8,7 +8,8 @@
       "Bash(git checkout:*)",
       "Bash(npm install:*)",
       "Bash(node -e \"console.log(require(''crypto'').randomBytes(64).toString(''hex''))\")",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []

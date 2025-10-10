@@ -1,9 +1,9 @@
-# Tab 4: Optimal Divestiture Analysis
+# Tab 5: Optimal Divestiture Analysis
 
 ## Overview
 The Optimal Divestiture Analysis tab uses advanced optimization algorithms to calculate the minimum set of locations that must be divested to meet regulatory requirements. This powerful tool helps structure remedies that resolve competition concerns while minimizing business impact.
 
-![Tab 4: optimal remedy analysis](/user-guide-content/tab4.png)
+![Tab 5: optimal remedy analysis](/user-guide-content/tab5.png)
 
 ## Understanding Divestiture Analysis
 
@@ -32,7 +32,7 @@ Optimization identifies the assets to be divested to get market shares and/or co
 
 **1.** It is unlikely that the Competition Bureau will require divestitures to result in market shares below the statutory thresholds, but the precise standard remains uncertain
 
-**2.** The thresholds targeted by the algorithm can be configured in Tab 5 of the app (see part 5 of this user guide)
+**2.** The thresholds targeted by the algorithm can be configured in Tab 6 of the app (see part 6 of this user guide)
 
 #### Crown Jewel Protection
 Identify locations that should be divested only as a last resort:
@@ -50,7 +50,7 @@ For larger datasets (e.g., 500+ merging party locations), assess the solution pr
  - **Start Fast**: Select "Quick" for initial estimate of solution
  - **Progress To More Precise Methods**: depending on the complexity of the problem, and how long the solution is taking, gradually get more precise results by assessing the solution first with Quickest, then Quick, then Medium, and if time permits, the Full solution. Use the Estimate Time button to see estimated time to completion for the solution at different precision levels.
 
-![Selecting optimization precision](/user-guide-content/tab4-options.png)
+![Selecting optimization precision](/user-guide-content/tab5-options.png)
 
 ## Understanding the Optimization Process
 
@@ -76,29 +76,29 @@ The optimization results show:
 - **Markets Resolved**: Number of problematic markets addressed
 - **Business Impact**: Revenue/economic value of divested locations
 
-![Remedy package results](/user-guide-content/tab4-results.png)
+![Remedy package results](/user-guide-content/tab5-results.png)
 
 ### Strategic Multi-market Locations Summary
 
 The app identifies the locations that affect market shares in many different markets, and provides detailed information on their impact on the divestiture:
 
-![Breakdown of multi-market impact locations](/user-guide-content/tab4-multi-market.png)
+![Breakdown of multi-market impact locations](/user-guide-content/tab5-multi-market.png)
 
 ### Market-by-Market Breakdown
 
 Detailed table showing details of the remedy recommended for each problematic market:
 
-![Overview of individual market divestitures](/user-guide-content/tab4-markets.png)
+![Overview of individual market divestitures](/user-guide-content/tab5-markets.png)
 
 ## Exporting Remedy Proposals
 
-All remedies are saved for future reference and inclusion in the Excel report, generated on Tab 5 of the app
+All remedies are saved for future reference and inclusion in the Excel report, generated on Tab 6 of the app
 
-![All remedies are saved for future use and exporting to report](/user-guide-content/tab4-saved.png)
+![All remedies are saved for future use and exporting to report](/user-guide-content/tab5-saved.png)
 
 ### Regulatory Submission Package
 
-On tab 5, user can generate comprehensive remedy proposal including:
+On tab 6, user can generate comprehensive remedy proposal including:
 - Executive summary
 - Market-by-market analysis
 - Divestiture list with rationale
@@ -130,6 +130,6 @@ A: This means thresholds cannot be met with any divestiture combination. Conside
 ## Next Steps
 
 After determining optimal divestitures:
-- **Tab 5: Settings & Export** - Generate final reports
+- **Tab 6: Settings & Export** - Generate final reports
 - **Download remedy package** for regulatory submission
 - **Share results** with legal and business teams

@@ -105,9 +105,10 @@ The app provides a bar chart summarizing market shares, and below that, the user
 ![Progress bar for retreiving isochrones for drive time based markets](/user-guide-content/generating-isochrones.png)
 
 ### Next Steps for Problematic Markets
-1. Review individual markets in detail (Tab 3)
-2. Consider potential remedies (Tab 4)
-3. Prepare regulatory filings with supporting data
+1. Run automated screening with Market X-Ray (Tab 3)
+2. Review individual markets in detail (Tab 4)
+3. Consider potential remedies (Tab 5)
+4. Prepare regulatory filings with supporting data
 
 ## Best Practices
 
@@ -129,5 +130,6 @@ A: They reflect typical traffic conditions and are generally within 10-15% of ac
 # Next Steps
 
 After identifying problematic markets, proceed to:
-- **Tab 3: Individual Market Analysis** for detailed single-market examination
-- **Tab 4: Optimal Divestiture** to explore remedy options
+- **Tab 3: Market X-Ray (Beta)** for automated competitive screening
+- **Tab 4: Individual Market Analysis** for detailed single-market examination
+- **Tab 5: Optimal Divestiture** to explore remedy options

@@ -104,6 +104,8 @@ User can review location summary statistics and locations on a map:
 
 ![Viewing overview map - showing the overview map with locations in data](/user-guide-content/map-overview.png)
 
+![Competitor breakdown - showing the breakdown of locations by competitor](/user-guide-content/competitor-breakdown.png)
+
 ## Best Practices
 
 - **Data Quality**: Ensure addresses are complete and properly formatted
