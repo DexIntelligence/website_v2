@@ -18,7 +18,7 @@ import {
 export default function MarketMapper() {
     const [showDemoMenu, setShowDemoMenu] = useState(false);
     return (
-        <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-24 space-y-16">
+        <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-32 pb-24 space-y-8">
             <section className="space-y-8">
                 <div className="flex items-center gap-3 text-brand/80 pt-8">
                     <Map className="h-6 w-6" />
@@ -86,39 +86,54 @@ export default function MarketMapper() {
 
             {/* Market Mapper - Live Now */}
             <section className="space-y-8">
-                <div className="grid lg:grid-cols-[auto_1fr] gap-8 items-center">
-                    {/* Hero Screenshot - Now inline on left */}
-                    <div className="rounded-2xl border border-brand/30 bg-gradient-to-br from-brand/10 via-transparent to-black/20 p-3 overflow-hidden max-w-md">
-                        <img
-                            src="/market-mapper-hero.png"
-                            alt="Market Mapper interactive map interface showing competitive overlap analysis"
-                            className="w-full h-auto rounded-lg shadow-xl"
-                        />
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                    {/* Stacked Cards Hero */}
+                    <div className="relative" style={{ width: '528px', height: '450px' }}>
+                        {/* Card 3 - Bottom */}
+                        <div className="absolute rounded-2xl border border-brand/30 overflow-hidden shadow-md" style={{ bottom: '0', left: '80px', width: '448px' }}>
+                            <img
+                                src="/market-mapper-card-3.png"
+                                alt="Market Mapper analysis view"
+                                className="w-full h-auto"
+                            />
+                        </div>
+
+                        {/* Card 2 - Middle */}
+                        <div className="absolute rounded-2xl border border-brand/30 overflow-hidden shadow-lg" style={{ bottom: '40px', left: '40px', width: '448px' }}>
+                            <img
+                                src="/market-mapper-card-2.png"
+                                alt="Market Mapper interface preview"
+                                className="w-full h-auto"
+                            />
+                        </div>
+
+                        {/* Card 1 - Top (Primary) */}
+                        <div className="absolute rounded-2xl border border-brand/30 overflow-hidden shadow-2xl" style={{ bottom: '80px', left: '0', width: '448px' }}>
+                            <img
+                                src="/market-mapper-hero.png"
+                                alt="Market Mapper interactive map interface showing competitive overlap analysis"
+                                className="w-full h-auto"
+                            />
+                        </div>
                     </div>
 
                     <div className="space-y-6">
-                        <div className="text-left">
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-                                <span className="text-white">Comprehensive </span>
-                                <span className="text-brand">
-                                    geographic competition
-                                </span>
-                                <span className="text-white"> analysis</span>
-                            </h2>
+                        <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-4 py-2">
+                            <span className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Live Now</span>
                         </div>
-                        <div className="flex items-start justify-between gap-6">
-                            <div className="space-y-3 flex-1">
-                                <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
-                                    Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
-                                </p>
-                                <p className="text-base text-gray-400 flex items-start gap-2">
-                                    <span className="text-brand mt-1">•</span>
-                                    <span>Get started with basic location data (or let us collect data for you)</span>
-                                </p>
-                            </div>
-                            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-400/40 px-4 py-2 flex-shrink-0">
-                                <span className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Live Now</span>
-                            </div>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+                            <span className="text-white">Comprehensive </span>
+                            <span className="text-brand">geographic competition</span>
+                            <span className="text-white"> analysis</span>
+                        </h2>
+                        <div className="space-y-4">
+                            <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+                                Market Mapper delivers instant, regulator-ready analysis of merger impact on market shares and concentration across all plausible geographic market definitions.
+                            </p>
+                            <p className="text-base text-gray-400 flex items-center gap-2">
+                                <span className="text-brand">•</span>
+                                <span>Get started with basic location data (or let us collect data for you)</span>
+                            </p>
                         </div>
                     </div>
                 </div>
