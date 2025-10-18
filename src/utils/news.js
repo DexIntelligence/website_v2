@@ -1,5 +1,13 @@
 import { marked } from 'marked';
 
+// Configure marked to allow HTML (v16+ uses different API)
+marked.use({
+  gfm: true,
+  breaks: true,
+  mangle: false,
+  headerIds: false
+});
+
 // Simple front-matter parser for browser use
 function parseFrontMatter(content) {
   // Normalize line endings first
