@@ -116,16 +116,18 @@ function Header() {
                     {item.label}
                   </button>
                   {dropdownOpen === index && (
-                    <div className="absolute top-full left-0 mt-2 bg-black border border-brand rounded-lg shadow-lg min-w-[160px] z-50">
-                      {item.dropdown.map((subItem) => (
-                        <Link
-                          key={subItem.to}
-                          to={subItem.to}
-                          className="block px-4 py-3 text-lg text-white hover:text-brand hover:bg-brand/10 transition-colors first:rounded-t-lg last:rounded-b-lg"
-                        >
-                          {subItem.label}
-                        </Link>
-                      ))}
+                    <div className="absolute top-full left-0 pt-2 z-50">
+                      <div className="bg-black border border-brand rounded-lg shadow-lg min-w-[160px]">
+                        {item.dropdown.map((subItem) => (
+                          <Link
+                            key={subItem.to}
+                            to={subItem.to}
+                            className="block px-4 py-3 text-lg text-white hover:text-brand hover:bg-brand/10 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
