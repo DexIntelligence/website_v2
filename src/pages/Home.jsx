@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { getAllNews } from '../utils/news.js';
 
 export default function Home() {
+  const [latestNews, setLatestNews] = useState([]);
+
+  useEffect(() => {
+    async function loadLatestNews() {
+      const allNews = await getAllNews();
+      // Get the most recent 2 news items
+      setLatestNews(allNews.slice(0, 2));
+    }
+    loadLatestNews();
+  }, []);
+
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 pt-40">
       {/* Hero */}
@@ -100,6 +113,56 @@ export default function Home() {
           </div>
           </div>
         </div>
+      </section>
+
+      {/* Latest News Section */}
+      <section className="mt-16">
+        <div className="w-24 h-px bg-white/20 mb-8"></div>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">Latest News</h2>
+          <Link
+            to="/news"
+            className="text-brand hover:text-white transition-colors text-sm font-medium"
+          >
+            View All News →
+          </Link>
+        </div>
+
+        {latestNews.length > 0 ? (
+          <div className="space-y-6">
+            {latestNews.map((item) => (
+              <article key={item.slug} className="border border-white/10 bg-black/40 p-6 hover:border-brand transition-colors">
+                <div className="mb-3">
+                  <span className="text-sm text-gray-400">
+                    {new Date(item.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+                <Link to={`/news/${item.slug}`}>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 hover:text-brand transition-colors">
+                    {item.title}
+                  </h3>
+                </Link>
+                <p className="text-base text-gray-300 mb-4 leading-relaxed">
+                  {item.excerpt}
+                </p>
+                <Link
+                  to={`/news/${item.slug}`}
+                  className="text-brand hover:text-white transition-colors text-sm font-medium"
+                >
+                  Read More →
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="border border-white/10 bg-black/40 p-6 text-center">
+            <p className="text-gray-400">No news available yet. Check back soon!</p>
+          </div>
+        )}
       </section>
 
       {/* Design Partners Section */}

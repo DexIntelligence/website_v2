@@ -12,6 +12,8 @@ import Team from "./pages/Team.jsx";
 import Demo from "./pages/Demo.jsx";
 import Insights from "./pages/Insights.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
+import News from "./pages/News.jsx";
+import NewsPost from "./pages/NewsPost.jsx";
 import Contact from "./pages/Contact.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Login from "./pages/client/Login.jsx";
@@ -28,7 +30,13 @@ import { authService } from "./utils/auth.js";
 const NAV_LINKS = [
   { label: "About", to: "/about" },
   { label: "Products", to: "/products" },
-  { label: "Insights", to: "/insights" },
+  {
+    label: "What's New",
+    dropdown: [
+      { label: "News", to: "/news" },
+      { label: "Insights", to: "/insights" },
+    ]
+  },
 ];
 const CTA = { label: "Contact", to: "/contact" };
 const LOGO_TEXT = "YourLogo"; // logo uses /logo.png
@@ -48,6 +56,7 @@ function useScrollShadow() {
 function Header() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(null);
   const scrolled = useScrollShadow();
   const location = useLocation();
 
@@ -93,14 +102,42 @@ function Header() {
 
           {/* Center/Right: Nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="px-3 py-2 text-xl rounded-xl hover:text-brand transition-colors"
-              >
-                {item.label}
-              </Link>
+            {NAV_LINKS.map((item, index) => (
+              item.dropdown ? (
+                <div
+                  key={index}
+                  className="relative"
+                  onMouseEnter={() => setDropdownOpen(index)}
+                  onMouseLeave={() => setDropdownOpen(null)}
+                >
+                  <button
+                    className="px-3 py-2 text-xl rounded-xl hover:text-brand transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                  {dropdownOpen === index && (
+                    <div className="absolute top-full left-0 mt-2 bg-black border border-brand rounded-lg shadow-lg min-w-[160px] z-50">
+                      {item.dropdown.map((subItem) => (
+                        <Link
+                          key={subItem.to}
+                          to={subItem.to}
+                          className="block px-4 py-3 text-lg text-white hover:text-brand hover:bg-brand/10 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="px-3 py-2 text-xl rounded-xl hover:text-brand transition-colors"
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -155,14 +192,31 @@ function Header() {
 
             <div className="mt-4 divide-y divide-white/10">
               <div className="py-2 flex flex-col">
-                {NAV_LINKS.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className="rounded-lg px-4 py-3 text-xl font-medium text-white hover:text-brand hover:bg-brand/10 transition-all duration-200"
-                  >
-                    {item.label}
-                  </Link>
+                {NAV_LINKS.map((item, index) => (
+                  item.dropdown ? (
+                    <div key={index}>
+                      <div className="px-4 py-3 text-xl font-medium text-gray-400">
+                        {item.label}
+                      </div>
+                      {item.dropdown.map((subItem) => (
+                        <Link
+                          key={subItem.to}
+                          to={subItem.to}
+                          className="rounded-lg px-6 py-2 text-lg font-medium text-white hover:text-brand hover:bg-brand/10 transition-all duration-200 block"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className="rounded-lg px-4 py-3 text-xl font-medium text-white hover:text-brand hover:bg-brand/10 transition-all duration-200"
+                    >
+                      {item.label}
+                    </Link>
+                  )
                 ))}
               </div>
               <div className="py-3">
@@ -257,6 +311,8 @@ export default function App() {
         <Route path="/demo" element={<Demo />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/insights/:slug" element={<BlogPost />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/news/:slug" element={<NewsPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
         {/* Client Portal Routes */}

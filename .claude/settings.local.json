@@ -9,7 +9,12 @@
       "Bash(npm install:*)",
       "Bash(node -e \"console.log(require(''crypto'').randomBytes(64).toString(''hex''))\")",
       "Bash(mkdir:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(dir:*)",
+      "Bash(curl -s http://localhost:5174/news/october-2025-product-update.md)",
+      "Bash(node:*)",
+      "Bash(cat:*)",
+      "Bash(python -c \"\nimport re\n\n# Read the file\nwith open(''public/news/october-2025-product-update.md'', ''r'', encoding=''utf-8'') as f:\n    content = f.read()\n\n# Remove indentation from all lines (but preserve blank lines)\nlines = content.split(''\\n'')\nunindented_lines = []\nfor line in lines:\n    # Strip leading whitespace from all lines\n    unindented_lines.append(line.lstrip())\n\n# Join back together\nnew_content = ''\\n''.join(unindented_lines)\n\n# Write back\nwith open(''public/news/october-2025-product-update.md'', ''w'', encoding=''utf-8'') as f:\n    f.write(new_content)\n\nprint(''Removed all indentation from markdown file'')\n\")"
     ],
     "deny": [],
     "ask": []
