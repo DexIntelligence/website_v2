@@ -161,9 +161,3 @@ readTime: "3 min read"
 </div>
 
 </div>
-
-<div class="mb-10"></div>
-
-<div class="text-center p-6 bg-gradient-to-r from-transparent via-brand/20 to-transparent rounded-lg border-t border-b border-brand/30">
-<p class="text-gray-300 text-base font-medium">Visit our website for regular updates: <a href="https://dexintelligence.ai" class="text-brand hover:text-white font-bold transition-colors">dexintelligence.ai</a></p>
-</div>
