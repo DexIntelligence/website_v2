@@ -3,7 +3,7 @@ import { Play, Clock, Users, BarChart3, Download } from 'lucide-react';
 
 export default function Demo() {
   // Market Mapper Demo Video
-  const youtubeVideoId = "JmYO_4RsH5k";
+  const youtubeVideoId = "hqHmbMsR_Dw";
 
   const demoHighlights = [
     {
